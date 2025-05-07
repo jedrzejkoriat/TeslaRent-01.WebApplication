@@ -20,6 +20,5 @@
         public string Email { get; set; }
         // OTHER
         public decimal Price { get; set; }
-
     }
 }

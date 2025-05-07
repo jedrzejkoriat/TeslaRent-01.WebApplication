@@ -9,6 +9,26 @@ namespace TeslaRent_01.WebApplication.Server.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Car>()
+                .HasOne(c => c.Model)
+                .WithMany()
+                .HasForeignKey(c => c.ModelId);
+
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.Car)
+                .WithMany()
+                .HasForeignKey(r => r.CarId);
+
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.StartLocation)
+                .WithMany()
+                .HasForeignKey(r => r.StartLocationId);
+
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.EndLocation)
+                .WithMany()
+                .HasForeignKey(r => r.EndLocationId);
+
             base.OnModelCreating(modelBuilder);
         }
 
