@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35919.96 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "teslarent-01.webapplication.client", "teslarent-01.webapplication.client\teslarent-01.webapplication.client.esproj", "{9230AB73-B2C9-1134-7062-7552157F10F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeslaRent-01.WebApplication.Server", "TeslaRent-01.WebApplication.Server\TeslaRent-01.WebApplication.Server.csproj", "{D1DAFB83-349F-4E1A-B438-CCA977BABAB9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9230AB73-B2C9-1134-7062-7552157F10F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9230AB73-B2C9-1134-7062-7552157F10F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9230AB73-B2C9-1134-7062-7552157F10F1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9230AB73-B2C9-1134-7062-7552157F10F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9230AB73-B2C9-1134-7062-7552157F10F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9230AB73-B2C9-1134-7062-7552157F10F1}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D1DAFB83-349F-4E1A-B438-CCA977BABAB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1DAFB83-349F-4E1A-B438-CCA977BABAB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1DAFB83-349F-4E1A-B438-CCA977BABAB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1DAFB83-349F-4E1A-B438-CCA977BABAB9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BF933288-C143-4FB9-8D15-649B19413265}
+	EndGlobalSection
+EndGlobal
