@@ -11,5 +11,10 @@ namespace TeslaRent_01.WebApplication.Server.Data
         {
             base.OnModelCreating(modelBuilder);
         }
+
+        DbSet<Car> Cars { get; set; }
+        DbSet<Model> Models { get; set; }
+        DbSet<Location> Locations { get; set; }
+        DbSet<Reservation> Reservations { get; set; }
     }
 }

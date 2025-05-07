@@ -26,4 +26,8 @@
     </ProjectReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Configuration\Entities\" />
+  </ItemGroup>
+
 </Project>
