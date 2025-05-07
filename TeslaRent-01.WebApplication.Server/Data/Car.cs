@@ -5,7 +5,7 @@
         // ID
         public int Id { get; set; }
         // RELATIONS
-        public int ModelId { get; set; }
-        public Model Model { get; set; }
+        public int CarModelId { get; set; }
+        public CarModel CarModel { get; set; }
     }
 }

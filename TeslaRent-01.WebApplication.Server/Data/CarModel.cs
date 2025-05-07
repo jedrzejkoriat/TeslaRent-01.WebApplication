@@ -1,6 +1,6 @@
 ﻿namespace TeslaRent_01.WebApplication.Server.Data
 {
-    public class Model
+    public class CarModel
     {
         // IDs
         public int Id { get; set; }

@@ -10,9 +10,9 @@ namespace TeslaRent_01.WebApplication.Server.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Car>()
-                .HasOne(c => c.Model)
+                .HasOne(c => c.CarModel)
                 .WithMany()
-                .HasForeignKey(c => c.ModelId);
+                .HasForeignKey(c => c.CarModelId);
 
             modelBuilder.Entity<Reservation>()
                 .HasOne(r => r.Car)
@@ -33,7 +33,7 @@ namespace TeslaRent_01.WebApplication.Server.Data
         }
 
         DbSet<Car> Cars { get; set; }
-        DbSet<Model> Models { get; set; }
+        DbSet<CarModel> CarModels { get; set; }
         DbSet<Location> Locations { get; set; }
         DbSet<Reservation> Reservations { get; set; }
     }
