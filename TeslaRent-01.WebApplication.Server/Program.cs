@@ -58,8 +58,21 @@ app.MapGet("/api/location", async(ITeslaReservationService teslaReservationServi
     }
 });
 
-app.MapGet("/api/cars", async([FromBody] ReservationSearchVM reservationSearchVM, ITeslaReservationService teslaReservationService) =>
+app.MapGet("/api/cars/start_location/{startLocationId}/start_date/{startDate}/end_location/{endLocationId}/end_date/{endDate}", 
+    async(ITeslaReservationService teslaReservationService, 
+    string startLocationId,
+    string startDate,
+    string endLocationId,
+    string endDate) =>
 {
+    ReservationSearchVM reservationSearchVM = new ReservationSearchVM
+    {
+        StartLocationId = Int32.Parse(startLocationId),
+        EndLocationId = Int32.Parse(endLocationId),
+        StartDate = DateTime.Parse(startDate),
+        EndDate = DateTime.Parse(endDate)
+    };
+
     var validationResults = reservationSearchVM.Validate(new ValidationContext(reservationSearchVM));
     var validationErrors = validationResults.ToList();
 
