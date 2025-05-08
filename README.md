@@ -1,7 +1,7 @@
 # TeslaRent-01.WebApplication
 
 Aktualne załozenia projektowe (08.05.2025):
-
+```
 1. Lokacje: 
     Palma Airport
     Palma City Center
@@ -30,3 +30,4 @@ Aktualne załozenia projektowe (08.05.2025):
 5. Endpointy:
     GET app.MapGet("/api/reservations/start/{startLocationId}/{startDate}/end/{endLocationId}/{endDate}" - RESPONSE {string CarModel.Name, int CarId, dec Price}[]
     POST app.MapPost("/api/reservations") - body {JSON} - {int CarId, int StartLocationId, int EndLocationId, DateTime StartDate, DateTime EndDate, string FirstName, string LastName, string Email, decimal Price} - RESPONSE { ok, problem }
+```
