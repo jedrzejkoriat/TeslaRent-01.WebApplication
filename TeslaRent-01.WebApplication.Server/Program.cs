@@ -12,7 +12,16 @@ using System.ComponentModel.DataAnnotations;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.SetMinimumLevel(LogLevel.Information);
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new Exception("connectionString is not set.");
+}
+
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddAutoMapper(typeof(MapperConfig));
@@ -44,66 +53,72 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // GET /api/location
-app.MapGet("/api/location", async(ITeslaRentService teslaReservationService) =>
+app.MapGet("/api/location", async (HttpContext context, ITeslaRentService teslaReservationService, ILogger<Program> logger) =>
 {
+    logger.LogInformation("Received request: {Method} {Path}", context.Request.Method, context.Request.Path);
     try
     {
+        // Call method
         List<LocationVM> locations = await teslaReservationService.GetAvailableLocationVMsAsync();
+        logger.LogInformation("Sent response: {StatusCode} {Path}", context.Response.StatusCode, context.Request.Path);
         return Results.Ok(locations);
     }
     catch (Exception ex)
     {
+        logger.LogError(ex, "Error processing request: {Method} {Path}", context.Request.Method, context.Request.Path);
         return Results.BadRequest(ex.Message);
     }
 });
 
 // GET /api/cars/start_location/{startLocationId}/start_date/{startDate}/end_location/{endLocationId}/end_date/{endDate}
-app.MapGet("/api/cars/start_location/{startLocationId}/start_date/{startDate}/end_location/{endLocationId}/end_date/{endDate}", 
-    async(ITeslaRentService teslaReservationService, 
-    string startLocationId,
-    string startDate,
-    string endLocationId,
-    string endDate) =>
-{
-    try
+app.MapGet("/api/cars/start_location/{startLocationId}/start_date/{startDate}/end_location/{endLocationId}/end_date/{endDate}",
+    async (HttpContext context, ITeslaRentService teslaReservationService, string startLocationId, string startDate, string endLocationId, string endDate, ILogger<Program> logger) =>
     {
-        // Create view model
-        ReservationSearchVM reservationSearchVM = new ReservationSearchVM
+        logger.LogInformation("Received request: {Method} {Path}", context.Request.Method, context.Request.Path);
+        try
         {
-            StartLocationId = Int32.Parse(startLocationId),
-            EndLocationId = Int32.Parse(endLocationId),
-            StartDate = DateTime.Parse(startDate),
-            EndDate = DateTime.Parse(endDate)
-        };
+            // Create view model
+            ReservationSearchVM reservationSearchVM = new ReservationSearchVM
+            {
+                StartLocationId = Int32.Parse(startLocationId),
+                EndLocationId = Int32.Parse(endLocationId),
+                StartDate = DateTime.Parse(startDate),
+                EndDate = DateTime.Parse(endDate)
+            };
 
-        // Check if the viewmodel is valid
-        var validationResults = reservationSearchVM.Validate(new ValidationContext(reservationSearchVM));
-        var validationErrors = validationResults.ToList();
+            // Check if the viewmodel is valid
+            var validationResults = reservationSearchVM.Validate(new ValidationContext(reservationSearchVM));
+            var validationErrors = validationResults.ToList();
 
-        if (validationErrors.Any())
+            if (validationErrors.Any())
+            {
+                var errorMessages = validationErrors.Select(v => v.ErrorMessage);
+                return Results.BadRequest(new { Errors = errorMessages });
+            }
+
+            // Call method
+            List<CarModelVM> cars = await teslaReservationService.GetAvailableCarVMsAsync(reservationSearchVM);
+            logger.LogInformation("Sent response: {StatusCode} {Path}", context.Response.StatusCode, context.Request.Path);
+            return Results.Ok(cars);
+        }
+        catch (FormatException ex)
         {
-            var errorMessages = validationErrors.Select(v => v.ErrorMessage);
-            return Results.BadRequest(new { Errors = errorMessages });
+            logger.LogError(ex, "Error processing request: {Method} {Path}", context.Request.Method, context.Request.Path);
+            return Results.BadRequest(new { Error = "Invalid format of input parameters.", Details = ex.Message });
+
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error processing request: {Method} {Path}", context.Request.Method, context.Request.Path);
+            return Results.Problem(ex.Message);
         }
 
-        List<CarModelVM> cars = await teslaReservationService.GetAvailableCarVMsAsync(reservationSearchVM);
-        return Results.Ok(cars);
-    }
-    catch (FormatException ex)
-    {
-        return Results.BadRequest(new { Error = "Invalid format of input parameters.", Details = ex.Message });
-
-    }
-    catch (Exception ex)
-    {
-        return Results.Problem(ex.Message);
-    }
-
-});
+    });
 
 // POST /api/reservation
-app.MapPost("/api/reservation", async ([FromBody] ReservationCreateVM reservationCreateVM, ITeslaRentService teslaReservationService) =>
+app.MapPost("/api/reservation", async (HttpContext context, [FromBody] ReservationCreateVM reservationCreateVM, ITeslaRentService teslaReservationService, ILogger<Program> logger) =>
 {
+    logger.LogInformation("Received request: {Method} {Path}", context.Request.Method, context.Request.Path);
     try
     {
         // Check if the viewmodel is valid
@@ -116,11 +131,14 @@ app.MapPost("/api/reservation", async ([FromBody] ReservationCreateVM reservatio
             return Results.BadRequest(new { Errors = errorMessages });
         }
 
+        // Call method
         await teslaReservationService.CreateReservationAsync(reservationCreateVM);
+        logger.LogInformation("Sent response: {StatusCode} {Path}", context.Response.StatusCode, context.Request.Path);
         return Results.Ok();
     }
     catch (Exception ex)
     {
+        logger.LogError(ex, "Error processing request: {Method} {Path}", context.Request.Method, context.Request.Path);
         return Results.Problem(ex.Message);
     }
 });
