@@ -6,6 +6,7 @@ using TeslaRent_01.WebApplication.Server.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using TeslaRent_01.WebApplication.Server.Services;
 using TeslaRent_01.WebApplication.Server.Configuration;
+using TeslaRent_01.WebApplication.Server.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddAutoMapper(typeof(MapperConfig));
+
+builder.Services.AddScoped<ISqlService, SqlService>();
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 

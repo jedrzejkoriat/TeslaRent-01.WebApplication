@@ -12,7 +12,7 @@ using TeslaRent_01.WebApplication.Server.Data;
 namespace TeslaRent_01.WebApplication.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250507230555_InitialMigration")]
+    [Migration("20250508181739_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -36,6 +36,9 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                     b.Property<int>("CarModelId")
                         .HasColumnType("int");
 
+                    b.Property<int>("DaysInService")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CarModelId");
@@ -46,202 +49,242 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                         new
                         {
                             Id = 1,
-                            CarModelId = 1
+                            CarModelId = 1,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 2,
-                            CarModelId = 1
+                            CarModelId = 1,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 3,
-                            CarModelId = 1
+                            CarModelId = 1,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 4,
-                            CarModelId = 1
+                            CarModelId = 1,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 5,
-                            CarModelId = 1
+                            CarModelId = 1,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 6,
-                            CarModelId = 1
+                            CarModelId = 1,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 7,
-                            CarModelId = 1
+                            CarModelId = 1,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 8,
-                            CarModelId = 1
+                            CarModelId = 1,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 9,
-                            CarModelId = 1
+                            CarModelId = 1,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 10,
-                            CarModelId = 1
+                            CarModelId = 1,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 11,
-                            CarModelId = 1
+                            CarModelId = 1,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 12,
-                            CarModelId = 1
+                            CarModelId = 1,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 13,
-                            CarModelId = 1
+                            CarModelId = 1,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 14,
-                            CarModelId = 1
+                            CarModelId = 1,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 15,
-                            CarModelId = 1
+                            CarModelId = 1,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 16,
-                            CarModelId = 1
+                            CarModelId = 1,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 17,
-                            CarModelId = 2
+                            CarModelId = 2,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 18,
-                            CarModelId = 2
+                            CarModelId = 2,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 19,
-                            CarModelId = 2
+                            CarModelId = 2,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 20,
-                            CarModelId = 2
+                            CarModelId = 2,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 21,
-                            CarModelId = 2
+                            CarModelId = 2,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 22,
-                            CarModelId = 2
+                            CarModelId = 2,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 23,
-                            CarModelId = 2
+                            CarModelId = 2,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 24,
-                            CarModelId = 2
+                            CarModelId = 2,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 25,
-                            CarModelId = 2
+                            CarModelId = 2,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 26,
-                            CarModelId = 2
+                            CarModelId = 2,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 27,
-                            CarModelId = 3
+                            CarModelId = 3,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 28,
-                            CarModelId = 3
+                            CarModelId = 3,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 29,
-                            CarModelId = 3
+                            CarModelId = 3,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 30,
-                            CarModelId = 3
+                            CarModelId = 3,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 31,
-                            CarModelId = 3
+                            CarModelId = 3,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 32,
-                            CarModelId = 3
+                            CarModelId = 3,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 33,
-                            CarModelId = 4
+                            CarModelId = 4,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 34,
-                            CarModelId = 4
+                            CarModelId = 4,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 35,
-                            CarModelId = 4
+                            CarModelId = 4,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 36,
-                            CarModelId = 4
+                            CarModelId = 4,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 37,
-                            CarModelId = 4
+                            CarModelId = 4,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 38,
-                            CarModelId = 4
+                            CarModelId = 4,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 39,
-                            CarModelId = 5
+                            CarModelId = 5,
+                            DaysInService = 0
                         },
                         new
                         {
                             Id = 40,
-                            CarModelId = 5
+                            CarModelId = 5,
+                            DaysInService = 0
                         });
                 });
 
@@ -649,19 +692,6 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                         new
                         {
                             Id = 16,
-                            CarId = 35,
-                            Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
-                            EndLocationId = 1,
-                            FirstName = "Tesla",
-                            LastName = "Rent",
-                            Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
-                            StartLocationId = 1
-                        },
-                        new
-                        {
-                            Id = 17,
                             CarId = 37,
                             Email = "Tesla@Rent.com",
                             EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
@@ -674,8 +704,21 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                         },
                         new
                         {
-                            Id = 18,
+                            Id = 17,
                             CarId = 38,
+                            Email = "Tesla@Rent.com",
+                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndLocationId = 1,
+                            FirstName = "Tesla",
+                            LastName = "Rent",
+                            Price = 0.0m,
+                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartLocationId = 1
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CarId = 39,
                             Email = "Tesla@Rent.com",
                             EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
@@ -961,7 +1004,7 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                         new
                         {
                             Id = 40,
-                            CarId = 39,
+                            CarId = 35,
                             Email = "Tesla@Rent.com",
                             EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 4,

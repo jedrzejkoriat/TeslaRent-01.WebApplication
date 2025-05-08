@@ -2,7 +2,7 @@
 
 namespace TeslaRent_01.WebApplication.Server.Contracts
 {
-    public interface ITeslaReservationService
+    public interface ISqlService
     {
         Task<List<AvailableCarsVM>> GetAvailableCarsVMAsync(ReservationSearchVM reservationSearchVM);
     }

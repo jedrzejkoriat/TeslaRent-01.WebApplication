@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using TeslaRent_01.WebApplication.Server.Data;
-using TeslaRent_01.WebApplication.Server.ViewModels;
+using TeslaRent_01.WebApplication.Server.Models;
 
 namespace TeslaRent_01.WebApplication.Server.Configuration
 {

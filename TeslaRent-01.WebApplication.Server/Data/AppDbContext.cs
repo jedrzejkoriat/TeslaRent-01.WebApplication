@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TeslaRent_01.WebApplication.Server.Configuration.Entities;
+using TeslaRent_01.WebApplication.Server.Models;
 
 namespace TeslaRent_01.WebApplication.Server.Data
 {
@@ -38,6 +39,11 @@ namespace TeslaRent_01.WebApplication.Server.Data
                 .HasForeignKey(r => r.EndLocationId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<AvailableCarsVM>(entity =>
+            {
+                entity.HasNoKey();
+            });
+
             modelBuilder.ApplyConfiguration(new CarModelSeedConfiguration());
             modelBuilder.ApplyConfiguration(new CarSeedConfiguration());
             modelBuilder.ApplyConfiguration(new LocationSeedConfiguration());
@@ -61,5 +67,6 @@ namespace TeslaRent_01.WebApplication.Server.Data
         DbSet<CarModel> CarModels { get; set; }
         DbSet<Location> Locations { get; set; }
         DbSet<Reservation> Reservations { get; set; }
+        DbSet<AvailableCarsVM> AvailableCarsVMs { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace TeslaRent_01.WebApplication.Server.ViewModels
+﻿namespace TeslaRent_01.WebApplication.Server.Models
 {
     public class ReservationCreateVM : ReservationSearchVM
     {

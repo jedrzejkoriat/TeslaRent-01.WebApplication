@@ -25,9 +25,9 @@ namespace TeslaRent_01.WebApplication.Server.Configuration.Entities
                 new Reservation {Id = 13, CarId = 29, StartLocationId = 1, EndLocationId = 1, StartDate = DateTime.Now.AddDays(-1).Date, EndDate = DateTime.Now.AddDays(-1).Date, Price = 0.0m, FirstName = "Tesla", LastName = "Rent", Email = "Tesla@Rent.com" },
                 new Reservation {Id = 14, CarId = 32, StartLocationId = 1, EndLocationId = 1, StartDate = DateTime.Now.AddDays(-1).Date, EndDate = DateTime.Now.AddDays(-1).Date, Price = 0.0m, FirstName = "Tesla", LastName = "Rent", Email = "Tesla@Rent.com" },
                 new Reservation {Id = 15, CarId = 33, StartLocationId = 1, EndLocationId = 1, StartDate = DateTime.Now.AddDays(-1).Date, EndDate = DateTime.Now.AddDays(-1).Date, Price = 0.0m, FirstName = "Tesla", LastName = "Rent", Email = "Tesla@Rent.com" },
-                new Reservation {Id = 16, CarId = 35, StartLocationId = 1, EndLocationId = 1, StartDate = DateTime.Now.AddDays(-1).Date, EndDate = DateTime.Now.AddDays(-1).Date, Price = 0.0m, FirstName = "Tesla", LastName = "Rent", Email = "Tesla@Rent.com" },
-                new Reservation {Id = 17, CarId = 37, StartLocationId = 1, EndLocationId = 1, StartDate = DateTime.Now.AddDays(-1).Date, EndDate = DateTime.Now.AddDays(-1).Date, Price = 0.0m, FirstName = "Tesla", LastName = "Rent", Email = "Tesla@Rent.com" },
-                new Reservation {Id = 18, CarId = 38, StartLocationId = 1, EndLocationId = 1, StartDate = DateTime.Now.AddDays(-1).Date, EndDate = DateTime.Now.AddDays(-1).Date, Price = 0.0m, FirstName = "Tesla", LastName = "Rent", Email = "Tesla@Rent.com" },
+                new Reservation {Id = 16, CarId = 37, StartLocationId = 1, EndLocationId = 1, StartDate = DateTime.Now.AddDays(-1).Date, EndDate = DateTime.Now.AddDays(-1).Date, Price = 0.0m, FirstName = "Tesla", LastName = "Rent", Email = "Tesla@Rent.com" },
+                new Reservation {Id = 17, CarId = 38, StartLocationId = 1, EndLocationId = 1, StartDate = DateTime.Now.AddDays(-1).Date, EndDate = DateTime.Now.AddDays(-1).Date, Price = 0.0m, FirstName = "Tesla", LastName = "Rent", Email = "Tesla@Rent.com" },
+                new Reservation { Id = 18, CarId = 39, StartLocationId = 1, EndLocationId = 1, StartDate = DateTime.Now.AddDays(-1).Date, EndDate = DateTime.Now.AddDays(-1).Date, Price = 0.0m, FirstName = "Tesla", LastName = "Rent", Email = "Tesla@Rent.com" },
 
                 // Palma City Center (13)
                 new Reservation { Id = 19, CarId = 2, StartLocationId = 2, EndLocationId = 2, StartDate = DateTime.Now.AddDays(-1).Date, EndDate = DateTime.Now.AddDays(-1).Date, Price = 0.0m, FirstName = "Tesla", LastName = "Rent", Email = "Tesla@Rent.com" },
@@ -55,7 +55,7 @@ namespace TeslaRent_01.WebApplication.Server.Configuration.Entities
                 new Reservation {Id = 37, CarId = 15, StartLocationId = 4, EndLocationId = 4, StartDate = DateTime.Now.AddDays(-1).Date, EndDate = DateTime.Now.AddDays(-1).Date, Price = 0.0m, FirstName = "Tesla", LastName = "Rent", Email = "Tesla@Rent.com" },
                 new Reservation {Id = 38, CarId = 26, StartLocationId = 4, EndLocationId = 4, StartDate = DateTime.Now.AddDays(-1).Date, EndDate = DateTime.Now.AddDays(-1).Date, Price = 0.0m, FirstName = "Tesla", LastName = "Rent", Email = "Tesla@Rent.com" },
                 new Reservation {Id = 39, CarId = 31, StartLocationId = 4, EndLocationId = 4, StartDate = DateTime.Now.AddDays(-1).Date, EndDate = DateTime.Now.AddDays(-1).Date, Price = 0.0m, FirstName = "Tesla", LastName = "Rent", Email = "Tesla@Rent.com" },
-                new Reservation {Id = 40, CarId = 39, StartLocationId = 4, EndLocationId = 4, StartDate = DateTime.Now.AddDays(-1).Date, EndDate = DateTime.Now.AddDays(-1).Date, Price = 0.0m, FirstName = "Tesla", LastName = "Rent", Email = "Tesla@Rent.com" }
+                new Reservation { Id = 40, CarId = 35, StartLocationId = 4, EndLocationId = 4, StartDate = DateTime.Now.AddDays(-1).Date, EndDate = DateTime.Now.AddDays(-1).Date, Price = 0.0m, FirstName = "Tesla", LastName = "Rent", Email = "Tesla@Rent.com" }
             );
         }
     }
