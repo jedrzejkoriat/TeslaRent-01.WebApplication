@@ -5,6 +5,7 @@ using TeslaRent_01.WebApplication.Server.Data;
 using TeslaRent_01.WebApplication.Server.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using TeslaRent_01.WebApplication.Server.Services;
+using TeslaRent_01.WebApplication.Server.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
