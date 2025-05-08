@@ -1,0 +1,14 @@
+﻿using AutoMapper;
+using TeslaRent_01.WebApplication.Server.Data;
+using TeslaRent_01.WebApplication.Server.ViewModels;
+
+namespace TeslaRent_01.WebApplication.Server.Configuration
+{
+    public class MapperConfig : Profile
+    {
+        public MapperConfig()
+        {
+            CreateMap<ReservationCreateVM, Reservation>();
+        }
+    }
+}
