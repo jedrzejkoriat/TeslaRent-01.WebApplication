@@ -8,6 +8,7 @@ using TeslaRent_01.WebApplication.Server.Services;
 using TeslaRent_01.WebApplication.Server.Configuration;
 using TeslaRent_01.WebApplication.Server.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,18 +47,51 @@ app.UseHttpsRedirection();
 
 app.MapGet("/api/location", async(ITeslaReservationService teslaReservationService) =>
 {
-    List<LocationVM> locations = await teslaReservationService.GetAvailableLocationVMsAsync();
-    return Results.Ok(locations);
+    try
+    {
+        List<LocationVM> locations = await teslaReservationService.GetAvailableLocationVMsAsync();
+        return Results.Ok(locations);
+    }
+    catch (Exception ex)
+    {
+        return Results.BadRequest(ex.Message);
+    }
 });
 
 app.MapGet("/api/cars", async([FromBody] ReservationSearchVM reservationSearchVM, ITeslaReservationService teslaReservationService) =>
 {
-    List<CarModelVM> cars = await teslaReservationService.GetAvailableCarVMsAsync(reservationSearchVM);
-    return Results.Ok(cars);
+    var validationResults = reservationSearchVM.Validate(new ValidationContext(reservationSearchVM));
+    var validationErrors = validationResults.ToList();
+
+    if (validationErrors.Any())
+    {
+        var errorMessages = validationErrors.Select(v => v.ErrorMessage);
+        return Results.BadRequest(new { Errors = errorMessages });
+    }
+
+    try
+    {
+        List<CarModelVM> cars = await teslaReservationService.GetAvailableCarVMsAsync(reservationSearchVM);
+        return Results.Ok(cars);
+    }
+    catch (Exception ex)
+    {
+        return Results.BadRequest(ex.Message);
+    }
+
 });
 
 app.MapPost("/api/reservation", async ([FromBody] ReservationCreateVM reservationCreateVM, ITeslaReservationService teslaReservationService) =>
 {
+    var validationResults = reservationCreateVM.Validate(new ValidationContext(reservationCreateVM));
+    var validationErrors = validationResults.ToList();
+
+    if (validationErrors.Any())
+    {
+        var errorMessages = validationErrors.Select(v => v.ErrorMessage);
+        return Results.BadRequest(new { Errors = errorMessages });
+    }
+
     try
     {
         await teslaReservationService.CreateReservationAsync(reservationCreateVM);

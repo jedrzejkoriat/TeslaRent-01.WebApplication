@@ -25,9 +25,9 @@ namespace TeslaRent_01.WebApplication.Server.Models
                 yield return new ValidationResult("Start date cannot be in the past.", new[] { nameof(StartDate) });
             }
 
-            if (EndDate.Date < StartDate.Date)
+            if (EndDate.Date <= StartDate.Date)
             {
-                yield return new ValidationResult("End date must be the same or after the start date.", new[] { nameof(EndDate) });
+                yield return new ValidationResult("End date must be after the start date.", new[] { nameof(EndDate) });
             }
         }
     }

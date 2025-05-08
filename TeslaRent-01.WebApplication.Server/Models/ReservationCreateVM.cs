@@ -22,6 +22,26 @@ namespace TeslaRent_01.WebApplication.Server.Models
             {
                 yield return result;
             }
+
+            if (string.IsNullOrEmpty(FirstName))
+            {
+                yield return new ValidationResult("First name is required.", new[] { nameof(FirstName) });
+            }
+
+            if (string.IsNullOrEmpty(LastName))
+            {
+                yield return new ValidationResult("Last name is required.", new[] { nameof(LastName) });
+            }
+
+            if (string.IsNullOrEmpty(Email))
+            {
+                yield return new ValidationResult("Email is required.", new[] { nameof(Email) });
+            }
+            else if (!new EmailAddressAttribute().IsValid(Email))
+            {
+                yield return new ValidationResult("Invalid email format.", new[] { nameof(Email) });
+            }
+
         }
     }
 }
