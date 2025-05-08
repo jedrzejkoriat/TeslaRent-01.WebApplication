@@ -17,10 +17,6 @@ namespace TeslaRent_01.WebApplication.Server.Data
                 .HasForeignKey(c => c.CarModelId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<CarModel>()
-                .Property(c => c.Name)
-                .HasColumnType("nvarchar(255)");
-
             modelBuilder.Entity<Reservation>()
                 .HasOne(r => r.Car)
                 .WithMany()
@@ -39,7 +35,13 @@ namespace TeslaRent_01.WebApplication.Server.Data
                 .HasForeignKey(r => r.EndLocationId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<AvailableCarsVM>(entity =>
+            // View models for sql queries
+            modelBuilder.Entity<CarModelVM>(entity =>
+            {
+                entity.HasNoKey();
+            });
+
+            modelBuilder.Entity<CarVM>(entity =>
             {
                 entity.HasNoKey();
             });
@@ -67,6 +69,7 @@ namespace TeslaRent_01.WebApplication.Server.Data
         DbSet<CarModel> CarModels { get; set; }
         DbSet<Location> Locations { get; set; }
         DbSet<Reservation> Reservations { get; set; }
-        DbSet<AvailableCarsVM> AvailableCarsVMs { get; set; }
+        DbSet<CarModelVM> AvailableCarModelVMs { get; set; }
+        DbSet<CarVM> AvailableCarVMs { get; set; }
     }
 }

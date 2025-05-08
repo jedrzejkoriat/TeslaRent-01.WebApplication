@@ -9,6 +9,8 @@ namespace TeslaRent_01.WebApplication.Server.Configuration
         public MapperConfig()
         {
             CreateMap<ReservationCreateVM, Reservation>();
+            CreateMap<Location, LocationVM>();
+            CreateMap<ReservationCreateVM, ReservationSearchVM>();
         }
     }
 }

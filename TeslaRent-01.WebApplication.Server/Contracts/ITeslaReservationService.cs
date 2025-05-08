@@ -4,6 +4,8 @@ namespace TeslaRent_01.WebApplication.Server.Contracts
 {
     public interface ITeslaReservationService
     {
-        Task<List<AvailableCarsVM>> GetAvailableCarsVMAsync(ReservationSearchVM reservationSearchVM);
+        Task<List<LocationVM>> GetAvailableLocationVMsAsync();
+        Task<List<CarModelVM>> GetAvailableCarVMsAsync(ReservationSearchVM reservationSearchVM);
+        Task CreateReservationAsync(ReservationCreateVM reservationCreateVM);
     }
 }

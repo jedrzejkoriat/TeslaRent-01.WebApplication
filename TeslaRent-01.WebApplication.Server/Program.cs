@@ -43,6 +43,31 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.MapGet("/api/location", async(ITeslaReservationService teslaReservationService) =>
+{
+    List<LocationVM> locations = await teslaReservationService.GetAvailableLocationVMsAsync();
+    return Results.Ok(locations);
+});
+
+app.MapGet("/api/cars", async(ITeslaReservationService teslaReservationService, ReservationSearchVM reservationSearchVM) =>
+{
+    List<CarModelVM> cars = await teslaReservationService.GetAvailableCarVMsAsync(reservationSearchVM);
+    return Results.Ok(cars);
+});
+
+app.MapPost("/api/reservation", async (ITeslaReservationService teslaReservationService, ReservationCreateVM reservationCreateVM) =>
+{
+    try
+    {
+        await teslaReservationService.CreateReservationAsync(reservationCreateVM);
+        return Results.Ok();
+    }
+    catch (InvalidOperationException ex)
+    {
+        return Results.Problem(ex.Message);
+    }
+});
+
 app.MapFallbackToFile("/index.html");
 
 app.Run();

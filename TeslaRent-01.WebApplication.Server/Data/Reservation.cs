@@ -3,7 +3,7 @@
     public class Reservation
     {
         // ID
-        public int Id { get; set; }
+        public int? Id { get; set; }
         // RELATIONS
         public int CarId { get; set; }
         public Car Car { get; set; }
