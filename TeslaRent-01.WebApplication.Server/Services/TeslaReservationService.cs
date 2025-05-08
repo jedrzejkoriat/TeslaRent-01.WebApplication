@@ -5,11 +5,24 @@ namespace TeslaRent_01.WebApplication.Server.Services
 {
     public class TeslaReservationService : ITeslaReservationService
     {
-        private readonly AppDbContext context;
+        private readonly ICarRepository carRepository;
+        private readonly ICarModelRepository carModelRepository;
+        private readonly IReservationRepository reservationRepository;
+        private readonly ILocationRepository locationRepository;
 
-        public TeslaReservationService(AppDbContext context)
+        public TeslaReservationService(
+            ICarRepository carRepository, 
+            ICarModelRepository carModelRepository,
+            IReservationRepository reservationRepository,
+            ILocationRepository locationRepository)
         {
-            this.context = context;
+            this.carRepository = carRepository;
+            this.carModelRepository = carModelRepository;
+            this.reservationRepository = reservationRepository;
+            this.locationRepository = locationRepository;
         }
+
+
+
     }
 }
