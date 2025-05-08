@@ -14,11 +14,11 @@
         // DATES
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        // CUSTOMER
+        // STRINGS
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        // OTHER
+        // NUMBERS
         public decimal Price { get; set; }
     }
 }

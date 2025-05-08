@@ -6,7 +6,7 @@
         public int Id { get; set; }
         // STRINGS
         public string Name { get; set; }
-        // PRICING
+        // NUMBERS
         public decimal DailyRateShortTerm { get; set; }
         public decimal DailyRateMidTerm { get; set; }
         public decimal DailyRateLongTerm { get; set; }

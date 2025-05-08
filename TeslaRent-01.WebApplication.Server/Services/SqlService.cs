@@ -16,6 +16,15 @@ namespace TeslaRent_01.WebApplication.Server.Services
             this.context = context;
         }
 
+        /// <summary>
+        /// This query looks for:
+        /// 1. Car models that have no reservations overlapping with the given dates.
+        /// 2. Cars that have end location of the preceding reservation matching the start location
+        /// 3. Cars that have start location of the following reservation matching the end location
+        /// 4. Counts up the price bases on the number of days
+        /// </summary>
+        /// <param name="reservationSearchVM"></param>
+        /// <returns></returns>
         public async Task<List<CarModelVM>> GetAvailableCarModelVMsAsync(ReservationSearchVM reservationSearchVM)
         {
             var query = @"
@@ -85,6 +94,14 @@ namespace TeslaRent_01.WebApplication.Server.Services
             return result;
         }
 
+        /// <summary>
+        /// This query looks for:
+        /// 1. Specific car model that have no reservations overlapping with the given dates.
+        /// 2. Specific car model that have end location of the preceding reservation matching the start location
+        /// 3. Specific car model that have start location of the following reservation matching the end location
+        /// </summary>
+        /// <param name="reservationSearchVM"></param>
+        /// <returns></returns
         public async Task<int?> GetAvailableCarIdAsync(ReservationCreateVM reservationCreateVM)
         {
             var query = @"

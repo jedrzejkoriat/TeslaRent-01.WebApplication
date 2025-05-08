@@ -6,7 +6,6 @@
         public int Id { get; set; }
         // STRINGS
         public string Name { get; set; }
-        // ADDRESS
         public string Country { get; set; }
         public string City { get; set; }
         public string ZipCode { get; set; }

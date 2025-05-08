@@ -1,9 +1,11 @@
 ﻿using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
 using TeslaRent_01.WebApplication.Server.Models;
 
 namespace TeslaRent_01.WebApplication.Server.Configuration
 {
     [JsonSourceGenerationOptions(WriteIndented = true)]
+    [JsonSerializable(typeof(ProblemDetails))]
 
     [JsonSerializable(typeof(CarModelVM))]
     [JsonSerializable(typeof(List<CarModelVM>))]

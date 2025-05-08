@@ -11,6 +11,7 @@ namespace TeslaRent_01.WebApplication.Server.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Foreign key relationships
             modelBuilder.Entity<Car>()
                 .HasOne(c => c.CarModel)
                 .WithMany()
@@ -46,11 +47,13 @@ namespace TeslaRent_01.WebApplication.Server.Data
                 entity.HasNoKey();
             });
 
+            // Seed configuration - pre defined reservations (for logic), cars, car models, locations
             modelBuilder.ApplyConfiguration(new CarModelSeedConfiguration());
             modelBuilder.ApplyConfiguration(new CarSeedConfiguration());
             modelBuilder.ApplyConfiguration(new LocationSeedConfiguration());
             modelBuilder.ApplyConfiguration(new ReservationSeedConfiguration());
 
+            // Set max length to 255 for string propeties
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
                 var properties = entity.GetProperties()
