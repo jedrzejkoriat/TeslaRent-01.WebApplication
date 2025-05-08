@@ -5,9 +5,9 @@ namespace TeslaRent_01.WebApplication.Server.Models
     public class CarModelVM
     {
         [JsonPropertyName("id")]
-        public int Id { get; set; }
+        public int CarModelId { get; set; }
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public string CarModelName { get; set; }
         [JsonPropertyName("price")]
         public decimal Price { get; set; }
     }

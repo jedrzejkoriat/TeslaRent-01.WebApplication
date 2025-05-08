@@ -146,7 +146,7 @@ namespace TeslaRent_01.WebApplication.Server.Services
                 .FromSqlRaw(query, startDateParam, endDateParam, startLocationParam, endLocationParam, carModelIdParam)
                 .ToListAsync();
 
-            return result.FirstOrDefault()?.Id;
+            return result.FirstOrDefault()?.CarId;
         }
     }
 }

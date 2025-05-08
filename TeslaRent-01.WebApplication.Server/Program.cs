@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TeslaRent_01.WebApplication.Server.Services;
 using TeslaRent_01.WebApplication.Server.Configuration;
 using TeslaRent_01.WebApplication.Server.Models;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,13 +50,13 @@ app.MapGet("/api/location", async(ITeslaReservationService teslaReservationServi
     return Results.Ok(locations);
 });
 
-app.MapGet("/api/cars", async(ITeslaReservationService teslaReservationService, ReservationSearchVM reservationSearchVM) =>
+app.MapGet("/api/cars", async([FromBody] ReservationSearchVM reservationSearchVM, ITeslaReservationService teslaReservationService) =>
 {
     List<CarModelVM> cars = await teslaReservationService.GetAvailableCarVMsAsync(reservationSearchVM);
     return Results.Ok(cars);
 });
 
-app.MapPost("/api/reservation", async (ITeslaReservationService teslaReservationService, ReservationCreateVM reservationCreateVM) =>
+app.MapPost("/api/reservation", async ([FromBody] ReservationCreateVM reservationCreateVM, ITeslaReservationService teslaReservationService) =>
 {
     try
     {
