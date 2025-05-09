@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using TeslaRent_01.WebApplication.Server.Builders;
+using PdfSharp.Pdf;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +52,7 @@ builder.Services.AddScoped<ICarModelRepository, CarModelRepository>();
 builder.Services.AddScoped<ITeslaRentService, TeslaRentService>();
 
 builder.Services.AddScoped<IEmailBuilder, EmailBuilder>();
+builder.Services.AddScoped<IPdfBuilder, PdfBuilder>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -149,9 +151,9 @@ app.MapPost("/api/reservation", async (HttpContext context, [FromBody] Reservati
         }
 
         // Call method
-        await teslaReservationService.CreateReservationAsync(reservationCreateVM);
+        MemoryStream reservationDocument = await teslaReservationService.CreateReservationAsync(reservationCreateVM);
         logger.LogInformation("Sent response: {StatusCode} {Path}", context.Response.StatusCode, context.Request.Path);
-        return Results.Ok();
+        return Results.File(reservationDocument, "application/pdf", "Reservation_Confirmation.pdf");
     }
     catch (Exception ex)
     {

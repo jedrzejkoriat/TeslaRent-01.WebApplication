@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using PdfSharp.Pdf;
 using TeslaRent_01.WebApplication.Server.Contracts;
 using TeslaRent_01.WebApplication.Server.Data;
 using TeslaRent_01.WebApplication.Server.Models;
@@ -15,6 +16,7 @@ namespace TeslaRent_01.WebApplication.Server.Services
         private readonly IEmailSender emailSender;
         private readonly ICarModelRepository carModelRepository;
         private readonly IEmailBuilder emailBuilder;
+        private readonly IPdfBuilder pdfBuilder;
 
         public TeslaRentService(
             IReservationRepository reservationRepository,
@@ -23,7 +25,8 @@ namespace TeslaRent_01.WebApplication.Server.Services
             IMapper mapper,
             IEmailSender emailSender,
             ICarModelRepository carModelRepository,
-            IEmailBuilder emailBuilder)
+            IEmailBuilder emailBuilder,
+            IPdfBuilder pdfBuilder)
         {
             this.reservationRepository = reservationRepository;
             this.locationRepository = locationRepository;
@@ -32,6 +35,7 @@ namespace TeslaRent_01.WebApplication.Server.Services
             this.emailSender = emailSender;
             this.carModelRepository = carModelRepository;
             this.emailBuilder = emailBuilder;
+            this.pdfBuilder = pdfBuilder;
         }
 
         // Gets all available locations
@@ -47,7 +51,7 @@ namespace TeslaRent_01.WebApplication.Server.Services
         }
 
         // Creates a reservation for the selected car model
-        public async Task CreateReservationAsync(ReservationCreateVM reservationCreateVM)
+        public async Task<MemoryStream> CreateReservationAsync(ReservationCreateVM reservationCreateVM)
         {
             // Search for available car ID based on the reservation criteria - this is to prevent a situation where two users view the same car model and try to reserve it at the same time
             int? carId = await sqlService.GetAvailableCarIdAsync(reservationCreateVM);
@@ -62,7 +66,7 @@ namespace TeslaRent_01.WebApplication.Server.Services
             reservation.CarId = carId.Value;
             await reservationRepository.AddAsync(reservation);
 
-            // Build ReservationDetailsVM object
+            // Build ReservationDetailsVM object for pdf and email
             LocationDetailsVM startLocationVM = mapper.Map<LocationDetailsVM>(await locationRepository.GetAsync(reservation.StartLocationId));
             LocationDetailsVM endLocationVM = mapper.Map<LocationDetailsVM>(await locationRepository.GetAsync(reservation.EndLocationId));
 
@@ -73,11 +77,13 @@ namespace TeslaRent_01.WebApplication.Server.Services
                 EndLocationVM = endLocationVM
             };
 
-            // Build reservation email
+            // Build and send reservation email
             (string emailSubject, string emailBody) = emailBuilder.BuildReservationEmail(reservationDetailsVM);
-
-            // Send email
             await emailSender.SendEmailAsync(reservation.Email, emailSubject, emailBody);
+
+            // Build and return pdf
+            MemoryStream reservationDocument = pdfBuilder.BuildReservationPdf(reservationDetailsVM);
+            return reservationDocument;
         }
 
     }

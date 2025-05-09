@@ -1,4 +1,5 @@
-﻿using TeslaRent_01.WebApplication.Server.Models;
+﻿using PdfSharp.Pdf;
+using TeslaRent_01.WebApplication.Server.Models;
 
 namespace TeslaRent_01.WebApplication.Server.Contracts
 {
@@ -6,6 +7,6 @@ namespace TeslaRent_01.WebApplication.Server.Contracts
     {
         Task<List<LocationNameVM>> GetAvailableLocationVMsAsync();
         Task<List<CarModelVM>> GetAvailableCarVMsAsync(ReservationSearchVM reservationSearchVM);
-        Task CreateReservationAsync(ReservationCreateVM reservationCreateVM);
+        Task<MemoryStream> CreateReservationAsync(ReservationCreateVM reservationCreateVM);
     }
 }
