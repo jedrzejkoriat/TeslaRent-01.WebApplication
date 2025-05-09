@@ -57,24 +57,26 @@ namespace TeslaRent_01.WebApplication.Server.Services
                 throw new InvalidOperationException("No available car found for the specified criteria.");
             }
 
+            // Create reservation object and add carId value to it
             Reservation reservation = mapper.Map<Reservation>(reservationCreateVM);
             reservation.CarId = carId.Value;
             await reservationRepository.AddAsync(reservation);
 
+            // Build ReservationDetailsVM object
             LocationDetailsVM startLocationVM = mapper.Map<LocationDetailsVM>(await locationRepository.GetAsync(reservation.StartLocationId));
             LocationDetailsVM endLocationVM = mapper.Map<LocationDetailsVM>(await locationRepository.GetAsync(reservation.EndLocationId));
-            string carModelName = (await carModelRepository.GetAsync(carId.Value)).Name;
 
             ReservationDetailsVM reservationDetailsVM = new ReservationDetailsVM
             {
                 ReservationCreateVM = reservationCreateVM,
                 StartLocationVM = startLocationVM,
-                EndLocationVM = endLocationVM,
-                CarModelName = carModelName
+                EndLocationVM = endLocationVM
             };
 
+            // Build reservation email
             (string emailSubject, string emailBody) = emailBuilder.BuildReservationEmail(reservationDetailsVM);
 
+            // Send email
             await emailSender.SendEmailAsync(reservation.Email, emailSubject, emailBody);
         }
 

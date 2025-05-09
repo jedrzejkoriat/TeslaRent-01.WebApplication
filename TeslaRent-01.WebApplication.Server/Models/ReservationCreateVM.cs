@@ -9,6 +9,8 @@ namespace TeslaRent_01.WebApplication.Server.Models
         [JsonPropertyName("carModelId")]
         public int CarModelId { get; set; }
         // STRINGS
+        [JsonPropertyName("carModelName")]
+        public string CarModelName { get; set; }
         [JsonPropertyName("firstName")]
         public string FirstName { get; set; }
         [JsonPropertyName("lastName")]

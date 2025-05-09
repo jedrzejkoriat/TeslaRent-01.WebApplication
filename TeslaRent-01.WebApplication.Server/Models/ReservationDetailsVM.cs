@@ -4,7 +4,6 @@
     {
         public LocationDetailsVM StartLocationVM { get; set; }
         public LocationDetailsVM EndLocationVM { get; set; }
-        public string CarModelName { get; set; }
         public ReservationCreateVM ReservationCreateVM { get; set; }
     }
 }
