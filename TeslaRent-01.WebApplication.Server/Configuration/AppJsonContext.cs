@@ -10,8 +10,8 @@ namespace TeslaRent_01.WebApplication.Server.Configuration
     [JsonSerializable(typeof(CarModelVM))]
     [JsonSerializable(typeof(List<CarModelVM>))]
 
-    [JsonSerializable(typeof(LocationVM))]
-    [JsonSerializable(typeof(List<LocationVM>))]
+    [JsonSerializable(typeof(LocationNameVM))]
+    [JsonSerializable(typeof(List<LocationNameVM>))]
 
     [JsonSerializable(typeof(ReservationCreateVM))]
 

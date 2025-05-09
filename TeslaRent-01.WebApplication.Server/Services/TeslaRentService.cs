@@ -13,25 +13,31 @@ namespace TeslaRent_01.WebApplication.Server.Services
         private readonly ISqlService sqlService;
         private readonly IMapper mapper;
         private readonly IEmailSender emailSender;
+        private readonly ICarModelRepository carModelRepository;
+        private readonly IEmailBuilder emailBuilder;
 
         public TeslaRentService(
             IReservationRepository reservationRepository,
             ILocationRepository locationRepository,
             ISqlService sqlService,
             IMapper mapper,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ICarModelRepository carModelRepository,
+            IEmailBuilder emailBuilder)
         {
             this.reservationRepository = reservationRepository;
             this.locationRepository = locationRepository;
             this.sqlService = sqlService;
             this.mapper = mapper;
             this.emailSender = emailSender;
+            this.carModelRepository = carModelRepository;
+            this.emailBuilder = emailBuilder;
         }
 
         // Gets all available locations
-        public async Task<List<LocationVM>> GetAvailableLocationVMsAsync()
+        public async Task<List<LocationNameVM>> GetAvailableLocationVMsAsync()
         {
-            return mapper.Map<List<LocationVM>>(await locationRepository.GetAllAsync());
+            return mapper.Map<List<LocationNameVM>>(await locationRepository.GetAllAsync());
         }
 
         // Gets all available car models for the given dates and locations
@@ -45,28 +51,31 @@ namespace TeslaRent_01.WebApplication.Server.Services
         {
             // Search for available car ID based on the reservation criteria - this is to prevent a situation where two users view the same car model and try to reserve it at the same time
             int? carId = await sqlService.GetAvailableCarIdAsync(reservationCreateVM);
+
             if (carId == null)
             {
                 throw new InvalidOperationException("No available car found for the specified criteria.");
             }
-            else
+
+            Reservation reservation = mapper.Map<Reservation>(reservationCreateVM);
+            reservation.CarId = carId.Value;
+            await reservationRepository.AddAsync(reservation);
+
+            LocationDetailsVM startLocationVM = mapper.Map<LocationDetailsVM>(await locationRepository.GetAsync(reservation.StartLocationId));
+            LocationDetailsVM endLocationVM = mapper.Map<LocationDetailsVM>(await locationRepository.GetAsync(reservation.EndLocationId));
+            string carModelName = (await carModelRepository.GetAsync(carId.Value)).Name;
+
+            ReservationDetailsVM reservationDetailsVM = new ReservationDetailsVM
             {
-                Reservation reservation = mapper.Map<Reservation>(reservationCreateVM);
-                reservation.CarId = carId.Value;
+                ReservationCreateVM = reservationCreateVM,
+                StartLocationVM = startLocationVM,
+                EndLocationVM = endLocationVM,
+                CarModelName = carModelName
+            };
 
-                string emailSubject = "TeslaRent reservation confirmation";
-                string emailBody = $"Your reservation for Tesla Model";
+            (string emailSubject, string emailBody) = emailBuilder.BuildReservationEmail(reservationDetailsVM);
 
-                try
-                {
-                    await emailSender.SendEmailAsync(reservation.Email, emailSubject, emailBody);
-                    await reservationRepository.AddAsync(reservation);
-                }
-                catch(Exception ex)
-                {
-                    throw new Exception("Error while creating reservation:" + ex.Message);
-                }
-            }
+            await emailSender.SendEmailAsync(reservation.Email, emailSubject, emailBody);
         }
 
     }

@@ -10,6 +10,7 @@ using TeslaRent_01.WebApplication.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using TeslaRent_01.WebApplication.Server.Builders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,8 +46,11 @@ builder.Services.AddTransient<IEmailSender, EmailSenderService>(provider => new 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
+builder.Services.AddScoped<ICarModelRepository, CarModelRepository>();
 
 builder.Services.AddScoped<ITeslaRentService, TeslaRentService>();
+
+builder.Services.AddScoped<IEmailBuilder, EmailBuilder>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -72,7 +76,7 @@ app.MapGet("/api/location", async (HttpContext context, ITeslaRentService teslaR
     try
     {
         // Call method
-        List<LocationVM> locations = await teslaReservationService.GetAvailableLocationVMsAsync();
+        List<LocationNameVM> locations = await teslaReservationService.GetAvailableLocationVMsAsync();
         logger.LogInformation("Sent response: {StatusCode} {Path}", context.Response.StatusCode, context.Request.Path);
         return Results.Ok(locations);
     }
