@@ -9,6 +9,7 @@ using TeslaRent_01.WebApplication.Server.Configuration;
 using TeslaRent_01.WebApplication.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,14 +23,26 @@ if (string.IsNullOrEmpty(connectionString))
     throw new Exception("connectionString is not set.");
 }
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+var sendGridApiKey = builder.Configuration.GetSection("SendGrid")["ApiKey"];
+if (string.IsNullOrEmpty(sendGridApiKey))
+{
+    throw new Exception("SendGrid API key is not set.");
+}
 
-builder.Services.AddAutoMapper(typeof(MapperConfig));
+var sendGridEmail = builder.Configuration.GetSection("SendGrid")["Email"];
+if (string.IsNullOrEmpty(sendGridEmail))
+{
+    throw new Exception("SendGrid email is not set.");
+}
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<ISqlService, SqlService>();
 
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddAutoMapper(typeof(MapperConfig));
+builder.Services.AddTransient<IEmailSender, EmailSenderService>(provider => new EmailSenderService(sendGridApiKey, sendGridEmail));
 
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 

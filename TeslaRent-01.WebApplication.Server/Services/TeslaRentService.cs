@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using TeslaRent_01.WebApplication.Server.Contracts;
 using TeslaRent_01.WebApplication.Server.Data;
 using TeslaRent_01.WebApplication.Server.Models;
@@ -11,17 +12,20 @@ namespace TeslaRent_01.WebApplication.Server.Services
         private readonly ILocationRepository locationRepository;
         private readonly ISqlService sqlService;
         private readonly IMapper mapper;
+        private readonly IEmailSender emailSender;
 
         public TeslaRentService(
             IReservationRepository reservationRepository,
             ILocationRepository locationRepository,
             ISqlService sqlService,
-            IMapper mapper)
+            IMapper mapper,
+            IEmailSender emailSender)
         {
             this.reservationRepository = reservationRepository;
             this.locationRepository = locationRepository;
             this.sqlService = sqlService;
             this.mapper = mapper;
+            this.emailSender = emailSender;
         }
 
         // Gets all available locations
@@ -49,7 +53,19 @@ namespace TeslaRent_01.WebApplication.Server.Services
             {
                 Reservation reservation = mapper.Map<Reservation>(reservationCreateVM);
                 reservation.CarId = carId.Value;
-                await reservationRepository.AddAsync(reservation);
+
+                string emailSubject = "TeslaRent reservation confirmation";
+                string emailBody = $"Your reservation for Tesla Model";
+
+                try
+                {
+                    await emailSender.SendEmailAsync(reservation.Email, emailSubject, emailBody);
+                    await reservationRepository.AddAsync(reservation);
+                }
+                catch(Exception ex)
+                {
+                    throw new Exception("Error while creating reservation:" + ex.Message);
+                }
             }
         }
 
