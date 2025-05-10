@@ -10,9 +10,9 @@ namespace TeslaRent_01.WebApplication.Server.Services
 {
     public class TeslaRentService : ITeslaRentService
     {
-        private readonly ReservationRepository reservationRepository;
-        private readonly LocationRepository locationRepository;
-        private readonly CarRepository carRepository;
+        private readonly IReservationRepository reservationRepository;
+        private readonly ILocationRepository locationRepository;
+        private readonly ICarRepository carRepository;
         private readonly ISqlService sqlService;
         private readonly IMapper mapper;
         private readonly IEmailSender emailSender;
@@ -20,9 +20,9 @@ namespace TeslaRent_01.WebApplication.Server.Services
         private readonly IPdfBuilder pdfBuilder;
 
         public TeslaRentService(
-            ReservationRepository reservationRepository,
-            LocationRepository locationRepository,
-            CarRepository carRepository,
+            IReservationRepository reservationRepository,
+            ILocationRepository locationRepository,
+            ICarRepository carRepository,
             ISqlService sqlService,
             IMapper mapper,
             IEmailSender emailSender,
@@ -67,6 +67,7 @@ namespace TeslaRent_01.WebApplication.Server.Services
             reservation.CarId = carId.Value;
             await reservationRepository.AddAsync(reservation);
 
+            // Update the car's days in service
             int reservationLength = (int)(reservation.EndDate - reservation.StartDate).TotalDays;
             await carRepository.AddDaysToCarAsync(carId.Value, reservationLength);
 

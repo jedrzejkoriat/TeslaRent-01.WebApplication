@@ -3,7 +3,7 @@ using TeslaRent_01.WebApplication.Server.Data;
 
 namespace TeslaRent_01.WebApplication.Server.Repositories
 {
-    public sealed class ReservationRepository : GenericRepository<Reservation>
+    public sealed class ReservationRepository : GenericRepository<Reservation>, IReservationRepository
     {
         public ReservationRepository(AppDbContext context) : base(context)
         {
