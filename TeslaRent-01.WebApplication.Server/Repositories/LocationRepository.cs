@@ -3,7 +3,7 @@ using TeslaRent_01.WebApplication.Server.Data;
 
 namespace TeslaRent_01.WebApplication.Server.Repositories
 {
-    public class LocationRepository : GenericRepository<Location>, ILocationRepository
+    public sealed class LocationRepository : GenericRepository<Location>
     {
         public LocationRepository(AppDbContext context) : base(context)
         {

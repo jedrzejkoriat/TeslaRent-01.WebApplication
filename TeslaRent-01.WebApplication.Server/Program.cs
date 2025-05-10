@@ -45,9 +45,8 @@ builder.Services.AddAutoMapper(typeof(MapperConfig));
 builder.Services.AddTransient<IEmailSender, EmailSenderService>(provider => new EmailSenderService(sendGridApiKey, sendGridEmail));
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
-builder.Services.AddScoped<ILocationRepository, LocationRepository>();
-builder.Services.AddScoped<ICarModelRepository, CarModelRepository>();
+builder.Services.AddScoped<ReservationRepository>();
+builder.Services.AddScoped<LocationRepository>();
 
 builder.Services.AddScoped<ITeslaRentService, TeslaRentService>();
 

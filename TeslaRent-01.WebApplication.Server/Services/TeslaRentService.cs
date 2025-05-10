@@ -4,27 +4,26 @@ using PdfSharp.Pdf;
 using TeslaRent_01.WebApplication.Server.Contracts;
 using TeslaRent_01.WebApplication.Server.Data;
 using TeslaRent_01.WebApplication.Server.Models;
+using TeslaRent_01.WebApplication.Server.Repositories;
 
 namespace TeslaRent_01.WebApplication.Server.Services
 {
     public class TeslaRentService : ITeslaRentService
     {
-        private readonly IReservationRepository reservationRepository;
-        private readonly ILocationRepository locationRepository;
+        private readonly ReservationRepository reservationRepository;
+        private readonly LocationRepository locationRepository;
         private readonly ISqlService sqlService;
         private readonly IMapper mapper;
         private readonly IEmailSender emailSender;
-        private readonly ICarModelRepository carModelRepository;
         private readonly IEmailBuilder emailBuilder;
         private readonly IPdfBuilder pdfBuilder;
 
         public TeslaRentService(
-            IReservationRepository reservationRepository,
-            ILocationRepository locationRepository,
+            ReservationRepository reservationRepository,
+            LocationRepository locationRepository,
             ISqlService sqlService,
             IMapper mapper,
             IEmailSender emailSender,
-            ICarModelRepository carModelRepository,
             IEmailBuilder emailBuilder,
             IPdfBuilder pdfBuilder)
         {
@@ -33,7 +32,6 @@ namespace TeslaRent_01.WebApplication.Server.Services
             this.sqlService = sqlService;
             this.mapper = mapper;
             this.emailSender = emailSender;
-            this.carModelRepository = carModelRepository;
             this.emailBuilder = emailBuilder;
             this.pdfBuilder = pdfBuilder;
         }
