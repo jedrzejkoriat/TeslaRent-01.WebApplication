@@ -6,5 +6,6 @@
         Task<T> GetAsync(int id);
         Task<List<T>> GetAllAsync();
         Task<bool> ExistsAsync(int id);
+        Task UpdateAsync(T entity);
     }
 }

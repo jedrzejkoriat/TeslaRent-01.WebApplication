@@ -12,6 +12,7 @@ namespace TeslaRent_01.WebApplication.Server.Services
     {
         private readonly ReservationRepository reservationRepository;
         private readonly LocationRepository locationRepository;
+        private readonly CarRepository carRepository;
         private readonly ISqlService sqlService;
         private readonly IMapper mapper;
         private readonly IEmailSender emailSender;
@@ -21,6 +22,7 @@ namespace TeslaRent_01.WebApplication.Server.Services
         public TeslaRentService(
             ReservationRepository reservationRepository,
             LocationRepository locationRepository,
+            CarRepository carRepository,
             ISqlService sqlService,
             IMapper mapper,
             IEmailSender emailSender,
@@ -29,6 +31,7 @@ namespace TeslaRent_01.WebApplication.Server.Services
         {
             this.reservationRepository = reservationRepository;
             this.locationRepository = locationRepository;
+            this.carRepository = carRepository;
             this.sqlService = sqlService;
             this.mapper = mapper;
             this.emailSender = emailSender;
@@ -63,6 +66,9 @@ namespace TeslaRent_01.WebApplication.Server.Services
             Reservation reservation = mapper.Map<Reservation>(reservationCreateVM);
             reservation.CarId = carId.Value;
             await reservationRepository.AddAsync(reservation);
+
+            int reservationLength = (int)(reservation.EndDate - reservation.StartDate).TotalDays;
+            await carRepository.AddDaysToCarAsync(carId.Value, reservationLength);
 
             // Build ReservationDetailsVM object for pdf and email
             LocationDetailsVM startLocationVM = mapper.Map<LocationDetailsVM>(await locationRepository.GetAsync(reservation.StartLocationId));

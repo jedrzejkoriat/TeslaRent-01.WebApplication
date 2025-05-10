@@ -47,6 +47,7 @@ builder.Services.AddTransient<IEmailSender, EmailSenderService>(provider => new 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<ReservationRepository>();
 builder.Services.AddScoped<LocationRepository>();
+builder.Services.AddScoped<CarRepository>();
 
 builder.Services.AddScoped<ITeslaRentService, TeslaRentService>();
 

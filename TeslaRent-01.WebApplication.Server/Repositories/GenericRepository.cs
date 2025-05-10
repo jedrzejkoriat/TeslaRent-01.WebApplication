@@ -33,5 +33,11 @@ namespace TeslaRent_01.WebApplication.Server.Repositories
         {
             return await context.Set<T>().AnyAsync(e => EF.Property<int>(e, "Id") == id);
         }
+
+        public async Task UpdateAsync(T entity)
+        {
+            context.Update(entity);
+            await context.SaveChangesAsync();
+        }
     }
 }
