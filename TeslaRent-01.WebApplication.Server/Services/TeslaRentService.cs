@@ -5,6 +5,7 @@ using TeslaRent_01.WebApplication.Server.Contracts;
 using TeslaRent_01.WebApplication.Server.Data;
 using TeslaRent_01.WebApplication.Server.Models;
 using TeslaRent_01.WebApplication.Server.Repositories;
+using TeslaRent_01.WebApplication.Server.Validation;
 
 namespace TeslaRent_01.WebApplication.Server.Services
 {
@@ -42,18 +43,35 @@ namespace TeslaRent_01.WebApplication.Server.Services
         // Gets all available locations
         public async Task<List<LocationNameVM>> GetAvailableLocationVMsAsync()
         {
+            // Return list of available locations
             return mapper.Map<List<LocationNameVM>>(await locationRepository.GetAllAsync());
         }
 
         // Gets all available car models for the given dates and locations
-        public async Task<List<CarModelVM>> GetAvailableCarVMsAsync(ReservationSearchVM reservationSearchVM)
+        public async Task<List<CarModelVM>> GetAvailableCarVMsAsync(int startLocationId, int endLocationId, DateTime startDate, DateTime endDate)
         {
+            // Create view model
+            ReservationSearchVM reservationSearchVM = new ReservationSearchVM
+            {
+                StartLocationId = startLocationId,
+                EndLocationId = endLocationId,
+                StartDate = startDate,
+                EndDate = endDate
+            };
+
+            // Viewmodel validation
+            ViewModelValidator.Validate(reservationSearchVM);
+
+            // Return list of available cars
             return await sqlService.GetAvailableCarModelVMsAsync(reservationSearchVM);
         }
 
         // Creates a reservation for the selected car model
         public async Task<MemoryStream> CreateReservationAsync(ReservationCreateVM reservationCreateVM)
         {
+            // Viewmodel validation
+            ViewModelValidator.Validate(reservationCreateVM);
+
             // Search for available car ID based on the reservation criteria - this is to prevent a situation where two users view the same car model and try to reserve it at the same time
             int? carId = await sqlService.GetAvailableCarIdAsync(reservationCreateVM);
 
@@ -71,10 +89,11 @@ namespace TeslaRent_01.WebApplication.Server.Services
             int reservationLength = (int)(reservation.EndDate - reservation.StartDate).TotalDays;
             await carRepository.AddDaysToCarAsync(carId.Value, reservationLength);
 
-            // Build ReservationDetailsVM object for pdf and email
+            // Get start and end location details
             LocationDetailsVM startLocationVM = mapper.Map<LocationDetailsVM>(await locationRepository.GetAsync(reservation.StartLocationId));
             LocationDetailsVM endLocationVM = mapper.Map<LocationDetailsVM>(await locationRepository.GetAsync(reservation.EndLocationId));
 
+            // Build ReservationDetailsVM object for pdf and email
             ReservationDetailsVM reservationDetailsVM = new ReservationDetailsVM
             {
                 ReservationCreateVM = reservationCreateVM,

@@ -16,10 +16,7 @@ using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-builder.Logging.SetMinimumLevel(LogLevel.Information);
-
+// Get essential connection strings
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 if (string.IsNullOrEmpty(connectionString))
 {
@@ -38,21 +35,32 @@ if (string.IsNullOrEmpty(sendGridEmail))
     throw new Exception("SendGrid email is not set.");
 }
 
+// Add logger
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.SetMinimumLevel(LogLevel.Information);
+
+// Add db context
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
+// Add automapper
+builder.Services.AddAutoMapper(typeof(MapperConfig));
+
+// Add services
+builder.Services.AddTransient<IEmailSender, EmailSenderService>(provider => new EmailSenderService(sendGridApiKey, sendGridEmail));
 builder.Services.AddScoped<ISqlService, SqlService>();
 
-builder.Services.AddAutoMapper(typeof(MapperConfig));
-builder.Services.AddTransient<IEmailSender, EmailSenderService>(provider => new EmailSenderService(sendGridApiKey, sendGridEmail));
+// Add builders
+builder.Services.AddScoped<IPdfBuilder, PdfBuilder>();
+builder.Services.AddScoped<IEmailBuilder, EmailBuilder>();
 
+// Add main app service
+builder.Services.AddScoped<ITeslaRentService, TeslaRentService>();
+
+// Add repositories
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<ICarRepository, CarRepository>();
-
-builder.Services.AddScoped<ITeslaRentService, TeslaRentService>();
-
-builder.Services.AddScoped<IEmailBuilder, EmailBuilder>();
-builder.Services.AddScoped<IPdfBuilder, PdfBuilder>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -62,7 +70,6 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -77,7 +84,6 @@ app.MapGet("/api/location", async (HttpContext context, ITeslaRentService teslaR
     logger.LogInformation("Received request: {Method} {Path}", context.Request.Method, context.Request.Path);
     try
     {
-        // Call method
         List<LocationNameVM> locations = await teslaReservationService.GetAvailableLocationVMsAsync();
         logger.LogInformation("Sent response: {StatusCode} {Path}", context.Response.StatusCode, context.Request.Path);
         return Results.Ok(locations);
@@ -91,40 +97,19 @@ app.MapGet("/api/location", async (HttpContext context, ITeslaRentService teslaR
 
 // GET /api/cars/start_location/{startLocationId}/start_date/{startDate}/end_location/{endLocationId}/end_date/{endDate}
 app.MapGet("/api/cars/start_location/{startLocationId}/start_date/{startDate}/end_location/{endLocationId}/end_date/{endDate}",
-    async (HttpContext context, ITeslaRentService teslaReservationService, string startLocationId, string startDate, string endLocationId, string endDate, ILogger<Program> logger) =>
+    async (HttpContext context, ITeslaRentService teslaReservationService, int startLocationId, DateTime startDate, int endLocationId, DateTime endDate, ILogger<Program> logger) =>
     {
         logger.LogInformation("Received request: {Method} {Path}", context.Request.Method, context.Request.Path);
         try
         {
-            // Create view model
-            ReservationSearchVM reservationSearchVM = new ReservationSearchVM
-            {
-                StartLocationId = Int32.Parse(startLocationId),
-                EndLocationId = Int32.Parse(endLocationId),
-                StartDate = DateTime.Parse(startDate),
-                EndDate = DateTime.Parse(endDate)
-            };
-
-            // Check if the viewmodel is valid
-            var validationResults = reservationSearchVM.Validate(new ValidationContext(reservationSearchVM));
-            var validationErrors = validationResults.ToList();
-
-            if (validationErrors.Any())
-            {
-                var errorMessages = validationErrors.Select(v => v.ErrorMessage);
-                return Results.BadRequest(new { Errors = errorMessages });
-            }
-
-            // Call method
-            List<CarModelVM> cars = await teslaReservationService.GetAvailableCarVMsAsync(reservationSearchVM);
+            List<CarModelVM> cars = await teslaReservationService.GetAvailableCarVMsAsync(startLocationId, endLocationId, startDate, endDate);
             logger.LogInformation("Sent response: {StatusCode} {Path}", context.Response.StatusCode, context.Request.Path);
             return Results.Ok(cars);
         }
-        catch (FormatException ex)
+        catch (ValidationException ex)
         {
             logger.LogError(ex, "Error processing request: {Method} {Path}", context.Request.Method, context.Request.Path);
-            return Results.BadRequest(new { Error = "Invalid format of input parameters.", Details = ex.Message });
-
+            return Results.BadRequest(new { Error = "Validation error.", Details = ex.Message });
         }
         catch (Exception ex)
         {
@@ -140,20 +125,14 @@ app.MapPost("/api/reservation", async (HttpContext context, [FromBody] Reservati
     logger.LogInformation("Received request: {Method} {Path}", context.Request.Method, context.Request.Path);
     try
     {
-        // Check if the viewmodel is valid
-        var validationResults = reservationCreateVM.Validate(new ValidationContext(reservationCreateVM));
-        var validationErrors = validationResults.ToList();
-
-        if (validationErrors.Any())
-        {
-            var errorMessages = validationErrors.Select(v => v.ErrorMessage);
-            return Results.BadRequest(new { Errors = errorMessages });
-        }
-
-        // Call method
         MemoryStream reservationDocument = await teslaReservationService.CreateReservationAsync(reservationCreateVM);
         logger.LogInformation("Sent response: {StatusCode} {Path}", context.Response.StatusCode, context.Request.Path);
         return Results.File(reservationDocument, "application/pdf", "Reservation_Confirmation.pdf");
+    }
+    catch (ValidationException ex)
+    {
+        logger.LogError(ex, "Error processing request: {Method} {Path}", context.Request.Method, context.Request.Path);
+        return Results.BadRequest(new { Error = "Validation error.", Details = ex.Message });
     }
     catch (Exception ex)
     {
