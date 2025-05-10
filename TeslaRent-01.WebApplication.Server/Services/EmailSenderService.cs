@@ -4,7 +4,7 @@ using SendGrid.Helpers.Mail;
 
 namespace TeslaRent_01.WebApplication.Server.Services
 {
-    public class EmailSenderService : IEmailSender
+    internal sealed class EmailSenderService : IEmailSender
     {
         private readonly string apiKey;
         private readonly string sendFromEmailAddress;

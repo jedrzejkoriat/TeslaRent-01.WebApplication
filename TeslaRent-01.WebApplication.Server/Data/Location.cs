@@ -1,15 +1,15 @@
 ﻿namespace TeslaRent_01.WebApplication.Server.Data
 {
-    public class Location
+    public sealed record class Location
     {
         // IDs
-        public int Id { get; set; }
+        public int Id { get; init; }
         // STRINGS
-        public string Name { get; set; }
-        public string Country { get; set; }
-        public string City { get; set; }
-        public string ZipCode { get; set; }
-        public string Street { get; set; }
-        public string StreetNumber { get; set; }
+        public string Name { get; init; }
+        public string Country { get; init; }
+        public string City { get; init; }
+        public string ZipCode { get; init; }
+        public string Street { get; init; }
+        public string StreetNumber { get; init; }
     }
 }

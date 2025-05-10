@@ -4,7 +4,7 @@ using TeslaRent_01.WebApplication.Server.Models;
 
 namespace TeslaRent_01.WebApplication.Server.Data
 {
-    public class AppDbContext : DbContext
+    internal sealed class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {

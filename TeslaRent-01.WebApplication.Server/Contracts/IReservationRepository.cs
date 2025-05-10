@@ -2,7 +2,7 @@
 
 namespace TeslaRent_01.WebApplication.Server.Contracts
 {
-    public interface IReservationRepository : IGenericRepository<Reservation>
+    internal interface IReservationRepository : IGenericRepository<Reservation>
     {
     }
 }

@@ -4,7 +4,7 @@ using TeslaRent_01.WebApplication.Server.Data;
 
 namespace TeslaRent_01.WebApplication.Server.Configuration.Entities
 {
-    public class ReservationSeedConfiguration : IEntityTypeConfiguration<Reservation>
+    internal sealed class ReservationSeedConfiguration : IEntityTypeConfiguration<Reservation>
     {
         public void Configure(EntityTypeBuilder<Reservation> builder)
         {

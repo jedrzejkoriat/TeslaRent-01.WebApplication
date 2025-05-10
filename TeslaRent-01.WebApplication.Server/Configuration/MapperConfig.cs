@@ -4,7 +4,7 @@ using TeslaRent_01.WebApplication.Server.Models;
 
 namespace TeslaRent_01.WebApplication.Server.Configuration
 {
-    public class MapperConfig : Profile
+    internal sealed class MapperConfig : Profile
     {
         public MapperConfig()
         {

@@ -4,7 +4,7 @@ using TeslaRent_01.WebApplication.Server.Data;
 
 namespace TeslaRent_01.WebApplication.Server.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    internal abstract class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly AppDbContext context;
 

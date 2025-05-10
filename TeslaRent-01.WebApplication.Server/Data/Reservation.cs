@@ -1,24 +1,24 @@
 ﻿namespace TeslaRent_01.WebApplication.Server.Data
 {
-    public class Reservation
+    public sealed record class Reservation
     {
         // ID
-        public int? Id { get; set; }
+        public int? Id { get; init; }
         // RELATIONS
         public int CarId { get; set; }
-        public Car Car { get; set; }
-        public int StartLocationId { get; set; }
-        public Location StartLocation { get; set; }
-        public int EndLocationId { get; set; }
-        public Location EndLocation { get; set; }
+        public Car Car { get; init; }
+        public int StartLocationId { get; init; }
+        public Location StartLocation { get; init; }
+        public int EndLocationId { get; init; }
+        public Location EndLocation { get; init; }
         // DATES
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime StartDate { get; init; }
+        public DateTime EndDate { get; init; }
         // STRINGS
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
+        public string FirstName { get; init; }
+        public string LastName { get; init; }
+        public string Email { get; init; }
         // NUMBERS
-        public decimal Price { get; set; }
+        public decimal Price { get; init; }
     }
 }

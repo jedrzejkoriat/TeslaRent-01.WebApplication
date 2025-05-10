@@ -2,7 +2,7 @@
 
 namespace TeslaRent_01.WebApplication.Server.Contracts
 {
-    public interface ICarRepository : IGenericRepository<Car>
+    internal interface ICarRepository : IGenericRepository<Car>
     {
         Task AddDaysToCarAsync(int carId, int daysInService);
     }

@@ -1,6 +1,6 @@
 ﻿namespace TeslaRent_01.WebApplication.Server.Models
 {
-    public record LocationDetailsVM
+    public sealed record LocationDetailsVM
     {
         public string Name { get; set; }
         public string Country { get; set; }

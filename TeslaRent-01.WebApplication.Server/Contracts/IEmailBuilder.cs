@@ -2,7 +2,7 @@
 
 namespace TeslaRent_01.WebApplication.Server.Contracts
 {
-    public interface IEmailBuilder
+    internal interface IEmailBuilder
     {
         (string subject, string body) BuildReservationEmail(ReservationDetailsVM reservationDetailsVM);
     }

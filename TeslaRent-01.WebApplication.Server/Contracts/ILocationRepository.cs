@@ -2,7 +2,7 @@
 
 namespace TeslaRent_01.WebApplication.Server.Contracts
 {
-    public interface ILocationRepository : IGenericRepository<Location>
+    internal interface ILocationRepository : IGenericRepository<Location>
     {
     }
 }

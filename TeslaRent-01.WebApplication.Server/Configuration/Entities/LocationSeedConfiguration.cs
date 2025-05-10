@@ -5,7 +5,7 @@ using TeslaRent_01.WebApplication.Server.Data;
 
 namespace TeslaRent_01.WebApplication.Server.Configuration.Entities
 {
-    public class LocationSeedConfiguration : IEntityTypeConfiguration<Location>
+    internal sealed class LocationSeedConfiguration : IEntityTypeConfiguration<Location>
     {
         public void Configure(EntityTypeBuilder<Location> builder)
         {

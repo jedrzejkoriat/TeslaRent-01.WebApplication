@@ -8,7 +8,7 @@ using TeslaRent_01.WebApplication.Server.Repositories;
 
 namespace TeslaRent_01.WebApplication.Server.Services
 {
-    public class TeslaRentService : ITeslaRentService
+    internal sealed class TeslaRentService : ITeslaRentService
     {
         private readonly IReservationRepository reservationRepository;
         private readonly ILocationRepository locationRepository;

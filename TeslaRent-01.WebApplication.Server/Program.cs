@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using TeslaRent_01.WebApplication.Server.Builders;
 using PdfSharp.Pdf;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,7 +45,6 @@ builder.Services.AddScoped<ISqlService, SqlService>();
 builder.Services.AddAutoMapper(typeof(MapperConfig));
 builder.Services.AddTransient<IEmailSender, EmailSenderService>(provider => new EmailSenderService(sendGridApiKey, sendGridEmail));
 
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<ICarRepository, CarRepository>();

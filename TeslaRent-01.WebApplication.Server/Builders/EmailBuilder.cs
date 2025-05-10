@@ -3,7 +3,7 @@ using TeslaRent_01.WebApplication.Server.Models;
 
 namespace TeslaRent_01.WebApplication.Server.Builders
 {
-    public class EmailBuilder : IEmailBuilder
+    internal sealed class EmailBuilder : IEmailBuilder
     {
         public (string subject, string body) BuildReservationEmail(ReservationDetailsVM reservationDetailsVM)
         {

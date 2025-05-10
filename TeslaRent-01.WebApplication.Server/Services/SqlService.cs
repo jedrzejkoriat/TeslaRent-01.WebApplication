@@ -7,7 +7,7 @@ using TeslaRent_01.WebApplication.Server.Models;
 
 namespace TeslaRent_01.WebApplication.Server.Services
 {
-    public class SqlService : ISqlService
+    internal sealed class SqlService : ISqlService
     {
         private readonly AppDbContext context;
 

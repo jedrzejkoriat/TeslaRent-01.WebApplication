@@ -1,12 +1,12 @@
 ﻿namespace TeslaRent_01.WebApplication.Server.Data
 {
-    public class Car
+    public sealed record class Car
     {
         // ID
-        public int Id { get; set; }
+        public int Id { get; init; }
         public int DaysInService { get; set; }
         // RELATIONS
-        public int CarModelId { get; set; }
-        public CarModel CarModel { get; set; }
+        public int CarModelId { get; init; }
+        public CarModel CarModel { get; init; }
     }
 }

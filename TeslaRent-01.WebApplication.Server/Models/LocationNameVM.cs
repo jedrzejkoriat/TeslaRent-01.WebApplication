@@ -2,7 +2,7 @@
 
 namespace TeslaRent_01.WebApplication.Server.Models
 {
-    public record LocationNameVM
+    public sealed record LocationNameVM
     {
         // IDs
         [JsonPropertyName("id")]

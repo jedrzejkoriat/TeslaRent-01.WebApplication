@@ -6,7 +6,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace TeslaRent_01.WebApplication.Server.Builders
 {
-    public class PdfBuilder : IPdfBuilder
+    internal sealed class PdfBuilder : IPdfBuilder
     {
         public MemoryStream BuildReservationPdf(ReservationDetailsVM reservationDetailsVM)
         { 

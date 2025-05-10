@@ -4,7 +4,7 @@ using TeslaRent_01.WebApplication.Server.Data;
 
 namespace TeslaRent_01.WebApplication.Server.Configuration.Entities
 {
-    public class CarSeedConfiguration : IEntityTypeConfiguration<Car>
+    internal sealed class CarSeedConfiguration : IEntityTypeConfiguration<Car>
     {
         public void Configure(EntityTypeBuilder<Car> builder)
         {
