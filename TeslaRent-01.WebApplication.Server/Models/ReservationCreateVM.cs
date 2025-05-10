@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace TeslaRent_01.WebApplication.Server.Models
 {
-    public class ReservationCreateVM : ReservationSearchVM
+    public record ReservationCreateVM : ReservationSearchVM
     {
         // IDs
         [JsonPropertyName("carModelId")]
