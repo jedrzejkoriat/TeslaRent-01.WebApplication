@@ -12,11 +12,21 @@ import car5 from '../assets/cars/5.png';
 
 function CarList() {
 
-    const [isLoading, setIsLoading] = useState<boolean>(true);
     const location = useLocation();
-    const searchData = location.state as ReservationSearch;
     const navigate = useNavigate();
+
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const searchData = location.state as ReservationSearch;
+
     const [cars, setCars] = useState<CarModel[]>([]);
+
+    const carImages: Record<number, string> = {
+        1: car1,
+        2: car2,
+        3: car3,
+        4: car4,
+        5: car5
+    };
 
     useEffect(() => {
         const fetchCars = async () => {
@@ -52,14 +62,6 @@ function CarList() {
         };
         navigate('/personal-data', { state: reservationCreate } )
     }
-
-    const carImages: Record<number, string> = {
-        1: car1,
-        2: car2,
-        3: car3,
-        4: car4,
-        5: car5
-    };
 
     return (
         <>
