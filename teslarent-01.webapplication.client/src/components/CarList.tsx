@@ -51,7 +51,7 @@ function CarList() {
 
     const handleSelect = (car: CarModel) => {
         const reservationCreate: ReservationCreate = {
-            ...searchData,
+            reservationSearch: searchData,
             carModelId: car.carModelId,
             carModelName: car.carModelName,
             price: car.price,

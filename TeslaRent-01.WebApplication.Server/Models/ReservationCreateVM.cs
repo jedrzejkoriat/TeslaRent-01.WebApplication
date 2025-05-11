@@ -3,8 +3,10 @@ using System.Text.Json.Serialization;
 
 namespace TeslaRent_01.WebApplication.Server.Models
 {
-    public sealed record ReservationCreateVM : ReservationSearchVM
+    public sealed record ReservationCreateVM : IValidatableObject
     {
+        [JsonPropertyName("reservationSearch")]
+        ReservationSearchVM ReservationSearchVM { get; set; }
         // IDs
         [JsonPropertyName("carModelId")]
         public int CarModelId { get; set; }
@@ -23,10 +25,10 @@ namespace TeslaRent_01.WebApplication.Server.Models
         [JsonPropertyName("price")]
         public decimal Price { get; set; }
 
-        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // Check if the base class validation is successful
-            foreach (var result in base.Validate(validationContext))
+            foreach (var result in ReservationSearchVM.Validate(validationContext))
             {
                 yield return result;
             }
