@@ -71,12 +71,23 @@ namespace TeslaRent_01.WebApplication.Server.Services
                     AND (nr.StartLocationId IS NULL OR nr.StartLocationId = @EndLocationId)
                 )
                 SELECT rc.CarModelId, 
-                       cm.Name AS CarModelName,
-                       CASE
-                           WHEN DATEDIFF(DAY, @StartDate, @EndDate) < 7 THEN DATEDIFF(DAY, @StartDate, @EndDate) * cm.DailyRateShortTerm
-                           WHEN DATEDIFF(DAY, @StartDate, @EndDate) BETWEEN 7 AND 29 THEN DATEDIFF(DAY, @StartDate, @EndDate) * cm.DailyRateMidTerm
-                           ELSE DATEDIFF(DAY, @StartDate, @EndDate) * cm.DailyRateLongTerm
-                       END AS Price
+                   cm.Name,
+                   cm.BodyType,
+                   cm.Description,
+                   cm.Seats,
+                   cm.MaxSpeed,
+                   cm.MaxRange,
+                   cm.Acceleration,
+                   CASE
+                       WHEN DATEDIFF(DAY, @StartDate, @EndDate) < 7 THEN cm.DailyRateShortTerm
+                       WHEN DATEDIFF(DAY, @StartDate, @EndDate) BETWEEN 7 AND 29 THEN cm.DailyRateMidTerm
+                       ELSE cm.DailyRateLongTerm
+                   END AS DailyPrice,
+                   CASE
+                       WHEN DATEDIFF(DAY, @StartDate, @EndDate) < 7 THEN DATEDIFF(DAY, @StartDate, @EndDate) * cm.DailyRateShortTerm
+                       WHEN DATEDIFF(DAY, @StartDate, @EndDate) BETWEEN 7 AND 29 THEN DATEDIFF(DAY, @StartDate, @EndDate) * cm.DailyRateMidTerm
+                       ELSE DATEDIFF(DAY, @StartDate, @EndDate) * cm.DailyRateLongTerm
+                   END AS Price
                 FROM RankedCars rc
                 JOIN CarModels cm ON rc.CarModelId = cm.Id
                 WHERE rc.rn = 1;
