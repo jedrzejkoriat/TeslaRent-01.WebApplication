@@ -58,7 +58,7 @@ function CarList() {
             firstName: '',
             lastName: '',
             email: '',
-            phone: ''
+            phoneNumber: ''
         };
         navigate('/personal-data', { state: reservationCreate } )
     }

@@ -5,8 +5,6 @@ namespace TeslaRent_01.WebApplication.Server.Models
 {
     public sealed record ReservationCreateVM : IValidatableObject
     {
-        [JsonPropertyName("reservationSearch")]
-        ReservationSearchVM ReservationSearchVM { get; set; }
         // IDs
         [JsonPropertyName("carModelId")]
         public int CarModelId { get; set; }
@@ -24,6 +22,9 @@ namespace TeslaRent_01.WebApplication.Server.Models
         // NUMBERS
         [JsonPropertyName("price")]
         public decimal Price { get; set; }
+        // OTHER VIEWMODELS
+        [JsonPropertyName("reservationSearch")]
+        public ReservationSearchVM ReservationSearchVM { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

@@ -8,5 +8,5 @@ export type ReservationCreate = {
     firstName: string;
     lastName: string;
     email: string;
-    phone: string;
+    phoneNumber: string;
 };

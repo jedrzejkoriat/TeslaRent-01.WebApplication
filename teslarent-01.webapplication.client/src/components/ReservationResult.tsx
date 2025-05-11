@@ -65,7 +65,7 @@ function ReservationResult() {
                         <p><strong>End Date:</strong> {reservationDetails.reservation.reservationSearch.endDate}</p>
                     <p><strong>Customer:</strong> {reservationDetails.reservation.firstName} {reservationDetails.reservation.lastName}</p>
                     <p><strong>Email:</strong> {reservationDetails.reservation.email}</p>
-                    <p><strong>Phone:</strong> {reservationDetails.reservation.phone}</p>
+                    <p><strong>Phone:</strong> {reservationDetails.reservation.phoneNumber}</p>
                 </div>
             ) : (
                 <div>No reservation details available.</div>

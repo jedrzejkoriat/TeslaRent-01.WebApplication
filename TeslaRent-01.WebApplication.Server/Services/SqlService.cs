@@ -164,10 +164,10 @@ namespace TeslaRent_01.WebApplication.Server.Services
                 WHERE rc.rn = 1;
             ";
 
-            var startDateParam = new SqlParameter("@StartDate", SqlDbType.DateTime) { Value = reservationCreateVM.StartDate };
-            var endDateParam = new SqlParameter("@EndDate", SqlDbType.DateTime) { Value = reservationCreateVM.EndDate };
-            var startLocationParam = new SqlParameter("@StartLocationId", SqlDbType.Int) { Value = reservationCreateVM.StartLocationId };
-            var endLocationParam = new SqlParameter("@EndLocationId", SqlDbType.Int) { Value = reservationCreateVM.EndLocationId };
+            var startDateParam = new SqlParameter("@StartDate", SqlDbType.DateTime) { Value = reservationCreateVM.ReservationSearchVM.StartDate };
+            var endDateParam = new SqlParameter("@EndDate", SqlDbType.DateTime) { Value = reservationCreateVM.ReservationSearchVM.EndDate };
+            var startLocationParam = new SqlParameter("@StartLocationId", SqlDbType.Int) { Value = reservationCreateVM.ReservationSearchVM.StartLocationId };
+            var endLocationParam = new SqlParameter("@EndLocationId", SqlDbType.Int) { Value = reservationCreateVM.ReservationSearchVM.EndLocationId };
             var carModelIdParam = new SqlParameter("@CarModelId", SqlDbType.Int) { Value = reservationCreateVM.CarModelId };
 
             var result = await context.Set<CarVM>()
