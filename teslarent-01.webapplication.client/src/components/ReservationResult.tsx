@@ -61,8 +61,8 @@ function ReservationResult() {
                     <h5>Reservation Information:</h5>
                     <p><strong>Car Model:</strong> {reservationDetails.reservation.carModelName}</p>
                     <p><strong>Price:</strong> ${reservationDetails.reservation.price.toFixed(2)}</p>
-                    <p><strong>Start Date:</strong> {reservationDetails.reservation.reservationSearch.startDate}</p>
-                        <p><strong>End Date:</strong> {reservationDetails.reservation.reservationSearch.endDate}</p>
+                    <p><strong>Start Date:</strong> {reservationDetails.reservation.startDate}</p>
+                        <p><strong>End Date:</strong> {reservationDetails.reservation.endDate}</p>
                     <p><strong>Customer:</strong> {reservationDetails.reservation.firstName} {reservationDetails.reservation.lastName}</p>
                     <p><strong>Email:</strong> {reservationDetails.reservation.email}</p>
                     <p><strong>Phone:</strong> {reservationDetails.reservation.phoneNumber}</p>

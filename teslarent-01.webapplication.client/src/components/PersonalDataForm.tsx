@@ -69,13 +69,13 @@ function PersonalDataForm() {
             </div>
 
             <div className="mb-3">
-                <label htmlFor="phone" className="form-label">Phone</label>
+                <label htmlFor="phoneNumber" className="form-label">Phone</label>
                 <input
                     type="tel"
                     className="form-control"
-                    id="phone"
-                    name="phone"
-                    value={reservationData.phone}
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    value={reservationData.phoneNumber}
                     onChange={handleChange}
                     required
                 />

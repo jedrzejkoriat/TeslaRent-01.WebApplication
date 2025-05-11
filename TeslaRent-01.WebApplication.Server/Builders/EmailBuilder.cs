@@ -28,7 +28,7 @@ namespace TeslaRent_01.WebApplication.Server.Builders
                        {reservationDetailsVM.StartLocationVM.ZipCode} {reservationDetailsVM.StartLocationVM.City}, {reservationDetailsVM.StartLocationVM.Country}</p>
 
                     <h3>Pickup Date:</h3>
-                    <p>{reservationDetailsVM.ReservationCreateVM.ReservationSearchVM.StartDate:dd/MM/yyyy} between 6:00 AM and 8:00 PM</p>
+                    <p>{reservationDetailsVM.ReservationCreateVM.StartDate:dd/MM/yyyy} between 6:00 AM and 8:00 PM</p>
 
                     <p>Please bring your ID or passport with you. The reservation must be paid within 24 hours of receiving this email.</p>
 
@@ -44,7 +44,7 @@ namespace TeslaRent_01.WebApplication.Server.Builders
                        {reservationDetailsVM.EndLocationVM.ZipCode} {reservationDetailsVM.EndLocationVM.City}, {reservationDetailsVM.EndLocationVM.Country}</p>
 
                     <h3>Return Date:</h3>
-                    <p>{reservationDetailsVM.ReservationCreateVM.ReservationSearchVM.EndDate:dd/MM/yyyy} between 6:00 AM and 8:00 PM</p>
+                    <p>{reservationDetailsVM.ReservationCreateVM.EndDate:dd/MM/yyyy} between 6:00 AM and 8:00 PM</p>
 
                     <p>If you have any questions or need assistance, feel free to contact our support team at +34 123 456 789 or tesla@rent.com.</p>
 

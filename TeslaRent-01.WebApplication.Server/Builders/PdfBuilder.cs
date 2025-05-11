@@ -32,7 +32,7 @@ namespace TeslaRent_01.WebApplication.Server.Builders
             gfx.DrawString("Thank you for choosing TeslaRent!", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
             yPosition += 20;
 
-            gfx.DrawString("Your reservation for a Tesla car has been successfully confirmed.", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
+            gfx.DrawString($"Your reservation for a {reservationDetailsVM.ReservationCreateVM.CarModelName} has been successfully confirmed.", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
             yPosition += 20;
 
             // Pickup Location

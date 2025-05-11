@@ -51,9 +51,12 @@ function CarList() {
 
     const handleSelect = (car: CarModel) => {
         const reservationCreate: ReservationCreate = {
-            reservationSearch: searchData,
-            carModelId: car.carModelId,
-            carModelName: car.carModelName,
+            startDate: searchData.startDate,
+            endDate: searchData.endDate,
+            startLocationId: searchData.startLocationId,
+            endLocationId: searchData.endLocationId,
+            carModelId: car.id,
+            carModelName: car.name,
             price: car.price,
             firstName: '',
             lastName: '',
@@ -72,18 +75,18 @@ function CarList() {
             ) : (
                 <>
                     {cars.map((car) => (
-                        <div key={car.carModelId} className="card mb-3" style={{ maxWidth: '540px' }}>
+                        <div key={car.id} className="card mb-3" style={{ maxWidth: '540px' }}>
                             <div className="row g-0">
                                 <div className="col-md-4">
                                     <img
-                                        src={carImages[car.carModelId]}
+                                        src={carImages[car.id]}
                                         className="img-fluid rounded-start"
-                                        alt={car.carModelName}
+                                        alt={car.name}
                                     />
                                 </div>
                                 <div className="col-md-8">
                                     <div className="card-body">
-                                        <h5 className="card-title">{car.carModelName}</h5>
+                                        <h5 className="card-title">{car.name}</h5>
                                         <p className="card-text">{car.description}</p>
                                         <ul className="list-unstyled mb-2">
                                             <li><strong>Body Type:</strong> {car.bodyType}</li>

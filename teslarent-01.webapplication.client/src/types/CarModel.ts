@@ -1,6 +1,6 @@
 export type CarModel = {
-    carModelId: number,
-    carModelName: string,
+    id: number,
+    name: string,
     price: number,
     bodyType: string,
     description: string,
