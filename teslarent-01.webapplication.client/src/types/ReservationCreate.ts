@@ -7,4 +7,5 @@ export type ReservationCreate = ReservationSearch & {
     lastName: string;
     email: string;
     price: number;
+    phone: string;
 };

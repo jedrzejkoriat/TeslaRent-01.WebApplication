@@ -1,5 +1,11 @@
 export type CarModel = {
     carModelId: number,
     carModelName: string,
-    price: number
+    price: number,
+    bodyType: string,
+    description: string,
+    seats: number,
+    maxSpeed: number,
+    maxRange: number,
+    acceleration: number
 };
