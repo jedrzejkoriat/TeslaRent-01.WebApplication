@@ -17,6 +17,8 @@ namespace TeslaRent_01.WebApplication.Server.Models
         public string LastName { get; set; }
         [JsonPropertyName("email")]
         public string Email { get; set; }
+        [JsonPropertyName("phoneNumber")]
+        public string PhoneNumber { get; set; }
         // NUMBERS
         [JsonPropertyName("price")]
         public decimal Price { get; set; }
@@ -38,6 +40,11 @@ namespace TeslaRent_01.WebApplication.Server.Models
             if (string.IsNullOrEmpty(LastName))
             {
                 yield return new ValidationResult("Last name is required.", new[] { nameof(LastName) });
+            }
+
+            if (string.IsNullOrEmpty(PhoneNumber))
+            {
+                yield return new ValidationResult("Phone number is required.", new[] { nameof(PhoneNumber) });
             }
 
             if (string.IsNullOrEmpty(Email))
