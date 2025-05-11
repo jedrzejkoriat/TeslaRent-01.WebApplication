@@ -4,7 +4,7 @@ import type { ReservationCreate } from '../types/ReservationCreate';
 import type { CarModel } from '../types/CarModel';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import car1 from '../assets/cars/1.jpg';
+import car1 from '../assets/cars/1.png';
 import car2 from '../assets/cars/2.png';
 import car3 from '../assets/cars/3.png';
 import car4 from '../assets/cars/4.png';

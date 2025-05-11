@@ -9,22 +9,23 @@ namespace TeslaRent_01.WebApplication.Server.Builders
     internal sealed class PdfBuilder : IPdfBuilder
     {
         public MemoryStream BuildReservationPdf(ReservationDetailsVM reservationDetailsVM)
-        { 
-            // Create document
+        {
             PdfDocument document = new PdfDocument();
             document.Info.Title = "Reservation Confirmation";
 
-            // Create page
             PdfPage page = document.AddPage();
             XGraphics gfx = XGraphics.FromPdfPage(page);
 
-            // Fonts
             XFont fontNormal = new XFont("Arial", 12);
             XFont fontBold = new XFont("Arial", 12, XFontStyleEx.Bold);
 
-            // Margins
             double margin = 40;
             double yPosition = margin;
+
+            // Data extraction for better visibility
+            var reservation = reservationDetailsVM.ReservationCreateVM;
+            var startLocation = reservationDetailsVM.StartLocationVM;
+            var endLocation = reservationDetailsVM.EndLocationVM;
 
             gfx.DrawString("Reservation Confirmation", fontBold, XBrushes.Black, new XPoint(margin, yPosition));
             yPosition += 20;
@@ -32,63 +33,48 @@ namespace TeslaRent_01.WebApplication.Server.Builders
             gfx.DrawString("Thank you for choosing TeslaRent!", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
             yPosition += 20;
 
-            gfx.DrawString($"Your reservation for a {reservationDetailsVM.ReservationCreateVM.CarModelName} has been successfully confirmed.", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
+            gfx.DrawString($"Your reservation for a {reservation.CarModelName} has been successfully confirmed.", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
             yPosition += 20;
 
             // Pickup Location
             gfx.DrawString("Pickup Location:", fontBold, XBrushes.Black, new XPoint(margin, yPosition));
             yPosition += 20;
 
-            gfx.DrawString("Street: Main Street 123", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
-            yPosition += 15;
-
-            gfx.DrawString("City: Palma, Mallorca", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
-            yPosition += 15;
-
-            gfx.DrawString("Zip Code: 07001", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
-            yPosition += 20;
+            gfx.DrawString(startLocation.Name, fontNormal, XBrushes.Black, new XPoint(margin, yPosition)); yPosition += 15;
+            gfx.DrawString($"Street: {startLocation.Street} {startLocation.StreetNumber}", fontNormal, XBrushes.Black, new XPoint(margin, yPosition)); yPosition += 15;
+            gfx.DrawString($"City: {startLocation.City}, {startLocation.Country}", fontNormal, XBrushes.Black, new XPoint(margin, yPosition)); yPosition += 15;
+            gfx.DrawString($"Zip Code: {startLocation.ZipCode}", fontNormal, XBrushes.Black, new XPoint(margin, yPosition)); yPosition += 20;
 
             // Pickup Date
             gfx.DrawString("Pickup Date:", fontBold, XBrushes.Black, new XPoint(margin, yPosition));
             yPosition += 20;
 
-            gfx.DrawString("May 15, 2025 between 6:00 AM and 8:00 PM", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
+            gfx.DrawString($"{reservation.StartDate:yyyy-MM-dd} between 10:00 AM and 8:00 PM", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
             yPosition += 20;
 
             // Payment Details
             gfx.DrawString("Payment Details:", fontBold, XBrushes.Black, new XPoint(margin, yPosition));
             yPosition += 20;
 
-            gfx.DrawString("Amount: 100.00 EUR", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
-            yPosition += 15;
-
-            gfx.DrawString("Account Name: Tesla Rent", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
-            yPosition += 15;
-
-            gfx.DrawString("IBAN: ES76 1234 5678 9012 3456 7890", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
-            yPosition += 15;
-
-            gfx.DrawString("BIC: MAJRESMMXXX", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
-            yPosition += 20;
+            gfx.DrawString($"Amount: {reservation.Price:0.00} EUR", fontNormal, XBrushes.Black, new XPoint(margin, yPosition)); yPosition += 15;
+            gfx.DrawString("Account Name: Tesla Rent", fontNormal, XBrushes.Black, new XPoint(margin, yPosition)); yPosition += 15;
+            gfx.DrawString("IBAN: ES76 1234 5678 9012 3456 7890", fontNormal, XBrushes.Black, new XPoint(margin, yPosition)); yPosition += 15;
+            gfx.DrawString("BIC: MAJRESMMXXX", fontNormal, XBrushes.Black, new XPoint(margin, yPosition)); yPosition += 20;
 
             // Return Location
             gfx.DrawString("Return Location:", fontBold, XBrushes.Black, new XPoint(margin, yPosition));
             yPosition += 20;
 
-            gfx.DrawString("Tesla Rent Office, Palma", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
-            yPosition += 15;
-
-            gfx.DrawString("Street: Return St. 45", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
-            yPosition += 15;
-
-            gfx.DrawString("Zip Code: 07002", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
-            yPosition += 20;
+            gfx.DrawString(endLocation.Name, fontNormal, XBrushes.Black, new XPoint(margin, yPosition)); yPosition += 15;
+            gfx.DrawString($"Street: {endLocation.Street} {endLocation.StreetNumber}", fontNormal, XBrushes.Black, new XPoint(margin, yPosition)); yPosition += 15;
+            gfx.DrawString($"City: {endLocation.City}, {endLocation.Country}", fontNormal, XBrushes.Black, new XPoint(margin, yPosition)); yPosition += 15;
+            gfx.DrawString($"Zip Code: {endLocation.ZipCode}", fontNormal, XBrushes.Black, new XPoint(margin, yPosition)); yPosition += 20;
 
             // Return Date
             gfx.DrawString("Return Date:", fontBold, XBrushes.Black, new XPoint(margin, yPosition));
             yPosition += 20;
 
-            gfx.DrawString("May 22, 2025 between 6:00 AM and 8:00 PM", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
+            gfx.DrawString($"{reservation.EndDate:yyyy-MM-dd} until 10:00 AM", fontNormal, XBrushes.Black, new XPoint(margin, yPosition));
             yPosition += 50;
 
             // Contact Information
