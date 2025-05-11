@@ -8,4 +8,5 @@ export type CarModel = {
     maxSpeed: number,
     maxRange: number,
     acceleration: number
+    dailyPrice: number
 };
