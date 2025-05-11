@@ -65,16 +65,28 @@ builder.Services.AddScoped<ICarRepository, CarRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-if (app.Environment.IsDevelopment())
+/*if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+}*/
+
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 
@@ -140,7 +152,5 @@ app.MapPost("/api/reservation", async (HttpContext context, [FromBody] Reservati
         return Results.Problem(ex.Message);
     }
 });
-
-app.MapFallbackToFile("/index.html");
 
 app.Run();
