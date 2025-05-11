@@ -67,7 +67,7 @@ namespace TeslaRent_01.WebApplication.Server.Services
         }
 
         // Creates a reservation for the selected car model
-        public async Task<MemoryStream> CreateReservationAsync(ReservationCreateVM reservationCreateVM)
+        public async Task<ReservationDetailsVM> CreateReservationAsync(ReservationCreateVM reservationCreateVM)
         {
             // Viewmodel validation
             ViewModelValidator.Validate(reservationCreateVM);
@@ -105,6 +105,11 @@ namespace TeslaRent_01.WebApplication.Server.Services
             (string emailSubject, string emailBody) = emailBuilder.BuildReservationEmail(reservationDetailsVM);
             await emailSender.SendEmailAsync(reservation.Email, emailSubject, emailBody);
 
+            return reservationDetailsVM;
+        }
+
+        public async Task<MemoryStream> GetReservationDocument(ReservationDetailsVM reservationDetailsVM)
+        {
             // Build and return pdf
             MemoryStream reservationDocument = pdfBuilder.BuildReservationPdf(reservationDetailsVM);
             return reservationDocument;

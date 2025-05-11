@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using TeslaRent_01.WebApplication.Server.Builders;
 using PdfSharp.Pdf;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -91,12 +92,12 @@ app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 
 // GET /api/location
-app.MapGet("/api/location", async (HttpContext context, ITeslaRentService teslaReservationService, ILogger<Program> logger) =>
+app.MapGet("/api/location", async (HttpContext context, ITeslaRentService teslaRentService, ILogger<Program> logger) =>
 {
     logger.LogInformation("Received request: {Method} {Path}", context.Request.Method, context.Request.Path);
     try
     {
-        List<LocationNameVM> locations = await teslaReservationService.GetAvailableLocationVMsAsync();
+        List<LocationNameVM> locations = await teslaRentService.GetAvailableLocationVMsAsync();
         logger.LogInformation("Sent response: {StatusCode} {Path}", context.Response.StatusCode, context.Request.Path);
         return Results.Ok(locations);
     }
@@ -109,12 +110,12 @@ app.MapGet("/api/location", async (HttpContext context, ITeslaRentService teslaR
 
 // GET /api/cars/start_location/{startLocationId}/start_date/{startDate}/end_location/{endLocationId}/end_date/{endDate}
 app.MapGet("/api/cars/start_location/{startLocationId}/start_date/{startDate}/end_location/{endLocationId}/end_date/{endDate}",
-    async (HttpContext context, ITeslaRentService teslaReservationService, int startLocationId, DateTime startDate, int endLocationId, DateTime endDate, ILogger<Program> logger) =>
+    async (HttpContext context, ITeslaRentService teslaRentService, int startLocationId, DateTime startDate, int endLocationId, DateTime endDate, ILogger<Program> logger) =>
     {
         logger.LogInformation("Received request: {Method} {Path}", context.Request.Method, context.Request.Path);
         try
         {
-            List<CarModelVM> cars = await teslaReservationService.GetAvailableCarVMsAsync(startLocationId, endLocationId, startDate, endDate);
+            List<CarModelVM> cars = await teslaRentService.GetAvailableCarVMsAsync(startLocationId, endLocationId, startDate, endDate);
             logger.LogInformation("Sent response: {StatusCode} {Path}", context.Response.StatusCode, context.Request.Path);
             return Results.Ok(cars);
         }
@@ -128,23 +129,40 @@ app.MapGet("/api/cars/start_location/{startLocationId}/start_date/{startDate}/en
             logger.LogError(ex, "Error processing request: {Method} {Path}", context.Request.Method, context.Request.Path);
             return Results.Problem(ex.Message);
         }
-
     });
 
 // POST /api/reservation
-app.MapPost("/api/reservation", async (HttpContext context, [FromBody] ReservationCreateVM reservationCreateVM, ITeslaRentService teslaReservationService, ILogger<Program> logger) =>
+app.MapPost("/api/reservation", async (HttpContext context, [FromBody] ReservationCreateVM reservationCreateVM, ITeslaRentService teslaRentService, ILogger<Program> logger) =>
 {
     logger.LogInformation("Received request: {Method} {Path}", context.Request.Method, context.Request.Path);
     try
     {
-        MemoryStream reservationDocument = await teslaReservationService.CreateReservationAsync(reservationCreateVM);
+        ReservationDetailsVM reservationDetailsVM = await teslaRentService.CreateReservationAsync(reservationCreateVM);
         logger.LogInformation("Sent response: {StatusCode} {Path}", context.Response.StatusCode, context.Request.Path);
-        return Results.File(reservationDocument, "application/pdf", "Reservation_Confirmation.pdf");
+        return Results.Ok(reservationDetailsVM);
     }
     catch (ValidationException ex)
     {
         logger.LogError(ex, "Error processing request: {Method} {Path}", context.Request.Method, context.Request.Path);
         return Results.BadRequest(new { Error = "Validation error.", Details = ex.Message });
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "Error processing request: {Method} {Path}", context.Request.Method, context.Request.Path);
+        return Results.Problem(ex.Message);
+    }
+});
+
+// POST /api/reservation/document
+app.MapPost("/api/reservation/document", async (HttpContext context, [FromBody] ReservationDetailsVM reservationDetailsVM, ITeslaRentService teslaRentService, ILogger<Program> logger) =>
+{
+
+    logger.LogInformation("Received request: {Method} {Path}", context.Request.Method, context.Request.Path);
+    try
+    {
+        MemoryStream reservationDocument= await teslaRentService.GetReservationDocument(reservationDetailsVM);
+        logger.LogInformation("Sent response: {StatusCode} {Path}", context.Response.StatusCode, context.Request.Path);
+        return Results.File(reservationDocument, "application/pdf", "Reservation_Confirmation.pdf");
     }
     catch (Exception ex)
     {
