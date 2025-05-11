@@ -12,8 +12,8 @@ using TeslaRent_01.WebApplication.Server.Data;
 namespace TeslaRent_01.WebApplication.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250508181739_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20250511182830_AddCarInfoAndPhoneNumber")]
+    partial class AddCarInfoAndPhoneNumber
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -296,6 +296,14 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<decimal>("Acceleration")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("BodyType")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<decimal>("DailyRateLongTerm")
                         .HasColumnType("decimal(18,2)");
 
@@ -305,10 +313,24 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                     b.Property<decimal>("DailyRateShortTerm")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("MaxRange")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaxSpeed")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("Seats")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -318,42 +340,72 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                         new
                         {
                             Id = 1,
+                            Acceleration = 3.1m,
+                            BodyType = "Sedan",
                             DailyRateLongTerm = 165m,
                             DailyRateMidTerm = 200m,
                             DailyRateShortTerm = 220m,
-                            Name = "Tesla Model 3"
+                            Description = "A compact electric sedan offering high performance and range.",
+                            MaxRange = 491,
+                            MaxSpeed = 261,
+                            Name = "Tesla Model 3",
+                            Seats = 5
                         },
                         new
                         {
                             Id = 2,
+                            Acceleration = 5.0m,
+                            BodyType = "SUV",
                             DailyRateLongTerm = 270m,
                             DailyRateMidTerm = 315m,
                             DailyRateShortTerm = 350m,
-                            Name = "Tesla Model Y"
+                            Description = "A spacious electric SUV with advanced features and great range.",
+                            MaxRange = 499,
+                            MaxSpeed = 217,
+                            Name = "Tesla Model Y",
+                            Seats = 5
                         },
                         new
                         {
                             Id = 3,
+                            Acceleration = 2.1m,
+                            BodyType = "Sedan",
                             DailyRateLongTerm = 375m,
                             DailyRateMidTerm = 450m,
                             DailyRateShortTerm = 500m,
-                            Name = "Tesla Model S"
+                            Description = "A luxury electric sedan with impressive range and acceleration.",
+                            MaxRange = 652,
+                            MaxSpeed = 322,
+                            Name = "Tesla Model S",
+                            Seats = 5
                         },
                         new
                         {
                             Id = 4,
+                            Acceleration = 2.6m,
+                            BodyType = "SUV",
                             DailyRateLongTerm = 500m,
                             DailyRateMidTerm = 600m,
                             DailyRateShortTerm = 650m,
-                            Name = "Tesla Model X"
+                            Description = "A premium electric SUV with falcon-wing doors and roomy interior.",
+                            MaxRange = 543,
+                            MaxSpeed = 262,
+                            Name = "Tesla Model X",
+                            Seats = 7
                         },
                         new
                         {
                             Id = 5,
+                            Acceleration = 3.0m,
+                            BodyType = "Pickup",
                             DailyRateLongTerm = 525m,
                             DailyRateMidTerm = 640m,
                             DailyRateShortTerm = 700m,
-                            Name = "Tesla Cybertruck"
+                            Description = "A futuristic electric pickup truck built for durability and power.",
+                            MaxRange = 750,
+                            MaxSpeed = 210,
+                            Name = "Tesla Cybertruck",
+                            Seats = 6
                         });
                 });
 
@@ -444,11 +496,11 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
 
             modelBuilder.Entity("TeslaRent_01.WebApplication.Server.Data.Reservation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
 
                     b.Property<int>("CarId")
                         .HasColumnType("int");
@@ -470,6 +522,11 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -499,12 +556,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 1,
                             CarId = 1,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -512,12 +570,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 2,
                             CarId = 4,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -525,12 +584,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 3,
                             CarId = 7,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -538,12 +598,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 4,
                             CarId = 10,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -551,12 +612,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 5,
                             CarId = 13,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -564,12 +626,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 6,
                             CarId = 16,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -577,12 +640,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 7,
                             CarId = 17,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -590,12 +654,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 8,
                             CarId = 19,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -603,12 +668,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 9,
                             CarId = 21,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -616,12 +682,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 10,
                             CarId = 23,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -629,12 +696,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 11,
                             CarId = 25,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -642,12 +710,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 12,
                             CarId = 27,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -655,12 +724,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 13,
                             CarId = 29,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -668,12 +738,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 14,
                             CarId = 32,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -681,12 +752,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 15,
                             CarId = 33,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -694,12 +766,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 16,
                             CarId = 37,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -707,12 +780,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 17,
                             CarId = 38,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -720,12 +794,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 18,
                             CarId = 39,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 1,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 1
                         },
                         new
@@ -733,12 +808,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 19,
                             CarId = 2,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 2,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 2
                         },
                         new
@@ -746,12 +822,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 20,
                             CarId = 5,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 2,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 2
                         },
                         new
@@ -759,12 +836,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 21,
                             CarId = 8,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 2,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 2
                         },
                         new
@@ -772,12 +850,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 22,
                             CarId = 11,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 2,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 2
                         },
                         new
@@ -785,12 +864,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 23,
                             CarId = 14,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 2,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 2
                         },
                         new
@@ -798,12 +878,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 24,
                             CarId = 18,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 2,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 2
                         },
                         new
@@ -811,12 +892,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 25,
                             CarId = 20,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 2,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 2
                         },
                         new
@@ -824,12 +906,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 26,
                             CarId = 22,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 2,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 2
                         },
                         new
@@ -837,12 +920,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 27,
                             CarId = 28,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 2,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 2
                         },
                         new
@@ -850,12 +934,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 28,
                             CarId = 30,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 2,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 2
                         },
                         new
@@ -863,12 +948,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 29,
                             CarId = 34,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 2,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 2
                         },
                         new
@@ -876,12 +962,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 30,
                             CarId = 36,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 2,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 2
                         },
                         new
@@ -889,12 +976,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 31,
                             CarId = 40,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 2,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 2
                         },
                         new
@@ -902,12 +990,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 32,
                             CarId = 3,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 3,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 3
                         },
                         new
@@ -915,12 +1004,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 33,
                             CarId = 6,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 3,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 3
                         },
                         new
@@ -928,12 +1018,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 34,
                             CarId = 9,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 3,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 3
                         },
                         new
@@ -941,12 +1032,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 35,
                             CarId = 24,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 3,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 3
                         },
                         new
@@ -954,12 +1046,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 36,
                             CarId = 12,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 3,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 3
                         },
                         new
@@ -967,12 +1060,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 37,
                             CarId = 15,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 4,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 4
                         },
                         new
@@ -980,12 +1074,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 38,
                             CarId = 26,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 4,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 4
                         },
                         new
@@ -993,12 +1088,13 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 39,
                             CarId = 31,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 4,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 4
                         },
                         new
@@ -1006,14 +1102,42 @@ namespace TeslaRent_01.WebApplication.Server.Migrations
                             Id = 40,
                             CarId = 35,
                             Email = "Tesla@Rent.com",
-                            EndDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             EndLocationId = 4,
                             FirstName = "Tesla",
                             LastName = "Rent",
+                            PhoneNumber = "+48123456789",
                             Price = 0.0m,
-                            StartDate = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            StartDate = new DateTime(2025, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             StartLocationId = 4
                         });
+                });
+
+            modelBuilder.Entity("TeslaRent_01.WebApplication.Server.Models.CarModelVM", b =>
+                {
+                    b.Property<int>("CarModelId")
+                        .HasColumnType("int")
+                        .HasAnnotation("Relational:JsonPropertyName", "id");
+
+                    b.Property<string>("CarModelName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasAnnotation("Relational:JsonPropertyName", "name");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)")
+                        .HasAnnotation("Relational:JsonPropertyName", "price");
+
+                    b.ToTable("AvailableCarModelVMs");
+                });
+
+            modelBuilder.Entity("TeslaRent_01.WebApplication.Server.Models.CarVM", b =>
+                {
+                    b.Property<int>("CarId")
+                        .HasColumnType("int");
+
+                    b.ToTable("AvailableCarVMs");
                 });
 
             modelBuilder.Entity("TeslaRent_01.WebApplication.Server.Data.Car", b =>
