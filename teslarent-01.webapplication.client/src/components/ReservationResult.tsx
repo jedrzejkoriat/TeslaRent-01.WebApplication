@@ -5,48 +5,55 @@ import { useState } from 'react';
 
 function ReservationResult() {
 
+    // Hooks
     const location = useLocation();
-    const reservationDetails = location.state as ReservationDetails;
     const [error, setError] = useState<ErrorBody | null>(null);
 
-    const handleDownload = async () => {
-        try {
-            console.log("Fetching document");
-            const url = 'api/reservation/document';
-            const bodyData = reservationDetails;
+    // Load data from location
+    const reservationDetails = location.state as ReservationDetails;
 
-            const response = await fetch(url, {
+    /* Handle download:
+        1. Send POST request with ReservationDetails object
+        2. Get blob as response
+        3. Download the blob as PDF
+    */
+    const handleDownloadButton = async () => {
+        try {
+            const response = await fetch('api/reservation/document', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(bodyData)
+                body: JSON.stringify(reservationDetails)
             });
 
             if (!response.ok) {
                 const errorResponse: ErrorBody = await response.json();
                 setError(errorResponse)
             }
-
-            console.log("Document fetched");
-
             const blob = await response.blob();
-            const downloadUrl = window.URL.createObjectURL(blob);
-
-            const link = document.createElement('a');
-            link.href = downloadUrl;
-            link.download = 'Reservation_Confirmation.pdf';
-            document.body.appendChild(link);
-            link.click();
-
-            link.remove();
-            window.URL.revokeObjectURL(downloadUrl);
+            downloadFile(blob);
 
         } catch (error) {
             console.error('Error fetching reservation details:', error);
         }
     };
 
+    // Download blob as PDF
+    function downloadFile(blob: Blob) {
+        const downloadUrl = window.URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = 'Reservation_Confirmation.pdf';
+        document.body.appendChild(link);
+        link.click();
+
+        link.remove();
+        window.URL.revokeObjectURL(downloadUrl);
+    }
+
+    // HTML
     return (
             <>{error ? <p>{error.details}</p> : null}
             <div>
@@ -71,7 +78,7 @@ function ReservationResult() {
                 <p><strong>Phone:</strong> {reservationDetails.reservation.phoneNumber}</p>
                 <button
                     className="btn btn-primary"
-                    onClick={() => handleDownload()}
+                    onClick={() => handleDownloadButton()}
                 >
                     Download
                 </button>

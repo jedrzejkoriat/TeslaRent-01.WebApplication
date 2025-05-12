@@ -7,42 +7,13 @@ import type { ReservationCreate } from '../types/ReservationCreate';
 
 function PersonalDataForm() {
 
+    // Hooks
     const location = useLocation()
     const navigate = useNavigate();
-
     const [error, setError] = useState<ErrorBody | null>(null);
     const [reservationData, setReservationData] = useState<ReservationCreate>(location.state as ReservationCreate);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log('Form data submitted:', reservationData);
-
-        try {
-            console.log("Fetching details");
-            const url = 'api/reservation';
-            const bodyData = reservationData;
-
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(bodyData)
-
-            });
-            if (!response.ok) {
-                const errorResponse: ErrorBody = await response.json();
-                setError(errorResponse)
-            }
-            const reservationDetails: ReservationDetails = await response.json();
-            console.log("Details fetched");
-
-            navigate('/reservation-result', { state: reservationDetails });
-        } catch (error) {
-            console.error('Error fetching reservation details:', error);
-        }
-    };
-
+    // Handle input changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setReservationData((prevData) => ({
@@ -51,9 +22,39 @@ function PersonalDataForm() {
         }));
     };
 
+    /* Handle form submission:
+        1. Sends POST request with ReservationSearch object as body
+        2. Gets ReservationDetails object as response
+        3. Navigates to ReservationResult component
+    */
+    const handleSubmitButton = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch('api/reservation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(reservationData)
+
+            });
+            if (!response.ok) {
+                const errorResponse: ErrorBody = await response.json();
+                setError(errorResponse)
+            }
+            const reservationDetails: ReservationDetails = await response.json();
+
+            navigate('/reservation-result', { state: reservationDetails });
+        } catch (error) {
+            console.error('Error fetching reservation details:', error);
+        }
+    };
+
+    // HTML
     return (
         <>{error ? <p>{error.details}</p> : null}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitButton}>
             <div className="mb-3">
                 <label htmlFor="firstName" className="form-label">First Name</label>
                 <input

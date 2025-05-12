@@ -4,9 +4,11 @@ import type { LocationName } from '../types/LocationName';
 import type { CarModel } from '../types/CarModel';
 import { useNavigate } from 'react-router-dom';
 import type { ErrorBody } from '../types/ErrorBody';
+import type { CarListDataModel } from '../types/CarListDataModel';
 
 function SearchForm() {
-    // Search form state
+
+    // Initialize ReservationSearch object state
     const [searchData, setSearchData] = useState<ReservationSearch>({
         startLocationId: 0,
         endLocationId: 0,
@@ -14,12 +16,22 @@ function SearchForm() {
         endDate: '',
     });
 
+    // Handle input changes
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setSearchData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    // Hooks
     const [error, setError] = useState<ErrorBody | null>(null);
     const [locations, setLocations] = useState<LocationName[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigate = useNavigate();
 
-    // fetch locations from API
+    // Fetch initial data (LocationName[]) on component mount
     useEffect(() => {
         const fetchLocations = async () => {
             try {
@@ -36,14 +48,17 @@ function SearchForm() {
                 setIsLoading(false);
             }
         };
-
         fetchLocations();
     }, []);
 
-    // fetch cars
-    const handleSubmit = async (e: React.FormEvent) => {
+    /* Handle form submission:
+        1. Send GET request with search data in url
+        2. Get CarModel[] as response
+        3. Build CarListDataModel object with CarModel[] and ReservationSearch objects
+        4. Navigate to cars with CarListDataModel object as state
+    */
+    const handleSubmitButton = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Start fetching cars");
 
         try {
             const url = `/api/cars/start_location/${searchData.startLocationId}/start_date/${searchData.startDate}/end_location/${searchData.endLocationId}/end_date/${searchData.endDate}`;
@@ -53,29 +68,21 @@ function SearchForm() {
                 setError(errorResponse)
             }
             const cars: CarModel[] = await response.json();
-            console.log("Cars fetched");
+            const carListDataModel: CarListDataModel = {cars, searchData};
 
-            navigate('/cars', { state: { data: cars, searchData } });
+            navigate('/cars', { state: carListDataModel });
         } catch (error) {
             console.error(error);
         }
     };
 
-    // handle input changes
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setSearchData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
-
+    // HTML
     return (
         <>{error ? <p>{error.details}</p> : null}
         <>{isLoading ? (<div className="spinner-border text-primary" role="status">
             <span className="visually-hidden">Loading...</span>
         </div>) : (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmitButton}>
                 <div className="mb-3">
                     <label htmlFor="startLocationId" className="form-label">Start Location</label>
 

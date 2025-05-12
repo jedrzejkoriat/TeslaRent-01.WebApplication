@@ -1,8 +1,14 @@
+// Types
 import type { ReservationSearch } from '../types/ReservationSearch';
 import type { ReservationCreate } from '../types/ReservationCreate';
+import type { CarListDataModel } from '../types/CarListDataModel';
 import type { CarModel } from '../types/CarModel';
+
+// React
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+
+// Car photos
 import car1 from '../assets/cars/1.png';
 import car2 from '../assets/cars/2.png';
 import car3 from '../assets/cars/3.png';
@@ -11,16 +17,16 @@ import car5 from '../assets/cars/5.png';
 
 function CarList() {
 
+    // Hooks
     const location = useLocation();
     const navigate = useNavigate();
 
-    const { data: cars, searchData } = location.state as {
-        cars: CarModel[];
-        searchData: ReservationSearch;
-    };
+    // Load data from location
+    const carListDataModel = location.state as CarListDataModel;
+    const cars = carListDataModel.cars as CarModel[];
+    const searchData = carListDataModel.searchData as ReservationSearch;
 
-    console.log("Received cars: ", cars);
-
+    // Load car images
     const carImages: Record<number, string> = {
         1: car1,
         2: car2,
@@ -29,7 +35,11 @@ function CarList() {
         5: car5
     };
 
-    const handleSelect = (car: CarModel) => {
+    /* Handle car selection:
+        1. Build ReservationCreate object
+        2. Navigate to PersonalDataForm component with ReservationCreate object as state
+    */
+    const handleSelectButton = (car: CarModel) => {
         const reservationCreate: ReservationCreate = {
             startDate: searchData.startDate,
             endDate: searchData.endDate,
@@ -46,6 +56,7 @@ function CarList() {
         navigate('/personal-data', { state: reservationCreate })
     }
 
+    // HTML
     return (
         <>
             <p>{searchData.startDate} - {searchData.endDate}</p>
@@ -79,7 +90,7 @@ function CarList() {
                                     </p>
                                     <button
                                         className="btn btn-primary"
-                                        onClick={() => handleSelect(car)}
+                                        onClick={() => handleSelectButton(car)}
                                     >
                                         Select
                                     </button>
