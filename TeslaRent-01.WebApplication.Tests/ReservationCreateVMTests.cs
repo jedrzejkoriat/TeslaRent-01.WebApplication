@@ -20,7 +20,8 @@ public class ReservationCreateVMTests
             CarModelName = "Tesla Model 3",
             Price = 1000,
             StartLocationId = 1,
-            EndLocationId = 2
+            EndLocationId = 2,
+            PhoneNumber = "123456789"
         };
 
         var validationResults = reservationCreateVM.Validate(new ValidationContext(reservationCreateVM));
@@ -43,7 +44,8 @@ public class ReservationCreateVMTests
             CarModelName = "Tesla Model 3",
             Price = 1000,
             StartLocationId = 1,
-            EndLocationId = 2
+            EndLocationId = 2,
+            PhoneNumber = "123456789"
         };
 
         var validationResults = reservationCreateVM.Validate(new ValidationContext(reservationCreateVM));
@@ -66,7 +68,8 @@ public class ReservationCreateVMTests
             CarModelName = "Tesla Model 3",
             Price = 1000,
             StartLocationId = 1,
-            EndLocationId = 2
+            EndLocationId = 2,
+            PhoneNumber = "123456789"
         };
 
         var validationResults = reservationCreateVM.Validate(new ValidationContext(reservationCreateVM));
@@ -89,7 +92,8 @@ public class ReservationCreateVMTests
             CarModelName = "Tesla Model 3",
             Price = 1000,
             StartLocationId = 1,
-            EndLocationId = 2
+            EndLocationId = 2,
+            PhoneNumber = "123456789"
         };
 
         var validationResults = reservationCreateVM.Validate(new ValidationContext(reservationCreateVM));
@@ -112,7 +116,8 @@ public class ReservationCreateVMTests
             CarModelName = "Tesla Model 3",
             Price = 1000,
             StartLocationId = 1,
-            EndLocationId = 2
+            EndLocationId = 2,
+            PhoneNumber = "123456789"
         };
 
         var validationResults = reservationCreateVM.Validate(new ValidationContext(reservationCreateVM));
@@ -135,7 +140,8 @@ public class ReservationCreateVMTests
             CarModelName = "Tesla Model 3",
             Price = 1000,
             StartLocationId = 1,
-            EndLocationId = 2
+            EndLocationId = 2,
+            PhoneNumber = "123456789"
         };
 
         var validationResults = reservationCreateVM.Validate(new ValidationContext(reservationCreateVM));
@@ -158,7 +164,8 @@ public class ReservationCreateVMTests
             CarModelName = "Tesla Model 3",
             Price = 1000,
             StartLocationId = 1,
-            EndLocationId = 2
+            EndLocationId = 2,
+            PhoneNumber = "123456789"
         };
 
         var validationResults = reservationCreateVM.Validate(new ValidationContext(reservationCreateVM));
@@ -181,12 +188,37 @@ public class ReservationCreateVMTests
             CarModelName = "Tesla Model 3",
             Price = 1000,
             StartLocationId = 1,
-            EndLocationId = 2
+            EndLocationId = 2,
+            PhoneNumber = "123456789"
         };
 
         var validationResults = reservationCreateVM.Validate(new ValidationContext(reservationCreateVM));
         var validationErrors = validationResults.ToList();
 
         Assert.Contains(validationResults, vr => vr.ErrorMessage == "Invalid email format.");
+    }
+
+    [Fact]
+    public void Validate_ReturnError_PhoneEmpty()
+    {
+        ReservationCreateVM reservationCreateVM = new ReservationCreateVM
+        {
+            StartDate = DateTime.UtcNow.AddDays(1),
+            EndDate = DateTime.UtcNow.AddDays(2),
+            FirstName = "John",
+            LastName = "Doe",
+            Email = "John.Doe@gmail.com",
+            CarModelId = 1,
+            CarModelName = "Tesla Model 3",
+            Price = 1000,
+            StartLocationId = 1,
+            EndLocationId = 2,
+            PhoneNumber = ""
+        };
+
+        var validationResults = reservationCreateVM.Validate(new ValidationContext(reservationCreateVM));
+        var validationErrors = validationResults.ToList();
+
+        Assert.Contains(validationResults, vr => vr.ErrorMessage == "Phone number is required.");
     }
 }

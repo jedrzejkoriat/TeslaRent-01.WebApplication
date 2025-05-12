@@ -156,7 +156,6 @@ app.MapPost("/api/reservation", async (HttpContext context, [FromBody] Reservati
 // POST /api/reservation/document
 app.MapPost("/api/reservation/document", async (HttpContext context, [FromBody] ReservationDetailsVM reservationDetailsVM, ITeslaRentService teslaRentService, ILogger<Program> logger) =>
 {
-
     logger.LogInformation("Received request: {Method} {Path}", context.Request.Method, context.Request.Path);
     try
     {
