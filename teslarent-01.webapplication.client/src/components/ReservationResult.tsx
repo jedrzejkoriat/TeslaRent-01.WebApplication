@@ -1,10 +1,13 @@
 import type { ReservationDetails } from '../types/ReservationDetails';
 import { useLocation } from 'react-router-dom';
+import type { ErrorBody } from '../types/ErrorBody';
+import { useState } from 'react';
 
 function ReservationResult() {
 
     const location = useLocation();
     const reservationDetails = location.state as ReservationDetails;
+    const [error, setError] = useState<ErrorBody | null>(null);
 
     const handleDownload = async () => {
         try {
@@ -21,7 +24,8 @@ function ReservationResult() {
             });
 
             if (!response.ok) {
-                throw new Error('Failed to fetch reservation document');
+                const errorResponse: ErrorBody = await response.json();
+                setError(errorResponse)
             }
 
             console.log("Document fetched");
@@ -44,7 +48,7 @@ function ReservationResult() {
     };
 
     return (
-        <>
+            <>{error ? <p>{error.details}</p> : null}
             <div>
                 <h4>Reservation Details</h4>
                 <h5>Start Location:</h5>

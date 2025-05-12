@@ -3,6 +3,7 @@ import type { ReservationSearch } from '../types/ReservationSearch';
 import type { LocationName } from '../types/LocationName';
 import type { CarModel } from '../types/CarModel';
 import { useNavigate } from 'react-router-dom';
+import type { ErrorBody } from '../types/ErrorBody';
 
 function SearchForm() {
     // Search form state
@@ -13,6 +14,7 @@ function SearchForm() {
         endDate: '',
     });
 
+    const [error, setError] = useState<ErrorBody | null>(null);
     const [locations, setLocations] = useState<LocationName[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigate = useNavigate();
@@ -23,7 +25,8 @@ function SearchForm() {
             try {
                 const response = await fetch('/api/location');
                 if (!response.ok) {
-                    throw new Error('Failed to fetch locations');
+                    const errorResponse: ErrorBody = await response.json();
+                    setError(errorResponse)
                 }
                 const data: LocationName[] = await response.json();
                 setLocations(data);
@@ -46,7 +49,8 @@ function SearchForm() {
             const url = `/api/cars/start_location/${searchData.startLocationId}/start_date/${searchData.startDate}/end_location/${searchData.endLocationId}/end_date/${searchData.endDate}`;
             const response = await fetch(url);
             if (!response.ok) {
-                throw new Error('Failed to fetch cars');
+                const errorResponse: ErrorBody = await response.json();
+                setError(errorResponse)
             }
             const cars: CarModel[] = await response.json();
             console.log("Cars fetched");
@@ -67,6 +71,7 @@ function SearchForm() {
     };
 
     return (
+        <>{error ? <p>{error.details}</p> : null}
         <>{isLoading ? (<div className="spinner-border text-primary" role="status">
             <span className="visually-hidden">Loading...</span>
         </div>) : (
@@ -135,6 +140,7 @@ function SearchForm() {
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
         )}
+            </>
         </>
     );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import type { ErrorBody } from '../types/ErrorBody';
 import type { ReservationDetails } from '../types/ReservationDetails';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -10,6 +10,7 @@ function PersonalDataForm() {
     const location = useLocation()
     const navigate = useNavigate();
 
+    const [error, setError] = useState<ErrorBody | null>(null);
     const [reservationData, setReservationData] = useState<ReservationCreate>(location.state as ReservationCreate);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -30,7 +31,8 @@ function PersonalDataForm() {
 
             });
             if (!response.ok) {
-                throw new Error('Failed to fetch reservation details');
+                const errorResponse: ErrorBody = await response.json();
+                setError(errorResponse)
             }
             const reservationDetails: ReservationDetails = await response.json();
             console.log("Details fetched");
@@ -50,6 +52,7 @@ function PersonalDataForm() {
     };
 
     return (
+        <>{error ? <p>{error.details}</p> : null}
         <form onSubmit={handleSubmit}>
             <div className="mb-3">
                 <label htmlFor="firstName" className="form-label">First Name</label>
@@ -104,7 +107,8 @@ function PersonalDataForm() {
             </div>
 
             <button type="submit" className="btn btn-primary">Continue</button>
-        </form>
+            </form>
+        </>
     )
 }
 
