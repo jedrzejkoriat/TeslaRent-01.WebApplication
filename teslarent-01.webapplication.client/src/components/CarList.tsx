@@ -58,8 +58,6 @@ function CarList() {
 
     // HTML
     return (
-        <>
-            <p>{searchData.startDate} - {searchData.endDate}</p>
             <>
                 {cars.map((car) => (
                     <div key={car.id} className="card mb-3" style={{ maxWidth: '540px' }}>
@@ -83,10 +81,10 @@ function CarList() {
                                         <li><strong>0-100:</strong> {car.acceleration}s</li>
                                     </ul>
                                     <p className="card-text">
-                                        <strong>Daily Price:</strong> ${car.dailyPrice.toFixed(2)}
+                                        <strong>Daily Price:</strong> €{car.dailyPrice.toFixed(2)}
                                     </p>
                                     <p className="card-text">
-                                        <strong>Price:</strong> ${car.price.toFixed(2)}
+                                        <strong>Price:</strong> €{car.price.toFixed(2)}
                                     </p>
                                     <button
                                         className="btn btn-primary"
@@ -100,7 +98,6 @@ function CarList() {
                     </div>
                 ))}
             </>
-        </>
     );
 }
 

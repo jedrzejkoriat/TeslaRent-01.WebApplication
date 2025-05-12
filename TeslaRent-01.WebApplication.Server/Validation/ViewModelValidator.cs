@@ -13,7 +13,7 @@ namespace TeslaRent_01.WebApplication.Server.Validation
             if (validationErrors.Any())
             {
                 var errorMessages = validationErrors.Select(v => v.ErrorMessage);
-                throw new ValidationException(string.Join("; ", errorMessages));
+                throw new ValidationException(string.Join("\n", errorMessages));
             }
         }
     }

@@ -78,7 +78,7 @@ function SearchForm() {
 
     // HTML
     return (
-        <>{error ? <p>{error.details}</p> : null}
+        <>{error ? <div className="alert alert-danger">{error.details}</div> : null}
         <>{isLoading ? (<div className="spinner-border text-primary" role="status">
             <span className="visually-hidden">Loading...</span>
         </div>) : (
