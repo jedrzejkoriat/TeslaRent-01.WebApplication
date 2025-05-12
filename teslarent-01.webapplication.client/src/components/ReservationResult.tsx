@@ -13,6 +13,7 @@ function ReservationResult() {
     useEffect(() => {
         const fetchReservationDetails = async () => {
             try {
+                console.log("Fetching details");
                 const url = 'api/reservation';
                 const bodyData = reservationCreate;
 
@@ -29,7 +30,7 @@ function ReservationResult() {
                 }
                 const data: ReservationDetails = await response.json();
                 setReservationDetails(data);
-                console.log("Detailsfetched");
+                console.log("Details fetched");
             } catch (error) {
                 console.error('Error fetching reservation details:', error);
             } finally {
@@ -39,6 +40,43 @@ function ReservationResult() {
 
         fetchReservationDetails();
     }, [reservationCreate]);
+
+    const handleDownload = async () => {
+        try {
+            console.log("Fetching document");
+            const url = 'api/reservation/document';
+            const bodyData = reservationDetails;
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(bodyData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch reservation document');
+            }
+
+            console.log("Document fetched");
+
+            const blob = await response.blob();
+            const downloadUrl = window.URL.createObjectURL(blob);
+
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = 'Reservation_Confirmation.pdf';
+            document.body.appendChild(link);
+            link.click();
+
+            link.remove();
+            window.URL.revokeObjectURL(downloadUrl);
+
+        } catch (error) {
+            console.error('Error fetching reservation details:', error);
+        }
+    };
 
 
     return (
@@ -65,7 +103,13 @@ function ReservationResult() {
                         <p><strong>End Date:</strong> {reservationDetails.reservation.endDate}</p>
                     <p><strong>Customer:</strong> {reservationDetails.reservation.firstName} {reservationDetails.reservation.lastName}</p>
                     <p><strong>Email:</strong> {reservationDetails.reservation.email}</p>
-                    <p><strong>Phone:</strong> {reservationDetails.reservation.phoneNumber}</p>
+                        <p><strong>Phone:</strong> {reservationDetails.reservation.phoneNumber}</p>
+                        <button
+                            className="btn btn-primary"
+                            onClick={() => handleDownload()}
+                        >
+                            Download
+                        </button>
                 </div>
             ) : (
                 <div>No reservation details available.</div>
