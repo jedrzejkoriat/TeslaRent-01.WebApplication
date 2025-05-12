@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+
+import type { ReservationDetails } from '../types/ReservationDetails';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import type { ReservationCreate } from '../types/ReservationCreate';
@@ -10,21 +12,41 @@ function PersonalDataForm() {
 
     const [reservationData, setReservationData] = useState<ReservationCreate>(location.state as ReservationCreate);
 
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        console.log('Form data submitted:', reservationData);
 
-    // handle input changes
+        try {
+            console.log("Fetching details");
+            const url = 'api/reservation';
+            const bodyData = reservationData;
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(bodyData)
+
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch reservation details');
+            }
+            const reservationDetails: ReservationDetails = await response.json();
+            console.log("Details fetched");
+
+            navigate('/reservation-result', { state: reservationDetails });
+        } catch (error) {
+            console.error('Error fetching reservation details:', error);
+        }
+    };
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setReservationData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
-    };
-
-    // handle data submission
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log('Form data submitted:', reservationData);
-        navigate('/reservation-result', { state: reservationData });
     };
 
     return (

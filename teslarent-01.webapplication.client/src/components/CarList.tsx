@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import type { ReservationSearch } from '../types/ReservationSearch';
 import type { ReservationCreate } from '../types/ReservationCreate';
 import type { CarModel } from '../types/CarModel';
@@ -15,10 +14,12 @@ function CarList() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const searchData = location.state as ReservationSearch;
+    const { data: cars, searchData } = location.state as {
+        cars: CarModel[];
+        searchData: ReservationSearch;
+    };
 
-    const [cars, setCars] = useState<CarModel[]>([]);
+    console.log("Received cars: ", cars);
 
     const carImages: Record<number, string> = {
         1: car1,
@@ -27,27 +28,6 @@ function CarList() {
         4: car4,
         5: car5
     };
-
-    useEffect(() => {
-        const fetchCars = async () => {
-            try {
-                const url = `/api/cars/start_location/${searchData.startLocationId}/start_date/${searchData.startDate}/end_location/${searchData.endLocationId}/end_date/${searchData.endDate}`;
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch cars');
-                }
-                const data: CarModel[] = await response.json();
-                setCars(data);
-                console.log("Cars fetched");
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchCars();
-    }, []);
 
     const handleSelect = (car: CarModel) => {
         const reservationCreate: ReservationCreate = {
@@ -63,57 +43,52 @@ function CarList() {
             email: '',
             phoneNumber: ''
         };
-        navigate('/personal-data', { state: reservationCreate } )
+        navigate('/personal-data', { state: reservationCreate })
     }
 
     return (
         <>
-            {isLoading ? (
-                <div className="spinner-border text-primary" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </div>
-            ) : (
-                <>
-                    {cars.map((car) => (
-                        <div key={car.id} className="card mb-3" style={{ maxWidth: '540px' }}>
-                            <div className="row g-0">
-                                <div className="col-md-4">
-                                    <img
-                                        src={carImages[car.id]}
-                                        className="img-fluid rounded-start"
-                                        alt={car.name}
-                                    />
-                                </div>
-                                <div className="col-md-8">
-                                    <div className="card-body">
-                                        <h5 className="card-title">{car.name}</h5>
-                                        <p className="card-text">{car.description}</p>
-                                        <ul className="list-unstyled mb-2">
-                                            <li><strong>Body Type:</strong> {car.bodyType}</li>
-                                            <li><strong>Seats:</strong> {car.seats}</li>
-                                            <li><strong>Max Speed:</strong> {car.maxSpeed} km/h</li>
-                                            <li><strong>Range:</strong> {car.maxRange} km</li>
-                                            <li><strong>0-100:</strong> {car.acceleration}s</li>
-                                        </ul>
-                                        <p className="card-text">
-                                            <strong>Daily Price:</strong> ${car.dailyPrice.toFixed(2)}
-                                        </p>
-                                        <p className="card-text">
-                                            <strong>Price:</strong> ${car.price.toFixed(2)}
-                                        </p>
-                                        <button
-                                            className="btn btn-primary"
-                                            onClick={() => handleSelect(car)}
-                                        >
-                                            Select
-                                        </button>
-                                    </div>
+            <p>{searchData.startDate} - {searchData.endDate}</p>
+            <>
+                {cars.map((car) => (
+                    <div key={car.id} className="card mb-3" style={{ maxWidth: '540px' }}>
+                        <div className="row g-0">
+                            <div className="col-md-4">
+                                <img
+                                    src={carImages[car.id]}
+                                    className="img-fluid rounded-start"
+                                    alt={car.name}
+                                />
+                            </div>
+                            <div className="col-md-8">
+                                <div className="card-body">
+                                    <h5 className="card-title">{car.name}</h5>
+                                    <p className="card-text">{car.description}</p>
+                                    <ul className="list-unstyled mb-2">
+                                        <li><strong>Body Type:</strong> {car.bodyType}</li>
+                                        <li><strong>Seats:</strong> {car.seats}</li>
+                                        <li><strong>Max Speed:</strong> {car.maxSpeed} km/h</li>
+                                        <li><strong>Range:</strong> {car.maxRange} km</li>
+                                        <li><strong>0-100:</strong> {car.acceleration}s</li>
+                                    </ul>
+                                    <p className="card-text">
+                                        <strong>Daily Price:</strong> ${car.dailyPrice.toFixed(2)}
+                                    </p>
+                                    <p className="card-text">
+                                        <strong>Price:</strong> ${car.price.toFixed(2)}
+                                    </p>
+                                    <button
+                                        className="btn btn-primary"
+                                        onClick={() => handleSelect(car)}
+                                    >
+                                        Select
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    ))}
-                </>
-            )}
+                    </div>
+                ))}
+            </>
         </>
     );
 }

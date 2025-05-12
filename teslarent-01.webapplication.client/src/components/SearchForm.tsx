@@ -1,24 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import type { ReservationSearch } from '../types/ReservationSearch';
 import type { LocationName } from '../types/LocationName';
+import type { CarModel } from '../types/CarModel';
 import { useNavigate } from 'react-router-dom';
 
 function SearchForm() {
     // Search form state
-    const [formData, setFormData] = useState<ReservationSearch>({
+    const [searchData, setSearchData] = useState<ReservationSearch>({
         startLocationId: 0,
         endLocationId: 0,
         startDate: '',
         endDate: '',
     });
 
-    // locations state
     const [locations, setLocations] = useState<LocationName[]>([]);
-
-    // loading state
     const [isLoading, setIsLoading] = useState<boolean>(true);
-
-    // navigation
     const navigate = useNavigate();
 
     // fetch locations from API
@@ -41,21 +37,33 @@ function SearchForm() {
         fetchLocations();
     }, []);
 
+    // fetch cars
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        console.log("Start fetching cars");
+
+        try {
+            const url = `/api/cars/start_location/${searchData.startLocationId}/start_date/${searchData.startDate}/end_location/${searchData.endLocationId}/end_date/${searchData.endDate}`;
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Failed to fetch cars');
+            }
+            const cars: CarModel[] = await response.json();
+            console.log("Cars fetched");
+
+            navigate('/cars', { state: { data: cars, searchData } });
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     // handle input changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({
+        setSearchData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
-    };
-
-    // handle data submission
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log('Form data submitted:', formData);
-        navigate('/cars', { state: formData });
     };
 
     return (
@@ -70,7 +78,7 @@ function SearchForm() {
                         id="startLocationId"
                         name="startLocationId"
                         className="form-control"
-                        value={formData.startLocationId}
+                        value={searchData.startLocationId}
                         onChange={handleChange}
                     >
                         <option value={0}>Select Start Location</option>
@@ -88,7 +96,7 @@ function SearchForm() {
                         id="endLocationId"
                         name="endLocationId"
                         className="form-control"
-                        value={formData.endLocationId}
+                        value={searchData.endLocationId}
                         onChange={handleChange}
                     >
                         <option value={0}>Select End Location</option>
@@ -107,7 +115,7 @@ function SearchForm() {
                         className="form-control"
                         id="startDate"
                         name="startDate"
-                        value={formData.startDate}
+                        value={searchData.startDate}
                         onChange={handleChange}
                     />
                 </div>
@@ -119,7 +127,7 @@ function SearchForm() {
                         className="form-control"
                         id="endDate"
                         name="endDate"
-                        value={formData.endDate}
+                        value={searchData.endDate}
                         onChange={handleChange}
                     />
                 </div>
