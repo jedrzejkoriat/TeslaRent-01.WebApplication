@@ -36,6 +36,10 @@ namespace TeslaRent_01.WebApplication.Server.Data
                 .HasForeignKey(r => r.EndLocationId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<CarModel>()
+                .Property(d => d.Description)
+                .HasMaxLength(1000);
+
             // View models for sql queries
             modelBuilder.Entity<CarModelVM>(entity =>
             {

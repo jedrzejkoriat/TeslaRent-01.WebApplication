@@ -16,20 +16,44 @@
 body {
     color: #f1f1f1;
     padding-top: 70px;
-    background-color: #242424 !important;
+    background-color: #1e1e1e !important;
 }
 
-.card {
-    background-color: #1e1e1e;
-    color: #fff;
+input {
+    width: 500px !important;
 }
 
-.navbar {
-    background-color: #646363 !important;
-    color: #fff !important;
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+    }
+
+.container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.form-label {
     font-weight: bold;
-    
 }
+
+/* ========================================NAVBAR===========================================*/
+.navbar {
+    background: linear-gradient(to bottom, #000000 70%, #1e1e1e 100%);
+    background-color: #000000 !important;
+    font-weight: bold;
+    height: 70px;
+}
+
+    .navbar .nav-link {
+        position: relative;
+        top: -7px;
+    }
+
+    .navbar .navbar-brand {
+        position: relative;
+        top: -7px;
+    }
 
 .btn-primary {
     background-color: #0d6efd;
@@ -88,4 +112,9 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.card {
+    background-color: #1e1e1e;
+    color: #fff;
 }

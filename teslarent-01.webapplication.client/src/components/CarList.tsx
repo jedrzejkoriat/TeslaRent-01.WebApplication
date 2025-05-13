@@ -60,9 +60,11 @@ function CarList() {
     return (
             <>
                 {cars.map((car) => (
-                    <div key={car.id} className="card mb-3" style={{ maxWidth: '540px' }}>
+                    <div key={car.id} className="card mb-3" style={{ maxWidth: '1200px' }}>
                         <div className="row g-0">
-                            <div className="col-md-4">
+                            <h5 className="card-title d-flex justify-content-left" style={{ paddingLeft: '20px', paddingTop: '20px' }}>{car.name}</h5>
+                            <p className="card-text d-flex justify-content-left" style={{ paddingLeft: '20px' }}>{car.description}</p>
+                            <div className="col-md-4 d-flex justify-content-center align-items-center" style={{ paddingLeft: '20px' }}>
                                 <img
                                     src={carImages[car.id]}
                                     className="img-fluid rounded-start"
@@ -71,8 +73,6 @@ function CarList() {
                             </div>
                             <div className="col-md-8">
                                 <div className="card-body">
-                                    <h5 className="card-title">{car.name}</h5>
-                                    <p className="card-text">{car.description}</p>
                                     <ul className="list-unstyled mb-2">
                                         <li><strong>Body Type:</strong> {car.bodyType}</li>
                                         <li><strong>Seats:</strong> {car.seats}</li>
