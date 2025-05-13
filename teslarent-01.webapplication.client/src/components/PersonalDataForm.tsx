@@ -55,6 +55,7 @@ function PersonalDataForm() {
     return (
         <>{error ? <p>{error.details}</p> : null}
             <div className="container">
+                <h3><span className="badge bg-dark w-100">Personal Information</span></h3>
         <form onSubmit={handleSubmitButton}>
             <div className="mb-3">
                 <label htmlFor="firstName" className="form-label">First Name</label>

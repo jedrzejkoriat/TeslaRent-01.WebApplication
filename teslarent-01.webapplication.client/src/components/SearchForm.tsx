@@ -82,11 +82,11 @@ function SearchForm() {
             <>{isLoading ? (<div className="spinner-border text-primary" role="status">
                 <span className="visually-hidden">Loading...</span>
             </div>) : (
-                <div className="container">
+                    <div className="container">
+                        <h3><span className="badge bg-dark w-100">Search Cars</span></h3>
                     <form onSubmit={handleSubmitButton}>
                         <div className="mb-3">
                             <label htmlFor="startLocationId" className="form-label">Start Location</label>
-
                             <select
                                 id="startLocationId"
                                 name="startLocationId"
@@ -145,7 +145,7 @@ function SearchForm() {
                             />
                         </div>
 
-                            <button type="submit" className="btn btn-dark">Search Cars</button>
+                        <button type="submit" className="btn btn-dark w-100">Search Cars</button>
                     </form>
                 </div>
             )}

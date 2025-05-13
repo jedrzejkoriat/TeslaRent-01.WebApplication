@@ -58,7 +58,7 @@ namespace TeslaRent_01.WebApplication.Server.Builders
 
             gfx.DrawString($"Amount: {reservation.Price:0.00} EUR", fontNormal, XBrushes.Black, new XPoint(margin, yPosition)); yPosition += 15;
             gfx.DrawString("Account Name: Tesla Rent", fontNormal, XBrushes.Black, new XPoint(margin, yPosition)); yPosition += 15;
-            gfx.DrawString("IBAN: ES76 1234 5678 9012 3456 7890", fontNormal, XBrushes.Black, new XPoint(margin, yPosition)); yPosition += 15;
+            gfx.DrawString("IBAN: ES76 DONO TMAK EANY PAYM ENTS", fontNormal, XBrushes.Black, new XPoint(margin, yPosition)); yPosition += 15;
             gfx.DrawString("BIC: MAJRESMMXXX", fontNormal, XBrushes.Black, new XPoint(margin, yPosition)); yPosition += 20;
 
             // Return Location

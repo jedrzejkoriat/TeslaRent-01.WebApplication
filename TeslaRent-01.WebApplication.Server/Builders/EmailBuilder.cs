@@ -35,7 +35,7 @@ namespace TeslaRent_01.WebApplication.Server.Builders
                     <h3>Payment Details:</h3>
                     <p>Amount: {reservationDetailsVM.ReservationCreateVM.Price} EUR<br>
                        Account Name: Tesla Rent<br>
-                       IBAN: ES76 1234 5678 9012 3456 7890<br>
+                       IBAN: ES76 DONO TMAK EANY PAYM ENTS<br>
                        BIC: MAJRESMMXXX</p>
 
                     <h3>Return Location:</h3>

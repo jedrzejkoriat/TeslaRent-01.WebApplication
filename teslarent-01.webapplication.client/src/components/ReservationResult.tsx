@@ -58,9 +58,8 @@ function ReservationResult() {
         <>{error ? <p>{error.details}</p> : null}
             <div className="container">
                 <div className="row" style={{ paddingBottom: '20px', paddingLeft: '15px', paddingRight:'15px' }}>
-                    <div className="container-cars">
-                        <h4>Reservation Details</h4>
-                    </div>
+
+                    <h3><span className="badge bg-dark w-100">Your Reservation</span></h3>
                 </div>
                 <div><p><strong>Thank you! Your reservation has been completed, and a confirmation email has been sent to the address you provided. Please make the payment one day before the start of your reservation.
                 </strong></p></div>
@@ -85,22 +84,22 @@ function ReservationResult() {
                             <p>{reservationDetails.endLocation.street} {reservationDetails.endLocation.streetNumber}, {reservationDetails.endLocation.zipCode}</p>
                             <h5><i className="bi bi-calendar-event"></i> End Date:</h5>
                             <p className="mb-1">{new Date(reservationDetails.reservation.endDate).toLocaleDateString()}</p>
-                            <p>10:00 AM - 8:00 PM</p>
+                            <p>10:00 AM</p>
                         </div>
                     </div>
                     <div className="col-md-3">
                         <div className="container" style={{ minHeight: '100%' }}>
                             <h5><i className="bi bi-info-circle"></i> Reservation Info:</h5>
-                            <p><strong>Car:</strong> {reservationDetails.reservation.carModelName}</p>
-                            <p><strong>Price:</strong> ${reservationDetails.reservation.price.toFixed(2)}</p>
+                            <p className="mb-1"><strong>Car:</strong> {reservationDetails.reservation.carModelName}</p>
+                            <p className="mb-1"><strong>Price:</strong> ${reservationDetails.reservation.price.toFixed(2)}</p>
                             <p><strong>Deposit:</strong> ${(reservationDetails.reservation.price * 0.3).toFixed(2)}</p>
                         </div>
                     </div>
                     <div className="col-md-3">
                         <div className="container" style={{ minHeight: '100%' }}>
-                            <h5>Customer Information:</h5>
-                            <p><strong>Customer:</strong> {reservationDetails.reservation.firstName} {reservationDetails.reservation.lastName}</p>
-                            <p><strong>Email:</strong> {reservationDetails.reservation.email}</p>
+                            <h5><i className="bi bi-info-circle"></i> Customer Info:</h5>
+                            <p className="mb-1"><strong>Customer:</strong> {reservationDetails.reservation.firstName} {reservationDetails.reservation.lastName}</p>
+                            <p className="mb-1"><strong>Email:</strong> {reservationDetails.reservation.email}</p>
                             <p><strong>Phone:</strong> {reservationDetails.reservation.phoneNumber}</p>
                         </div>
                     </div>
