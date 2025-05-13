@@ -54,6 +54,7 @@ function PersonalDataForm() {
     // HTML
     return (
         <>{error ? <p>{error.details}</p> : null}
+            <div className="container">
         <form onSubmit={handleSubmitButton}>
             <div className="mb-3">
                 <label htmlFor="firstName" className="form-label">First Name</label>
@@ -106,9 +107,9 @@ function PersonalDataForm() {
                     required
                 />
             </div>
-
-            <button type="submit" className="btn btn-primary">Continue</button>
-            </form>
+                    <button type="submit" className="btn btn-dark w-100">Continue</button>
+                </form>
+            </div>
         </>
     )
 }
