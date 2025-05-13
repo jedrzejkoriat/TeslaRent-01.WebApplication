@@ -1,6 +1,6 @@
 function Privacy() {
     return (<>
-        <div className="max-w-3xl mx-auto px-6 py-10 text-gray-800 text-start text-white">
+        <div className="max-w-3xl mx-auto px-6 py-10 text-gray-800 text-start text-white" style={{paddingTop:"100px"} }>
             <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
             <p className="mb-4">
                 This website is part of an educational project and is not intended for commercial use.

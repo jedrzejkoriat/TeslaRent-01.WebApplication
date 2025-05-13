@@ -5,6 +5,7 @@
 
 ## appsettings
 TeslaRent-01.WebApplication.Server/appsettings.Development.json
+TeslaRent-01.WebApplication.Server/appsettings.json
 
 # User-specific files
 *.rsuser
