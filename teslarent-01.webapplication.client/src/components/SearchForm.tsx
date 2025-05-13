@@ -79,75 +79,77 @@ function SearchForm() {
     // HTML
     return (
         <>{error ? <div className="alert alert-danger">{error.details}</div> : null}
-            <>{isLoading ? (<div className="spinner-border text-primary" role="status">
+            <>{isLoading ? (<div className="spinner-border text-secondary" role="status">
                 <span className="visually-hidden">Loading...</span>
             </div>) : (
+                <>
+                    <h1 className="text-start text-white">Search cars</h1>
                     <div className="container">
-                        <h3><span className="badge bg-dark w-100">Search Cars</span></h3>
-                    <form onSubmit={handleSubmitButton}>
-                        <div className="mb-3">
-                            <label htmlFor="startLocationId" className="form-label">Start Location</label>
-                            <select
-                                id="startLocationId"
-                                name="startLocationId"
-                                className="form-control"
-                                value={searchData.startLocationId}
-                                onChange={handleChange}
-                            >
-                                <option value={0}>Select Start Location</option>
-                                {locations.map((location) => (
-                                    <option key={location.id} value={location.id}>
-                                        {location.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+                        <form onSubmit={handleSubmitButton}>
+                            <div className="mb-3">
+                                <label htmlFor="startLocationId" className="form-label">Start Location</label>
+                                <select
+                                    id="startLocationId"
+                                    name="startLocationId"
+                                    className="form-control"
+                                    value={searchData.startLocationId}
+                                    onChange={handleChange}
+                                >
+                                    <option value={0}>Select Start Location</option>
+                                    {locations.map((location) => (
+                                        <option key={location.id} value={location.id}>
+                                            {location.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="endLocationId" className="form-label">End Location</label>
-                            <select
-                                id="endLocationId"
-                                name="endLocationId"
-                                className="form-control"
-                                value={searchData.endLocationId}
-                                onChange={handleChange}
-                            >
-                                <option value={0}>Select End Location</option>
-                                {locations.map((location) => (
-                                    <option key={location.id} value={location.id}>
-                                        {location.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+                            <div className="mb-3">
+                                <label htmlFor="endLocationId" className="form-label">End Location</label>
+                                <select
+                                    id="endLocationId"
+                                    name="endLocationId"
+                                    className="form-control"
+                                    value={searchData.endLocationId}
+                                    onChange={handleChange}
+                                >
+                                    <option value={0}>Select End Location</option>
+                                    {locations.map((location) => (
+                                        <option key={location.id} value={location.id}>
+                                            {location.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="startDate" className="form-label">Start Date</label>
-                            <input
-                                type="date"
-                                className="form-control"
-                                id="startDate"
-                                name="startDate"
-                                value={searchData.startDate}
-                                onChange={handleChange}
-                            />
-                        </div>
+                            <div className="mb-3">
+                                <label htmlFor="startDate" className="form-label">Start Date</label>
+                                <input
+                                    type="date"
+                                    className="form-control"
+                                    id="startDate"
+                                    name="startDate"
+                                    value={searchData.startDate}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="endDate" className="form-label">End Date</label>
-                            <input
-                                type="date"
-                                className="form-control"
-                                id="endDate"
-                                name="endDate"
-                                value={searchData.endDate}
-                                onChange={handleChange}
-                            />
-                        </div>
+                            <div className="mb-3">
+                                <label htmlFor="endDate" className="form-label">End Date</label>
+                                <input
+                                    type="date"
+                                    className="form-control"
+                                    id="endDate"
+                                    name="endDate"
+                                    value={searchData.endDate}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                        <button type="submit" className="btn btn-dark w-100">Search Cars</button>
-                    </form>
-                </div>
+                            <button type="submit" className="btn btn-dark w-100">Search</button>
+                        </form>
+                    </div>
+                </>
             )}
             </>
         </>

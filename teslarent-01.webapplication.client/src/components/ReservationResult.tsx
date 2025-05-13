@@ -56,10 +56,9 @@ function ReservationResult() {
     // HTML
     return (
         <>{error ? <p>{error.details}</p> : null}
+            <h1 className="text-start text-white">Your reservation</h1>
             <div className="container">
                 <div className="row" style={{ paddingBottom: '20px', paddingLeft: '15px', paddingRight:'15px' }}>
-
-                    <h3><span className="badge bg-dark w-100">Your Reservation</span></h3>
                 </div>
                 <div><p><strong>Thank you! Your reservation has been completed, and a confirmation email has been sent to the address you provided. Please make the payment one day before the start of your reservation.
                 </strong></p></div>

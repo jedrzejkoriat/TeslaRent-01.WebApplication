@@ -54,64 +54,64 @@ function PersonalDataForm() {
     // HTML
     return (
         <>{error ? <p>{error.details}</p> : null}
-            <div className="container">
-                <h3><span className="badge bg-dark w-100">Personal Information</span></h3>
-        <form onSubmit={handleSubmitButton}>
-            <div className="mb-3">
-                <label htmlFor="firstName" className="form-label">First Name</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="firstName"
-                    name="firstName"
-                    value={reservationData.firstName}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
+                <h1 className="text-start text-white">Personal information</h1>
+                <div className="container">
+                    <form onSubmit={handleSubmitButton}>
+                        <div className="mb-3">
+                            <label htmlFor="firstName" className="form-label">First Name</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="firstName"
+                                name="firstName"
+                                value={reservationData.firstName}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
 
-            <div className="mb-3">
-                <label htmlFor="lastName" className="form-label">Last Name</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="lastName"
-                    name="lastName"
-                    value={reservationData.lastName}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
+                        <div className="mb-3">
+                            <label htmlFor="lastName" className="form-label">Last Name</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="lastName"
+                                name="lastName"
+                                value={reservationData.lastName}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
 
-            <div className="mb-3">
-                <label htmlFor="email" className="form-label">Email</label>
-                <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    name="email"
-                    value={reservationData.email}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
+                        <div className="mb-3">
+                            <label htmlFor="email" className="form-label">Email</label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                id="email"
+                                name="email"
+                                value={reservationData.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
 
-            <div className="mb-3">
-                <label htmlFor="phoneNumber" className="form-label">Phone</label>
-                <input
-                    type="tel"
-                    className="form-control"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    value={reservationData.phoneNumber}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-                    <button type="submit" className="btn btn-dark w-100">Continue</button>
-                </form>
-            </div>
-        </>
+                        <div className="mb-3">
+                            <label htmlFor="phoneNumber" className="form-label">Phone</label>
+                            <input
+                                type="tel"
+                                className="form-control"
+                                id="phoneNumber"
+                                name="phoneNumber"
+                                value={reservationData.phoneNumber}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-dark w-100">Continue</button>
+                    </form>
+                </div>
+            </>
     )
 }
 
