@@ -58,46 +58,59 @@ function CarList() {
 
     // HTML
     return (
-            <>
-                {cars.map((car) => (
-                    <div key={car.id} className="card mb-3" style={{ maxWidth: '1200px' }}>
-                        <div className="row g-0">
-                            <h5 className="card-title d-flex justify-content-left" style={{ paddingLeft: '20px', paddingTop: '20px' }}>{car.name}</h5>
-                            <p className="card-text d-flex justify-content-left" style={{ paddingLeft: '20px' }}>{car.description}</p>
-                            <div className="col-md-4 d-flex justify-content-center align-items-center" style={{ paddingLeft: '20px' }}>
-                                <img
-                                    src={carImages[car.id]}
-                                    className="img-fluid rounded-start"
-                                    alt={car.name}
-                                />
-                            </div>
-                            <div className="col-md-8">
-                                <div className="card-body">
-                                    <ul className="list-unstyled mb-2">
-                                        <li><strong>Body Type:</strong> {car.bodyType}</li>
-                                        <li><strong>Seats:</strong> {car.seats}</li>
-                                        <li><strong>Max Speed:</strong> {car.maxSpeed} km/h</li>
-                                        <li><strong>Range:</strong> {car.maxRange} km</li>
-                                        <li><strong>0-100:</strong> {car.acceleration}s</li>
-                                    </ul>
-                                    <p className="card-text">
-                                        <strong>Daily Price:</strong> €{car.dailyPrice.toFixed(2)}
-                                    </p>
-                                    <p className="card-text">
-                                        <strong>Price:</strong> €{car.price.toFixed(2)}
-                                    </p>
-                                    <button
-                                        className="btn btn-primary"
-                                        onClick={() => handleSelectButton(car)}
-                                    >
-                                        Select
-                                    </button>
+        <>
+            {cars.map((car) => (
+                <div key={car.id} className="card mb-3" style={{ maxWidth: '900px' }}>
+                    <div className="row g-0  text-start">
+                        <h4 className="card-title d-flex justify-content-left" style={{ paddingLeft: '20px', paddingTop: '20px' }}>{car.name}</h4>
+                        <p className="card-text d-flex justify-content-left" style={{ paddingLeft: '20px', paddingRight: '20px' }}>{car.description}</p>
+                        <div className="col-md-4 d-flex justify-content-center align-items-center" style={{ paddingLeft: '20px' }}>
+                            <img
+                                src={carImages[car.id]}
+                                className="img-fluid rounded-start"
+                                alt={car.name}
+                            />
+                        </div>
+                        <div className="col-md-8">
+                            <div className="card-body">
+                                <div className="row">
+                                    <div className="col-md-1"></div>
+                                    <div className="col-md-4">
+                                        <ul className="list-unstyled mb-2">
+                                            <li><i className="bi bi-car-front-fill"></i> {car.bodyType}</li>
+                                            <li><i className="bi bi-person-arms-up"></i> {car.seats}</li>
+                                            <li><i className="bi bi-speedometer2"></i> {car.maxSpeed} km/h</li>
+                                            <li><i className="bi bi-battery-charging"></i> {car.maxRange} km</li>
+                                            <li><i className="bi bi-rocket-takeoff-fill"></i> {car.acceleration}s</li>
+                                        </ul>
+                                    </div>
+                                    <div className="col-md-7">
+                                        <div className="container-cars">
+                                            <div className="row h-100">
+                                                <div className="col-md-8">
+                                                    <p className="card-text mb-1">
+                                                        <strong>Daily Price:</strong><i className="bi bi-currency-euro"></i>{car.dailyPrice.toFixed(2)}
+                                                    </p>
+                                                    <p className="card-text mb-1">
+                                                        <strong>Total Price:</strong> <i className="bi bi-currency-euro"></i>{car.price.toFixed(2)}
+                                                    </p>
+                                                    <p className="card-text mb-1">
+                                                        <strong>Deposit:</strong> <i className="bi bi-currency-euro"></i>{(car.price * 0.3).toFixed(2)}
+                                                    </p>
+                                                </div>
+                                                <div className="col-md-4 d-flex flex-column justify-content-end align-items-end">
+                                                    <button className="btn btn-primary" onClick={() => handleSelectButton(car)}>Select</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                ))}
-            </>
+                </div>
+            ))}
+        </>
     );
 }
 
