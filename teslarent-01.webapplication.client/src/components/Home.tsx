@@ -1,20 +1,16 @@
-import carVideo from '../assets/home/video.mp4'
+import carPhoto from '../assets/home/home.jpg';
 
 function Home() {
     return (
         <div className="body" style={{ paddingTop: '0px' }}>
-            <video
+            <img
                 className="absolute top-0 left-0 h-full object-cover"
-                src={carVideo}
-                autoPlay
-                muted
-                loop
-                playsInline
-                style={{ width: '1905px' }}
+                src={carPhoto}
+                alt="Car"
+                style={{ width: '1905px', height:'911px' }}
             />
         </div>
     );
 }
-
 
 export default Home;

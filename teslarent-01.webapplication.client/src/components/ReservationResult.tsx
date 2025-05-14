@@ -91,7 +91,6 @@ function ReservationResult() {
                             <h5><i className="bi bi-info-circle"></i> Reservation Info:</h5>
                             <p className="mb-1"><strong>Car:</strong> {reservationDetails.reservation.carModelName}</p>
                             <p className="mb-1"><strong>Price:</strong> ${reservationDetails.reservation.price.toFixed(2)}</p>
-                            <p><strong>Deposit:</strong> ${(reservationDetails.reservation.price * 0.3).toFixed(2)}</p>
                         </div>
                     </div>
                     <div className="col-md-3">

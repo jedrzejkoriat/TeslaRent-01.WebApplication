@@ -12,10 +12,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <SpaStaticFiles Include="teslarent-01.webapplication.client/dist/**" />
-	  <Content Remove="wwwroot\index.html" />
-	  <Content Remove="wwwroot\logo.jpg" />
-	  <Content Remove="wwwroot\logo.svg" />
+    <Content Remove="wwwroot\assets\1-4vu6RBAY.png" />
+    <Content Remove="wwwroot\assets\2-CTDt25zM.png" />
+    <Content Remove="wwwroot\assets\3-CTWztvrh.png" />
+    <Content Remove="wwwroot\assets\4-ByrrEPpw.png" />
+    <Content Remove="wwwroot\assets\5-nNTEa09Y.png" />
+    <Content Remove="wwwroot\assets\bootstrap-icons-BeopsB42.woff" />
+    <Content Remove="wwwroot\assets\bootstrap-icons-mSm7cUeB.woff2" />
+    <Content Remove="wwwroot\assets\home-CNN_54DD.jpg" />
+    <Content Remove="wwwroot\assets\index-C_vN8_IX.js" />
+    <Content Remove="wwwroot\assets\index-NbcpdrRq.css" />
+    <Content Remove="wwwroot\index.html" />
+    <Content Remove="wwwroot\logo.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="14.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
@@ -33,14 +44,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 	
-	<Target Name="PublishReact" AfterTargets="ComputeFilesToPublish">
-		<Exec Command="npm install" WorkingDirectory="$(SpaRoot)" />
-		<Exec Command="npm run build" WorkingDirectory="$(SpaRoot)" />
-		<ItemGroup>
-			<DistFiles Include="$(SpaRoot)dist\**" />
-			<ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)" RelativePath="%(DistFiles.Identity)" CopyToPublishDirectory="PreserveNewest" />
-		</ItemGroup>
-	</Target>
+
 	
 
   <ItemGroup>
@@ -51,7 +55,21 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\assets\1-4vu6RBAY.png" />
+	  <Content Include="wwwroot\assets\2-CTDt25zM.png" />
+	  <Content Include="wwwroot\assets\3-CTWztvrh.png" />
+	  <Content Include="wwwroot\assets\4-ByrrEPpw.png" />
+	  <Content Include="wwwroot\assets\5-nNTEa09Y.png" />
+	  <Content Include="wwwroot\assets\bootstrap-icons-BeopsB42.woff" />
+	  <Content Include="wwwroot\assets\bootstrap-icons-mSm7cUeB.woff2" />
+	  <Content Include="wwwroot\assets\home-CNN_54DD.jpg" />
+	  <Content Include="wwwroot\assets\index-C_vN8_IX.js" />
+	  <Content Include="wwwroot\assets\index-NbcpdrRq.css" />
+	  <Content Include="wwwroot\index.html" />
+	  <Content Include="wwwroot\logo.jpg" />
   </ItemGroup>
 
 </Project>

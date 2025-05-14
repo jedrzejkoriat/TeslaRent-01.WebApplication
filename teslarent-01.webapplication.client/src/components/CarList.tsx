@@ -95,7 +95,7 @@ function CarList() {
                                                             <strong>Total Price:</strong> <i className="bi bi-currency-euro"></i>{car.price.toFixed(2)}
                                                         </p>
                                                         <p className="card-text mb-1">
-                                                            <strong>Deposit:</strong> <i className="bi bi-currency-euro"></i>{(car.price * 0.3).toFixed(2)}
+                                                            <strong>Deposit:</strong> <i className="bi bi-currency-euro"></i>{(car.dailyPrice * 5).toFixed(2)}
                                                         </p>
                                                     </div>
                                                     <div className="col-md-4 d-flex flex-column justify-content-end align-items-end">
