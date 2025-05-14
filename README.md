@@ -18,7 +18,7 @@
 ## 📦 **Preview**
 
 ### Car List page
-![image](https://github.com/user-attachments/assets/78fcb788-665f-4625-9e6f-f1b95d7560f8)
+![image](https://github.com/user-attachments/assets/7138f283-bbf9-4b25-9547-6b4b9b87cafd)
 
 ### Home Page
 ![image](https://github.com/user-attachments/assets/fba10471-6a9e-4ee8-bbe3-2a6ac08bd702)
@@ -47,9 +47,9 @@
 ### 📊 Business logic
 ```
 1. Cars can be reserved daily
-2. Cars have discounts if they are reserved for 7-29days and even bigger discount for 30+ days
-3. In order to pickup the car, customer has to pay deposit which is 30% of total rental price
-4. Customer can pick up the car in chosen location and return it to any location selected
+2. Cars have discounts if they are reserved for 7-29days and even bigger discount for 30+ days.
+3. In order to pickup the car, customer has to pay deposit which is 500% of daily price.
+4. Customer can pick up the car in chosen location and return it to any location selected.
 5. Cars are searched based on availability. Reservations for a single car do not overlap.
    If a car is available for the selected dates but already has a subsequent reservation, it is checked whether
    the end location of the current search matches the start location of the existing reservation, and vice versa.
