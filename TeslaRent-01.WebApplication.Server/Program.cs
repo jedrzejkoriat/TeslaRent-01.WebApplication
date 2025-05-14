@@ -83,7 +83,6 @@ app.UseStaticFiles();
 
 app.MapFallbackToFile("index.html");
 
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -172,5 +171,7 @@ app.MapPost("/api/reservation/document", async (HttpContext context, [FromBody] 
         return Results.Problem(ex.Message);
     }
 });
+
+app.MapFallbackToFile("index.html");
 
 app.Run();
