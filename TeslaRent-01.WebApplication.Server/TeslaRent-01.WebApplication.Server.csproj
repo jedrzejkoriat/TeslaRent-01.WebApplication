@@ -13,17 +13,9 @@
 
   <ItemGroup>
 	  <SpaStaticFiles Include="teslarent-01.webapplication.client/dist/**" />
-	  <Content Remove="wwwroot\assets\1-4vu6RBAY.png" />
-	  <Content Remove="wwwroot\assets\2-CTDt25zM.png" />
-	  <Content Remove="wwwroot\assets\3-CTWztvrh.png" />
-	  <Content Remove="wwwroot\assets\4-ByrrEPpw.png" />
-	  <Content Remove="wwwroot\assets\5-nNTEa09Y.png" />
-	  <Content Remove="wwwroot\assets\bootstrap-icons-BeopsB42.woff" />
-	  <Content Remove="wwwroot\assets\bootstrap-icons-mSm7cUeB.woff2" />
-	  <Content Remove="wwwroot\assets\index-DTslgkqP.css" />
-	  <Content Remove="wwwroot\assets\index-f4ZMRUCQ.js" />
-	  <Content Remove="wwwroot\assets\video-seppurBD.mp4" />
 	  <Content Remove="wwwroot\index.html" />
+	  <Content Remove="wwwroot\logo.jpg" />
+	  <Content Remove="wwwroot\logo.svg" />
     <PackageReference Include="AutoMapper" Version="14.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
@@ -59,20 +51,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\assets\1-4vu6RBAY.png" />
-    <None Include="wwwroot\assets\2-CTDt25zM.png" />
-    <None Include="wwwroot\assets\3-CTWztvrh.png" />
-    <None Include="wwwroot\assets\4-ByrrEPpw.png" />
-    <None Include="wwwroot\assets\5-nNTEa09Y.png" />
-    <None Include="wwwroot\assets\bootstrap-icons-BeopsB42.woff" />
-    <None Include="wwwroot\assets\bootstrap-icons-mSm7cUeB.woff2" />
-    <None Include="wwwroot\assets\index-DTslgkqP.css" />
-    <None Include="wwwroot\assets\index-f4ZMRUCQ.js" />
-    <None Include="wwwroot\assets\video-seppurBD.mp4" />
-    <None Include="wwwroot\index.html" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
