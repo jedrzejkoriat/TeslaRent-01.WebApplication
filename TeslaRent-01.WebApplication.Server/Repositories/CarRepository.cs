@@ -1,10 +1,12 @@
-﻿using TeslaRent_01.WebApplication.Server.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using TeslaRent_01.WebApplication.Server.Contracts;
 using TeslaRent_01.WebApplication.Server.Data;
 
 namespace TeslaRent_01.WebApplication.Server.Repositories
 {
     internal sealed class CarRepository : GenericRepository<Car>, ICarRepository
     {
+
         public CarRepository(AppDbContext context) : base(context)
         {
         }

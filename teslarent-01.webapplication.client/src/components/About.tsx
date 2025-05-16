@@ -1,7 +1,11 @@
+import { useTranslation } from 'react-i18next';
+
 function About() {
+    const { t } = useTranslation();
+
     return (<>
         <div className="max-w-3xl mx-auto px-6 py-10 text-gray-800 font-sans leading-relaxed text-white text-start">
-            <h1 className="text-3xl font-bold mb-4">About TeslaRent</h1>
+            <h1 className="text-3xl font-bold mb-4">{t('about')}</h1>
             <p className="mb-4">
                 Welcome to <strong>TeslaRent</strong> - the world's most advanced car rental service that doesn't actually exist and never will.
             </p>

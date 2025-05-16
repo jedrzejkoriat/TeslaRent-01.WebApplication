@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import LanguageSwitcher from './items/LanguageSwitcher';
 
 function Navbar() {
     return (
@@ -22,6 +23,9 @@ function Navbar() {
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/contact">Contact</Link>
+                            </li>
+                            <li className="nav-item ms-auto">
+                                <LanguageSwitcher/>
                             </li>
                         </ul>
                     </div>

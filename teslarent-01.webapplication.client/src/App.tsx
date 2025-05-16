@@ -1,7 +1,5 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
-// Importuj komponenty
 import SearchForm from './components/SearchForm';
 import CarList from './components/CarList';
 import PersonalDataForm from './components/PersonalDataForm';
