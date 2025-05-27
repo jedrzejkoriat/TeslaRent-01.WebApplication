@@ -1,7 +1,14 @@
 import { Link } from 'react-router-dom';
-import LanguageSwitcher from './items/LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
 
 function Navbar() {
+    const { i18n } = useTranslation();
+
+    const changeLanguage = (lng: 'en' | 'pl') => {
+        i18n.changeLanguage(lng);
+    };
+
+
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -24,8 +31,14 @@ function Navbar() {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/contact">Contact</Link>
                             </li>
-                            <li className="nav-item ms-auto">
-                                <LanguageSwitcher/>
+                        </ul>
+
+                        <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li className="nav-item">
+                                <button className="nav-link btn btn-link" onClick={() => changeLanguage('en')}>English</button>
+                            </li>
+                            <li className="nav-item">
+                                <button className="nav-link btn btn-link" onClick={() => changeLanguage('pl')}>Polski</button>
                             </li>
                         </ul>
                     </div>
