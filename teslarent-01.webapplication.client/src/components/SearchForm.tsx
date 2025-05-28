@@ -82,12 +82,14 @@ function SearchForm() {
             <>{isLoading ? (<div className="spinner-border text-secondary" role="status">
                 <span className="visually-hidden">Loading...</span>
             </div>) : (
-                <>
-                    <h1 className="text-start text-white">Search cars</h1>
-                    <div className="container">
+                <div style={{ paddingTop: '100px' }}>
+                    <h1 className="text-start text-white">Search car</h1>
+                    <div className="container row mb-5">
                         <form onSubmit={handleSubmitButton}>
-                            <div className="mb-3">
-                                <label htmlFor="startLocationId" className="form-label">Start Location</label>
+                            <div className="mb-3 d-flex align-items-center">
+                                <label htmlFor="startLocationId" className="form-label me-2 mb-0" style={{ minWidth: '110px' }}>
+                                    Start Location
+                                </label>
                                 <select
                                     id="startLocationId"
                                     name="startLocationId"
@@ -104,8 +106,10 @@ function SearchForm() {
                                 </select>
                             </div>
 
-                            <div className="mb-3">
-                                <label htmlFor="endLocationId" className="form-label">End Location</label>
+                            <div className="mb-3 d-flex align-items-center">
+                                <label htmlFor="endLocationId" className="form-label me-2 mb-0" style={{ minWidth: '110px' }}>
+                                    End Location
+                                </label>
                                 <select
                                     id="endLocationId"
                                     name="endLocationId"
@@ -122,8 +126,10 @@ function SearchForm() {
                                 </select>
                             </div>
 
-                            <div className="mb-3">
-                                <label htmlFor="startDate" className="form-label">Start Date</label>
+                            <div className="mb-3 d-flex align-items-center">
+                                <label htmlFor="startDate" className="form-label me-2 mb-0" style={{ minWidth: '110px' }}>
+                                    Start Date
+                                </label>
                                 <input
                                     type="date"
                                     className="form-control"
@@ -134,8 +140,10 @@ function SearchForm() {
                                 />
                             </div>
 
-                            <div className="mb-3">
-                                <label htmlFor="endDate" className="form-label">End Date</label>
+                            <div className="mb-3 d-flex align-items-center">
+                                <label htmlFor="endDate" className="form-label me-2 mb-0" style={{ minWidth: '110px' }}>
+                                    End Date
+                                </label>
                                 <input
                                     type="date"
                                     className="form-control"
@@ -149,7 +157,7 @@ function SearchForm() {
                             <button type="submit" className="btn btn-dark w-100">Search</button>
                         </form>
                     </div>
-                </>
+                </div>
             )}
             </>
         </>

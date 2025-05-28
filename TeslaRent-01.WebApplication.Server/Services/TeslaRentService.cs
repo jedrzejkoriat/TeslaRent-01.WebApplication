@@ -19,6 +19,7 @@ namespace TeslaRent_01.WebApplication.Server.Services
         private readonly IEmailSender emailSender;
         private readonly IEmailBuilder emailBuilder;
         private readonly IPdfBuilder pdfBuilder;
+        private readonly ICarModelRepository carModelRepository;
 
         public TeslaRentService(
             IReservationRepository reservationRepository,
@@ -28,7 +29,8 @@ namespace TeslaRent_01.WebApplication.Server.Services
             IMapper mapper,
             IEmailSender emailSender,
             IEmailBuilder emailBuilder,
-            IPdfBuilder pdfBuilder)
+            IPdfBuilder pdfBuilder,
+            ICarModelRepository carModelRepository)
         {
             this.reservationRepository = reservationRepository;
             this.locationRepository = locationRepository;
@@ -38,6 +40,7 @@ namespace TeslaRent_01.WebApplication.Server.Services
             this.emailSender = emailSender;
             this.emailBuilder = emailBuilder;
             this.pdfBuilder = pdfBuilder;
+            this.carModelRepository = carModelRepository;
         }
 
         // Gets all available locations
@@ -115,5 +118,10 @@ namespace TeslaRent_01.WebApplication.Server.Services
             return reservationDocument;
         }
 
+        //
+        public async Task<List<OurCarVM>> GetOurCarsVMAsync()
+        {
+            return mapper.Map<List<OurCarVM>>(await carModelRepository.GetAllAsync());
+        }
     }
 }

@@ -11,23 +11,56 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-.video-container {
-    position: relative;
-    height: 100vh;
-    overflow: hidden;
-}
-
-.video-background {
-    position: absolute;
+.video-overlay {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* <- przyciemnienie */
+    z-index: 0; /* Musi byæ wiêksze ni¿ wideo, mniejsze ni¿ content */
 }
+
+.global-container {
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+}
+
+.global-content {
+    text-align: center;
+    z-index: 1
+}
+
+.background-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+}
+
+@media (min-aspect-ratio:16/9) {
+    .background-video {
+        width:100%;
+        height: auto;
+    }
+}
+
+@media (max-aspect-ratio:16/9) {
+    .background-video {
+        width: auto;
+        height: 100%;
+    }
+}
+
+
 
 .content {
     position: relative;
@@ -48,25 +81,22 @@ body {
     background-color: white !important;
 }
 
-input {
-    width: 400px !important;
-}
 
     input[type="date"]::-webkit-calendar-picker-indicator {
         filter: invert(1);
     }
 
 .container {
-    background-color: #ffffff;
+    background-color: rgba(212, 212, 212, 0.7);
     border-radius: 12px;
     padding: 1rem;
 }
 
 .container-cars {
-    background-color: #1e1e1e;
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 12px;
     padding: 1rem;
-    color: #ffffff;
+    color: black;
 }
 
 .form-label {

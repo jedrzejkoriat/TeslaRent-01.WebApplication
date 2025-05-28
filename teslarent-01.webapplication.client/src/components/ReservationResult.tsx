@@ -55,7 +55,7 @@ function ReservationResult() {
 
     // HTML
     return (
-        <>{error ? <p>{error.details}</p> : null}
+        <div style={{paddingTop:'200px', paddingBottom:'100px'} }>{error ? <p>{error.details}</p> : null}
             <h1 className="text-start text-white">Your reservation</h1>
             <div className="container">
                 <div className="row" style={{ paddingBottom: '20px', paddingLeft: '15px', paddingRight:'15px' }}>
@@ -64,7 +64,7 @@ function ReservationResult() {
                 </strong></p></div>
                 <div className="row" style={{paddingBottom: '20px'} }>
                     <div className="col-md-3">
-                        <div className="container" style={{minHeight: '100%'} }>
+                        <div className="container d-flex flex-column justify-content-center" style={{minHeight: '100%'} }>
                             <h5><i className="bi bi-geo-alt-fill"></i> Start Location:</h5>
                             <p className="mb-1"><strong>{reservationDetails.startLocation.name}</strong></p>
                             <p className="mb-1">{reservationDetails.startLocation.city}, {reservationDetails.startLocation.country}</p>
@@ -76,7 +76,7 @@ function ReservationResult() {
                     </div>
 
                     <div className="col-md-3">
-                        <div className="container" style={{ minHeight: '100%' }}>
+                        <div className="container d-flex flex-column justify-content-center" style={{ minHeight: '100%' }}>
                             <h5><i className="bi bi-geo-alt-fill"></i> End Location:</h5>
                             <p className="mb-1"><strong>{reservationDetails.endLocation.name}</strong></p>
                             <p className="mb-1">{reservationDetails.endLocation.city}, {reservationDetails.endLocation.country}</p>
@@ -87,14 +87,14 @@ function ReservationResult() {
                         </div>
                     </div>
                     <div className="col-md-3">
-                        <div className="container" style={{ minHeight: '100%' }}>
+                        <div className="container d-flex flex-column justify-content-center" style={{ minHeight: '100%' }}>
                             <h5><i className="bi bi-info-circle"></i> Reservation Info:</h5>
                             <p className="mb-1"><strong>Car:</strong> {reservationDetails.reservation.carModelName}</p>
                             <p className="mb-1"><strong>Price:</strong> ${reservationDetails.reservation.price.toFixed(2)}</p>
                         </div>
                     </div>
                     <div className="col-md-3">
-                        <div className="container" style={{ minHeight: '100%' }}>
+                        <div className="container d-flex flex-column justify-content-center" style={{ minHeight: '100%' }}>
                             <h5><i className="bi bi-info-circle"></i> Customer Info:</h5>
                             <p className="mb-1"><strong>Customer:</strong> {reservationDetails.reservation.firstName} {reservationDetails.reservation.lastName}</p>
                             <p className="mb-1"><strong>Email:</strong> {reservationDetails.reservation.email}</p>
@@ -104,7 +104,7 @@ function ReservationResult() {
                 </div>
                 <button className="btn btn-dark w-100" onClick={() => handleDownloadButton()}>Download Document</button>
             </div>
-        </>
+        </div>
     );
 }
 

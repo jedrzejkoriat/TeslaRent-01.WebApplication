@@ -12,6 +12,7 @@ namespace TeslaRent_01.WebApplication.Server.Configuration
             CreateMap<Location, LocationNameVM>();
             CreateMap<Location, LocationDetailsVM>();
             CreateMap<ReservationCreateVM, ReservationSearchVM>();
+            CreateMap<CarModel, OurCarVM>();
         }
     }
 }

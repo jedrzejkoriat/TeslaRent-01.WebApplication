@@ -62,6 +62,7 @@ builder.Services.AddScoped<ITeslaRentService, TeslaRentService>();
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<ICarRepository, CarRepository>();
+builder.Services.AddScoped<ICarModelRepository, CarModelRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -116,6 +117,29 @@ app.MapGet("/api/cars/start_location/{startLocationId}/start_date/{startDate}/en
         try
         {
             List<CarModelVM> cars = await teslaRentService.GetAvailableCarVMsAsync(startLocationId, endLocationId, startDate, endDate);
+            logger.LogInformation("Sent response: {StatusCode} {Path}", context.Response.StatusCode, context.Request.Path);
+            return Results.Ok(cars);
+        }
+        catch (ValidationException ex)
+        {
+            logger.LogError(ex, "Error processing request: {Method} {Path}", context.Request.Method, context.Request.Path);
+            return Results.BadRequest(new { Error = "Validation error.", Details = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error processing request: {Method} {Path}", context.Request.Method, context.Request.Path);
+            return Results.Problem(ex.Message);
+        }
+    });
+
+// GET /api/cars
+app.MapGet("/api/cars",
+    async (HttpContext context, ITeslaRentService teslaRentService, ILogger<Program> logger) =>
+    {
+        logger.LogInformation("Received request: {Method} {Path}", context.Request.Method, context.Request.Path);
+        try
+        {
+            List<OurCarVM> cars = await teslaRentService.GetOurCarsVMAsync();
             logger.LogInformation("Sent response: {StatusCode} {Path}", context.Response.StatusCode, context.Request.Path);
             return Results.Ok(cars);
         }

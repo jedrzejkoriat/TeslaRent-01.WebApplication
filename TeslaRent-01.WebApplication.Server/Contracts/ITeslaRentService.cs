@@ -9,5 +9,6 @@ namespace TeslaRent_01.WebApplication.Server.Contracts
         Task<List<CarModelVM>> GetAvailableCarVMsAsync(int startLocationId, int endLocationId, DateTime startDate, DateTime endDate);
         Task<ReservationDetailsVM> CreateReservationAsync(ReservationCreateVM reservationCreateVM);
         Task<MemoryStream> GetReservationDocument(ReservationDetailsVM reservationDetailsVM);
+        Task<List<OurCarVM>> GetOurCarsVMAsync();
     }
 }

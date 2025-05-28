@@ -53,7 +53,7 @@ function PersonalDataForm() {
 
     // HTML
     return (
-        <>{error ? <p>{error.details}</p> : null}
+        <div style={{paddingTop: '200px', paddingBottom:'100px'} }>{error ? <p>{error.details}</p> : null}
                 <h1 className="text-start text-white">Personal information</h1>
                 <div className="container">
                     <form onSubmit={handleSubmitButton}>
@@ -111,7 +111,7 @@ function PersonalDataForm() {
                         <button type="submit" className="btn btn-dark w-100">Continue</button>
                     </form>
                 </div>
-            </>
+            </div>
     )
 }
 
