@@ -2,11 +2,13 @@ import type { ReservationDetails } from '../types/ReservationDetails';
 import { useLocation } from 'react-router-dom';
 import type { ErrorBody } from '../types/ErrorBody';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function ReservationResult() {
 
     // Hooks
     const location = useLocation();
+    const { t } = useTranslation();
     const [error, setError] = useState<ErrorBody | null>(null);
 
     // Load data from location
@@ -55,54 +57,63 @@ function ReservationResult() {
 
     // HTML
     return (
-        <div style={{paddingTop:'200px', paddingBottom:'100px'} }>{error ? <p>{error.details}</p> : null}
-            <h1 className="text-start text-white">Your reservation</h1>
+        <div style={{ paddingTop: '200px', paddingBottom: '100px' }}>
+            {error ? <p>{error.details}</p> : null}
+            <h1 className="text-start text-white">{t('yourReservation')}</h1>
             <div className="container">
-                <div className="row" style={{ paddingBottom: '20px', paddingLeft: '15px', paddingRight:'15px' }}>
+                <div className="row" style={{ paddingBottom: '20px', paddingLeft: '15px', paddingRight: '15px' }}></div>
+                <div>
+                    <p>
+                        <strong>
+                            {t('thankYouReservationCompleted')}
+                        </strong>
+                    </p>
                 </div>
-                <div><p><strong>Thank you! Your reservation has been completed, and a confirmation email has been sent to the address you provided. Please make the payment one day before the start of your reservation.
-                </strong></p></div>
-                <div className="row" style={{paddingBottom: '20px'} }>
+                <div className="row" style={{ paddingBottom: '20px' }}>
                     <div className="col-md-3">
-                        <div className="container d-flex flex-column justify-content-center" style={{minHeight: '100%'} }>
-                            <h5><i className="bi bi-geo-alt-fill"></i> Start Location:</h5>
+                        <div className="container d-flex flex-column justify-content-center" style={{ minHeight: '100%' }}>
+                            <h5><i className="bi bi-geo-alt-fill"></i> {t('startLocation')}:</h5>
                             <p className="mb-1"><strong>{reservationDetails.startLocation.name}</strong></p>
                             <p className="mb-1">{reservationDetails.startLocation.city}, {reservationDetails.startLocation.country}</p>
                             <p>{reservationDetails.startLocation.street} {reservationDetails.startLocation.streetNumber}, {reservationDetails.startLocation.zipCode}</p>
-                            <h5><i className="bi bi-calendar-event"></i> Start Date:</h5>
+                            <h5><i className="bi bi-calendar-event"></i> {t('startDate')}:</h5>
                             <p className="mb-1">{new Date(reservationDetails.reservation.startDate).toLocaleDateString()}</p>
-                            <p>10:00 AM - 8:00 PM</p>
+                            <p>{t('hoursRangeMorningEvening')}</p>
                         </div>
                     </div>
 
                     <div className="col-md-3">
                         <div className="container d-flex flex-column justify-content-center" style={{ minHeight: '100%' }}>
-                            <h5><i className="bi bi-geo-alt-fill"></i> End Location:</h5>
+                            <h5><i className="bi bi-geo-alt-fill"></i> {t('endLocation')}:</h5>
                             <p className="mb-1"><strong>{reservationDetails.endLocation.name}</strong></p>
                             <p className="mb-1">{reservationDetails.endLocation.city}, {reservationDetails.endLocation.country}</p>
                             <p>{reservationDetails.endLocation.street} {reservationDetails.endLocation.streetNumber}, {reservationDetails.endLocation.zipCode}</p>
-                            <h5><i className="bi bi-calendar-event"></i> End Date:</h5>
+                            <h5><i className="bi bi-calendar-event"></i> {t('endDate')}:</h5>
                             <p className="mb-1">{new Date(reservationDetails.reservation.endDate).toLocaleDateString()}</p>
-                            <p>10:00 AM</p>
+                            <p>{t('hoursRangeMorning')}</p>
                         </div>
                     </div>
+
                     <div className="col-md-3">
                         <div className="container d-flex flex-column justify-content-center" style={{ minHeight: '100%' }}>
-                            <h5><i className="bi bi-info-circle"></i> Reservation Info:</h5>
-                            <p className="mb-1"><strong>Car:</strong> {reservationDetails.reservation.carModelName}</p>
-                            <p className="mb-1"><strong>Price:</strong> ${reservationDetails.reservation.price.toFixed(2)}</p>
+                            <h5><i className="bi bi-info-circle"></i> {t('reservationInfo')}:</h5>
+                            <p className="mb-1"><strong>{t('carr')}:</strong> {reservationDetails.reservation.carModelName}</p>
+                            <p className="mb-1"><strong>{t('price')}:</strong> ${reservationDetails.reservation.price.toFixed(2)}</p>
                         </div>
                     </div>
+
                     <div className="col-md-3">
                         <div className="container d-flex flex-column justify-content-center" style={{ minHeight: '100%' }}>
-                            <h5><i className="bi bi-info-circle"></i> Customer Info:</h5>
-                            <p className="mb-1"><strong>Customer:</strong> {reservationDetails.reservation.firstName} {reservationDetails.reservation.lastName}</p>
-                            <p className="mb-1"><strong>Email:</strong> {reservationDetails.reservation.email}</p>
-                            <p><strong>Phone:</strong> {reservationDetails.reservation.phoneNumber}</p>
+                            <h5><i className="bi bi-info-circle"></i> {t('customerInfo')}:</h5>
+                            <p className="mb-1"><strong>{t('customer')}:</strong> {reservationDetails.reservation.firstName} {reservationDetails.reservation.lastName}</p>
+                            <p className="mb-1"><strong>{t('email')}:</strong> {reservationDetails.reservation.email}</p>
+                            <p><strong>{t('phone')}:</strong> {reservationDetails.reservation.phoneNumber}</p>
                         </div>
                     </div>
                 </div>
-                <button className="btn btn-dark w-100" onClick={() => handleDownloadButton()}>Download Document</button>
+                <button className="btn btn-dark w-100" onClick={() => handleDownloadButton()}>
+                    {t('downloadDocument')}
+                </button>
             </div>
         </div>
     );

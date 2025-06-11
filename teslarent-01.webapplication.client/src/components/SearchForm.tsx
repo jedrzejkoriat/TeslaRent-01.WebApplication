@@ -4,6 +4,7 @@ import type { LocationName } from '../types/LocationName';
 import type { CarModel } from '../types/CarModel';
 import { useNavigate } from 'react-router-dom';
 import type { ErrorBody } from '../types/ErrorBody';
+import { useTranslation } from 'react-i18next';
 import type { CarListDataModel } from '../types/CarListDataModel';
 
 function SearchForm() {
@@ -30,6 +31,7 @@ function SearchForm() {
     const [locations, setLocations] = useState<LocationName[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     // Fetch initial data (LocationName[]) on component mount
     useEffect(() => {
@@ -78,87 +80,109 @@ function SearchForm() {
 
     // HTML
     return (
-        <>{error ? <div className="alert alert-danger">{error.details}</div> : null}
-            <>{isLoading ? (<div className="spinner-border text-secondary" role="status">
-                <span className="visually-hidden">Loading...</span>
-            </div>) : (
-                <div style={{ paddingTop: '100px' }}>
-                    <h1 className="text-start text-white">Search car</h1>
-                    <div className="container row mb-5">
-                        <form onSubmit={handleSubmitButton}>
-                            <div className="mb-3 d-flex align-items-center">
-                                <label htmlFor="startLocationId" className="form-label me-2 mb-0" style={{ minWidth: '110px' }}>
-                                    Start Location
-                                </label>
-                                <select
-                                    id="startLocationId"
-                                    name="startLocationId"
-                                    className="form-control"
-                                    value={searchData.startLocationId}
-                                    onChange={handleChange}
-                                >
-                                    <option value={0}>Select Start Location</option>
-                                    {locations.map((location) => (
-                                        <option key={location.id} value={location.id}>
-                                            {location.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div className="mb-3 d-flex align-items-center">
-                                <label htmlFor="endLocationId" className="form-label me-2 mb-0" style={{ minWidth: '110px' }}>
-                                    End Location
-                                </label>
-                                <select
-                                    id="endLocationId"
-                                    name="endLocationId"
-                                    className="form-control"
-                                    value={searchData.endLocationId}
-                                    onChange={handleChange}
-                                >
-                                    <option value={0}>Select End Location</option>
-                                    {locations.map((location) => (
-                                        <option key={location.id} value={location.id}>
-                                            {location.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div className="mb-3 d-flex align-items-center">
-                                <label htmlFor="startDate" className="form-label me-2 mb-0" style={{ minWidth: '110px' }}>
-                                    Start Date
-                                </label>
-                                <input
-                                    type="date"
-                                    className="form-control"
-                                    id="startDate"
-                                    name="startDate"
-                                    value={searchData.startDate}
-                                    onChange={handleChange}
-                                />
-                            </div>
-
-                            <div className="mb-3 d-flex align-items-center">
-                                <label htmlFor="endDate" className="form-label me-2 mb-0" style={{ minWidth: '110px' }}>
-                                    End Date
-                                </label>
-                                <input
-                                    type="date"
-                                    className="form-control"
-                                    id="endDate"
-                                    name="endDate"
-                                    value={searchData.endDate}
-                                    onChange={handleChange}
-                                />
-                            </div>
-
-                            <button type="submit" className="btn btn-dark w-100">Search</button>
-                        </form>
+        <>
+            {error ? <div className="alert alert-danger">{error.details}</div> : null}
+            <>
+                {isLoading ? (
+                    <div className="spinner-border text-secondary" role="status">
+                        <span className="visually-hidden"></span>
                     </div>
-                </div>
-            )}
+                ) : (
+                    <div style={{ paddingTop: '100px' }}>
+                        <h1 className="text-start text-white">{t('searchForYourDreamCar')}</h1>
+                        <div className="container row mb-5">
+                            <form onSubmit={handleSubmitButton}>
+                                <div className="mb-3 d-flex align-items-center">
+                                    <label
+                                        htmlFor="startLocationId"
+                                        className="form-label me-2 mb-0"
+                                        style={{ minWidth: '180px' }}
+                                    >
+                                        {t('startLocation')}
+                                    </label>
+                                    <select
+                                        id="startLocationId"
+                                        name="startLocationId"
+                                        className="form-control"
+                                        value={searchData.startLocationId}
+                                        onChange={handleChange}
+                                    >
+                                        <option value={0}>{t('selectStartLocation')}</option>
+                                        {locations.map((location) => (
+                                            <option key={location.id} value={location.id}>
+                                                {location.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div className="mb-3 d-flex align-items-center">
+                                    <label
+                                        htmlFor="endLocationId"
+                                        className="form-label me-2 mb-0"
+                                        style={{ minWidth: '180px' }}
+                                    >
+                                        {t('endLocation')}
+                                    </label>
+                                    <select
+                                        id="endLocationId"
+                                        name="endLocationId"
+                                        className="form-control"
+                                        value={searchData.endLocationId}
+                                        onChange={handleChange}
+                                    >
+                                        <option value={0}>{t('selectEndLocation')}</option>
+                                        {locations.map((location) => (
+                                            <option key={location.id} value={location.id}>
+                                                {location.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div className="mb-3 d-flex align-items-center">
+                                    <label
+                                        htmlFor="startDate"
+                                        className="form-label me-2 mb-0"
+                                        style={{ minWidth: '180px' }}
+                                    >
+                                        {t('startDate')}
+                                    </label>
+                                    <input
+                                        type="date"
+                                        className="form-control"
+                                        id="startDate"
+                                        name="startDate"
+                                        value={searchData.startDate}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+
+                                <div className="mb-3 d-flex align-items-center">
+                                    <label
+                                        htmlFor="endDate"
+                                        className="form-label me-2 mb-0"
+                                        style={{ minWidth: '180px' }}
+                                    >
+                                        {t('endDate')}
+                                    </label>
+                                    <input
+                                        type="date"
+                                        className="form-control"
+                                        id="endDate"
+                                        name="endDate"
+                                        value={searchData.endDate}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+
+                                <button type="submit" className="btn btn-dark w-100">
+                                    {t('search')}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                )}
             </>
         </>
     );

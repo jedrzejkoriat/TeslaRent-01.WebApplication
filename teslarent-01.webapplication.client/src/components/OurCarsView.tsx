@@ -4,6 +4,7 @@ import type { ErrorBody } from '../types/ErrorBody';
 
 // React
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Car photos
 import car1 from '../assets/cars/1.png';
@@ -18,6 +19,7 @@ function OurCarsView() {
     const [cars, setCars] = useState<OurCars[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<ErrorBody | null>(null);
+    const { t } = useTranslation();
 
     // Fetch initial data (LocationName[]) on component mount
     useEffect(() => {
@@ -48,6 +50,14 @@ function OurCarsView() {
         5: car5
     };
 
+    const carDescriptions: Record<number, string> = {
+        1: t('car.description1'),
+        2: t('car.description2'),
+        3: t('car.description3'),
+        4: t('car.description4'),
+        5: t('car.description5')
+    };
+
     // HTML
     return (
         <>{error ? <div className="alert alert-danger">{error.details}</div> : null}
@@ -55,12 +65,12 @@ function OurCarsView() {
                 <span className="visually-hidden">Loading...</span>
             </div>) : (
                 <div style={{ paddingTop: '250px' }}>
-                    <h1 className="text-start text-white">Our cars</h1>
+                    <h1 className="text-start text-white">{t('ourcars')}</h1>
                     {cars.map((car) => (
                         <div key={car.id} className="container row mb-5">
                             <div className="row g-0 text-start">
                                 <h3 className="card-title d-flex justify-content-left" style={{ paddingLeft: '20px', paddingTop: '20px' }}>{car.name}</h3>
-                                <p className="card-text d-flex justify-content-left" style={{ paddingLeft: '20px', paddingRight: '20px' }}>{car.description}</p>
+                                <p className="card-text d-flex justify-content-left" style={{ paddingLeft: '20px', paddingRight: '20px' }}>{carDescriptions[car.id]}</p>
                                 <div className="col-md-5 d-flex justify-content-center align-items-center" style={{ paddingLeft: '20px' }}>
                                     <img
                                         src={carImages[car.id]}
@@ -73,7 +83,7 @@ function OurCarsView() {
                                         <div className="row">
                                             <div className="col-md-1"></div>
                                             <div className="col-md-4 container-cars  d-flex flex-column justify-content-center">
-                                                <h3 className="text-center">Specifications</h3>
+                                                <h3 className="text-center">{t('car.specifications')}</h3>
                                                 <ul className="list-unstyled mb-2">
                                                     <h6><i className="bi bi-car-front-fill"></i> {car.bodyType}</h6>
                                                     <h6><i className="bi bi-person-arms-up"></i> {car.seats}</h6>
@@ -84,13 +94,13 @@ function OurCarsView() {
                                             </div>
                                             <div className="col-md-1"></div>
                                             <div className="col-md-4 container-cars d-flex flex-column">
-                                                <h3 className="text-center">Daily price</h3>
+                                                <h3 className="text-center">{t('car.dailyPrice')}</h3>
                                                 <ul className="list-unstyled mb-2 d-flex flex-column justify-content-center">
-                                                    <li><strong>Short-term:</strong></li>
+                                                    <li><strong>{t('shortTerm')}</strong></li>
                                                     <li><i className="bi bi-currency-euro"></i>{car.dailyPriceShort.toFixed(2)}</li>
-                                                    <li><strong>Mid-term (7+ days):</strong></li>
+                                                    <li><strong>{t('midTerm')}</strong></li>
                                                     <li><i className="bi bi-currency-euro"></i>{car.dailyPriceShort.toFixed(2)}</li>
-                                                    <li><strong>Long-term (30+ days):</strong></li>
+                                                    <li><strong>{t('longTerm')}</strong></li>
                                                     <li><i className="bi bi-currency-euro"></i>{car.dailyPriceShort.toFixed(2)}</li>
                                                 </ul>
                                             </div>

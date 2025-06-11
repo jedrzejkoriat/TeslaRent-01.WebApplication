@@ -17,11 +17,19 @@
     <Content Remove="wwwroot\assets\3-CTWztvrh.png" />
     <Content Remove="wwwroot\assets\4-ByrrEPpw.png" />
     <Content Remove="wwwroot\assets\5-nNTEa09Y.png" />
+    <Content Remove="wwwroot\assets\airport-DMDt7ijT.png" />
+    <Content Remove="wwwroot\assets\airport-photo-ChmOtO5u.png" />
+    <Content Remove="wwwroot\assets\alcudia-BaD1LvKW.png" />
+    <Content Remove="wwwroot\assets\alcudia-photo-CAO5v0ZN.png" />
     <Content Remove="wwwroot\assets\bootstrap-icons-BeopsB42.woff" />
     <Content Remove="wwwroot\assets\bootstrap-icons-mSm7cUeB.woff2" />
-    <Content Remove="wwwroot\assets\home-CNN_54DD.jpg" />
-    <Content Remove="wwwroot\assets\index-C_vN8_IX.js" />
-    <Content Remove="wwwroot\assets\index-NbcpdrRq.css" />
+    <Content Remove="wwwroot\assets\index-B696_Frd.css" />
+    <Content Remove="wwwroot\assets\index-CjmsDeBE.js" />
+    <Content Remove="wwwroot\assets\manacor-Cveayi_b.png" />
+    <Content Remove="wwwroot\assets\manacor-photo-Civc-BzL.png" />
+    <Content Remove="wwwroot\assets\palma-6RlgSNfs.png" />
+    <Content Remove="wwwroot\assets\palma-photo-_dyxxqho.png" />
+    <Content Remove="wwwroot\assets\video-seppurBD.mp4" />
     <Content Remove="wwwroot\index.html" />
     <Content Remove="wwwroot\logo.jpg" />
   </ItemGroup>
@@ -58,18 +66,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\assets\1-4vu6RBAY.png" />
-	  <Content Include="wwwroot\assets\2-CTDt25zM.png" />
-	  <Content Include="wwwroot\assets\3-CTWztvrh.png" />
-	  <Content Include="wwwroot\assets\4-ByrrEPpw.png" />
-	  <Content Include="wwwroot\assets\5-nNTEa09Y.png" />
-	  <Content Include="wwwroot\assets\bootstrap-icons-BeopsB42.woff" />
-	  <Content Include="wwwroot\assets\bootstrap-icons-mSm7cUeB.woff2" />
-	  <Content Include="wwwroot\assets\home-CNN_54DD.jpg" />
-	  <Content Include="wwwroot\assets\index-C_vN8_IX.js" />
-	  <Content Include="wwwroot\assets\index-NbcpdrRq.css" />
-	  <Content Include="wwwroot\index.html" />
-	  <Content Include="wwwroot\logo.jpg" />
+    <None Include="wwwroot\assets\1-4vu6RBAY.png" />
+    <None Include="wwwroot\assets\2-CTDt25zM.png" />
+    <None Include="wwwroot\assets\3-CTWztvrh.png" />
+    <None Include="wwwroot\assets\4-ByrrEPpw.png" />
+    <None Include="wwwroot\assets\5-nNTEa09Y.png" />
+    <None Include="wwwroot\assets\airport-DMDt7ijT.png" />
+    <None Include="wwwroot\assets\airport-photo-ChmOtO5u.png" />
+    <None Include="wwwroot\assets\alcudia-BaD1LvKW.png" />
+    <None Include="wwwroot\assets\alcudia-photo-CAO5v0ZN.png" />
+    <None Include="wwwroot\assets\bootstrap-icons-BeopsB42.woff" />
+    <None Include="wwwroot\assets\bootstrap-icons-mSm7cUeB.woff2" />
+    <None Include="wwwroot\assets\index-B696_Frd.css" />
+    <None Include="wwwroot\assets\index-CjmsDeBE.js" />
+    <None Include="wwwroot\assets\manacor-Cveayi_b.png" />
+    <None Include="wwwroot\assets\manacor-photo-Civc-BzL.png" />
+    <None Include="wwwroot\assets\palma-6RlgSNfs.png" />
+    <None Include="wwwroot\assets\palma-photo-_dyxxqho.png" />
+    <None Include="wwwroot\assets\video-seppurBD.mp4" />
+    <None Include="wwwroot\index.html" />
+    <None Include="wwwroot\logo.jpg" />
   </ItemGroup>
 
 </Project>

@@ -7,6 +7,8 @@
 TeslaRent-01.WebApplication.Server/appsettings.Development.json
 TeslaRent-01.WebApplication.Server/appsettings.json
 
+TeslaRent-01.WebApplication.Server/wwwroot/
+
 # User-specific files
 *.rsuser
 *.suo

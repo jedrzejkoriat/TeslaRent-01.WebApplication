@@ -7,6 +7,7 @@ import type { CarModel } from '../types/CarModel';
 // React
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // Car photos
 import car1 from '../assets/cars/1.png';
@@ -20,6 +21,7 @@ function CarList() {
     // Hooks
     const location = useLocation();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     // Load data from location
     const carListDataModel = location.state as CarListDataModel;
@@ -33,6 +35,14 @@ function CarList() {
         3: car3,
         4: car4,
         5: car5
+    };
+
+    const carDescriptions: Record<number, string> = {
+        1: t('car.description1'),
+        2: t('car.description2'),
+        3: t('car.description3'),
+        4: t('car.description4'),
+        5: t('car.description5')
     };
 
     /* Handle car selection:
@@ -63,7 +73,7 @@ function CarList() {
                 <div key={car.id} className="container row mb-5">
                     <div className="row g-0  text-start">
                         <h3 className="card-title d-flex justify-content-left" style={{ paddingLeft: '20px', paddingTop: '20px' }}>{car.name}</h3>
-                        <p className="card-text d-flex justify-content-left" style={{ paddingLeft: '20px', paddingRight: '20px' }}>{car.description}</p>
+                        <p className="card-text d-flex justify-content-left" style={{ paddingLeft: '20px', paddingRight: '20px' }}>{carDescriptions[car.id]}</p>
                         <div className="col-md-5 d-flex justify-content-center align-items-center" style={{ paddingLeft: '20px' }}>
                             <img
                                 src={carImages[car.id]}
@@ -76,35 +86,35 @@ function CarList() {
                                 <div className="row">
                                     <div className="col-md-1"></div>
                                     <div className="col-md-4 container-cars  d-flex flex-column justify-content-center">
-                                            <h3 className="text-center">Specifications</h3>
-                                            <ul className="list-unstyled mb-2">
-                                                <h6><i className="bi bi-car-front-fill"></i> {car.bodyType}</h6>
-                                                <h6><i className="bi bi-person-arms-up"></i> {car.seats}</h6>
-                                                <h6><i className="bi bi-speedometer2"></i> {car.maxSpeed} km/h</h6>
-                                                <h6><i className="bi bi-battery-charging"></i> {car.maxRange} km</h6>
-                                                <h6><i className="bi bi-rocket-takeoff-fill"></i> {car.acceleration}s</h6>
-                                            </ul>
-                                        </div>
+                                        <h3 className="text-center">{t('car.specifications')}</h3>
+                                        <ul className="list-unstyled mb-2">
+                                            <h6><i className="bi bi-car-front-fill"></i> {car.bodyType}</h6>
+                                            <h6><i className="bi bi-person-arms-up"></i> {car.seats}</h6>
+                                            <h6><i className="bi bi-speedometer2"></i> {car.maxSpeed} km/h</h6>
+                                            <h6><i className="bi bi-battery-charging"></i> {car.maxRange} km</h6>
+                                            <h6><i className="bi bi-rocket-takeoff-fill"></i> {car.acceleration}s</h6>
+                                        </ul>
+                                    </div>
                                     <div className="col-md-1"></div>
                                     <div className="col-md-4 container-cars d-flex flex-column">
-                                        <h3 className="text-center  d-flex flex-column justify-content-center">Pricing</h3>
-                                            <div className="row">
-                                                <div className="col-md-8">
-                                                    <ul className="list-unstyled mb-2">
-                                                        <li><strong>Daily Price:</strong></li>
-                                                        <li><i className="bi bi-currency-euro"></i>{car.dailyPrice.toFixed(2)}</li>
-                                                        <li><strong>Total Price:</strong></li>
-                                                        <li><i className="bi bi-currency-euro"></i>{car.price.toFixed(2)}</li>
-                                                        <li> <strong>Deposit:</strong></li>
-                                                        <li><i className="bi bi-currency-euro"></i>{(car.dailyPrice * 5).toFixed(2)}</li>
-                                                    </ul>
-                                                </div>
-                                                <div className="col-md-4 d-flex flex-column justify-content-end align-items-end">
-                                                    <button className="btn btn-primary" onClick={() => handleSelectButton(car)}>Select</button>
-                                                </div>
+                                        <h3 className="text-center  d-flex flex-column justify-content-center">{t('car.pricing')}</h3>
+                                        <div className="row">
+                                            <div className="col-md-8">
+                                                <ul className="list-unstyled mb-2">
+                                                    <li><strong>{t('car.dailyPrice')}</strong></li>
+                                                    <li><i className="bi bi-currency-euro"></i>{car.dailyPrice.toFixed(2)}</li>
+                                                    <li><strong>{t('car.totalPrice')}</strong></li>
+                                                    <li><i className="bi bi-currency-euro"></i>{car.price.toFixed(2)}</li>
+                                                    <li><strong>{t('car.deposit')}</strong></li>
+                                                    <li><i className="bi bi-currency-euro"></i>{(car.dailyPrice * 5).toFixed(2)}</li>
+                                                </ul>
+                                            </div>
+                                            <div className="col-md-4 d-flex flex-column justify-content-end align-items-end">
+                                                <button className="btn btn-primary" onClick={() => handleSelectButton(car)}>{t('car.select')}</button>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>

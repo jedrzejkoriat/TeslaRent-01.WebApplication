@@ -15,6 +15,9 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .video-overlay {
@@ -23,14 +26,14 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5); /* <- przyciemnienie */
-    z-index: 0; /* Musi byæ wiêksze ni¿ wideo, mniejsze ni¿ content */
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
 }
 
 .global-container {
     width: 100%;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
 }
 
@@ -93,7 +96,7 @@ body {
 }
 
 .container-cars {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 12px;
     padding: 1rem;
     color: black;
